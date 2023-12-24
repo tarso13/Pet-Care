@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/style.css">
+ <script src="js/script.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <title>Tarso Keletzi: Assignment 2 Task 1,2 CS359</title>
+  <meta name="Author" content="Tarso Keletzi">
+  <meta name="Description" content="This is Tarso Keletzi's pet keeping site.">
+  <meta name="keywords" lang="en-us" content="Pets, Cats, Dogs, Birds, Platform, Animals, Keepers, Owners">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+
+<body onload="config()">
+  <div class="container-bar">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="login.html">Best Pet Keeping Platform</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                </div>
+            </nav>
+  </div><br>
+  <h3>Register below to get started:</h3>
+  <form id="regform" class="registration">
+    <span id="confirm_message"></span>
+    <span id="message"></span>
+    <span id="country_message"></span>
+    <span id="osm_message"></span>
+    <p>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" onchange="validateUsername()" pattern="^[^\d].{7,}$" required>
+    </p>
+    <p>
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email" onchange="validateEmail()" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
+    </p>
+    <p>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" 
+             onkeyup="invalid_password()" onchange="checkStrength()" pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^+=]).{8,15}$" required>
+      <i class="fa fa-eye" id="togglePassword"></i>
+    </p>
+    <p>
+      <label for="password-confirmation">Confirm Password</label>
+      <input type="password" name="password-confirmation" id="password-confirmation"
+       onkeyup="checkPasswords()" pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,15}$" required>
+      <i class="fa fa-eye" id="togglePassword2"></i>
+    </p>
+    <script>
+      const togglePassword = document.querySelector("#togglePassword");
+      const togglePassword2 = document.querySelector("#togglePassword2");
+      const password = document.querySelector("#password");
+      togglePassword.addEventListener("click", function () {
+        var type =
+          password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+
+      const password_conf = document.querySelector("#password-confirmation");
+      togglePassword2.addEventListener("click", function () {
+        var type =
+          password_conf.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        password_conf.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+      });
+    </script>
+    <p>
+      <label for="firstname">First Name</label>
+      <input type="text" name="firstname" id="firstname" pattern="^[^\d]{3,30}$" required>
+    </p>
+    <p>
+      <label for="lastname">Last Name</label>
+      <input type="text" name="lastname" id="lastname" pattern="^[^\d]{3,30}$" required><br>
+    </p>
+    <p>
+      <label for="birthdate">Birthdate</label>
+      <input type="date" name="birthdate" id="birthdate" value="1980-01-01" min="1920-01-01" max="2007-12-31" required>
+    </p>
+    <div class="genre">
+      Genre
+      <label for="female">
+        <input type="radio" id="female" name="genre" value="female" required>Female
+      </label>
+      <label for="male">
+        <input type="radio" id="male" name="genre" value="male">Male
+      </label>
+      <label for="other">
+        <input type="radio" id="other" name="genre" value="other">Other
+      </label>
+    </div>
+    <div class="type" name="type" onchange="checkType()">
+      Type
+      <label for="owner">
+        <input type="radio" id="owner" name="type" value="owner" required>Pet Owner</label>
+      <label for="keeper">
+        <input type="radio" id="keeper" name="type" value="keeper">Pet
+        Keeper</label>
+    </div>
+    <p>
+      <label for="country">Country</label>
+      <select class="form-select" name="country" id="country" required>
+        <option label="select country" value=""></option>
+        <option value="GR">Greece</option>
+        <option value="OTH">Other...</option>
+      </select>
+    </p>
+    <p>
+      <label for="city">City</label>
+      <input type="text" name="city" id="city" pattern="^[^\d]{3,30}$" required>
+    </p>
+    <p>
+      <label for="address">Address</label>
+      <input type="text" name="address" id="address"  pattern="^.{10,150}$" required>
+      <button class="btn" onclick="checkLocation()"><img src="media/pin.png" height="20px" width="20px"></button>
+    </p>
+    <p>
+        <div class="Map" id="Map"></div>
+    </p>
+    <p>
+      <label for="job">Job</label>
+      <input type="text" name="job" id="job" pattern="^[^\d]{3,30}$">
+    </p>
+    <p>
+      <label for="personalpage">Personal Page</label>
+      <input type="url" name="personalpage" id="personalpage">
+      <br>
+    </p>
+    <p>
+      <label for="telephone">Telephone</label>
+      <input type="text" name="telephone" id="telephone" pattern="^\d{10,14}$">
+    </p>
+    <p>
+      <label for="agree">
+        Terms and conditions
+        <input type="checkbox" name="agree" id="agree" required>
+      </label>
+    </p>
+    <p>
+      <input type="submit" name="register" id="register" value="Register">
+    </p>
+  </form>
+ 
+  <footer id="footer">
+    <p>©Copyright 2023 by Tarso Keletzi. All rights reserved.</p>
+  </footer>
+  <form class="pet-keeper" id="pet-keeper" style="display: none">
+    <div class="property" id="property" onchange="definePet()">
+      Property
+      <label for="indoor">
+        <input type="radio" id="indoor" name="property" value="indoor" required>Indoor</label>
+      <label for="outdoor">
+        <input type="radio" id="outdoor" name="property" value="outdoor">Outdoor</label>
+      <label for="both">
+        <input type="radio" id="both" name="property" value="both">Both</label>
+    </div>
+    <div class="keeper-type" onchange="selectPrice()">
+      Keeper Type
+      <label id="cat-keeper-label" for="cat-keeper">
+        <input type="radio" id="cat-keeper" name="keeper-type" value="cat-keeper">Cat Keeper</label>
+      <label id="dog-keeper-label" for="dog-keeper">
+        <input type="radio" id="dog-keeper" name="keeper-type" value="dog-keeper">Dog Keeper</label>
+      <label id="cat-dog-keeper-label" for="cat-dog-keeper">
+        <input type="radio" id="cat-dog-keeper" name="keeper-type" value="cat-dog-keeper" required>Cat & Dog
+        Keeper</label>
+    </div>
+      <p>
+    <label id="catprice-label" for="catprice">Cat Price (per night)</label>
+    <input type="number" id="catprice" name="catprice" min="0" max="15" value="8"></p>
+   <p> <label id="dogprice-label" for="dogprice">Dog Price (per night)</label>
+        <input type="number" id="dogprice" name="dogprice" min="0" max="20" value="10"></p>
+    <div class="propertyDescription">
+        <p><label for="propertyDescription">Property Description</label></p>
+        <textarea id="propertyDescription" name="propertyDescription"></textarea>
+    </div>
+  </form>
+</body>
+
+</html>

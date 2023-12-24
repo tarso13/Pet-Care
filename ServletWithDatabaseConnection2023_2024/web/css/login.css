@@ -1,0 +1,88 @@
+body {
+    background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
+    font-family: Arial, sans-serif;
+    /*background-color: #f4f4f4;*/
+    margin-top:5%;
+    padding: 0;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container-bar {
+    width: 100%; 
+    background-color:brown;
+    padding-bottom: 3%;
+}
+.container-bar a{
+    margin-bottom: -5%;
+    color:white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.navbar-brand{
+    margin-top: -1%;
+}
+
+.navbar-brand:hover{
+    color: white;
+    
+}
+
+.login-container {
+    margin-top:10%;
+    margin-left:25%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 50%;
+    width: 50%;
+}
+
+h1 {
+    text-align: center;
+    /*color: #333;*/
+    color: brown;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+label {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: block;
+    /*margin-bottom: 8px;*/
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+}
+
+button {
+    box-sizing: border-box;
+    position:relative;
+    width: 100%;
+    padding: 10px;
+    background-color: brown;
+    color: #fff;
+    border: none;
+    border-radius: 2%;
+    cursor: pointer;
+}
+#password{
+    margin-bottom: 2%;
+}
+button:hover {
+    background-color: rgb(100, 11, 11);
+}
+
+p{
+    margin-left:30%;
+    font-style: italic;
+}

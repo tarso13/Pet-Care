@@ -1,0 +1,54 @@
+body {
+    background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
+    font-family: Arial, sans-serif;
+    /*background-color: #f4f4f4;*/
+    margin-top:5%;
+    padding: 0;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container-bar {
+    width: 100%; 
+    background-color:brown;
+}
+.container-bar a{
+    margin-bottom: -5%;
+    color:white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    padding-left: 1%;
+}
+.account-management{
+    margin-left:90%;
+    padding-top: -2%;
+    color:white;
+}
+
+.navbar-brand{
+    margin-top: -1%;
+}
+.navbar-brand:hover{
+    color: white;
+    
+}
+
+.dropdown-menu{
+    height:15%;
+}
+
+.dropdown-menu a{
+    margin-bottom: 2%;
+    
+}
+
+.dropdown-toggle{
+    font-size: 20px;
+    margin-top:-5%;
+    margin-left:-12%;
+}
+
+.dropdown-toggle:hover{
+    color:white;
+}

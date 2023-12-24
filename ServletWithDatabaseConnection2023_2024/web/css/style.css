@@ -1,0 +1,232 @@
+/* Sets background image details and alignment for the body of the html page */
+body {
+    background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
+    /* background-size: cover; */
+    height: auto;
+    width: auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+
+}
+.container-bar {
+    width: 100%;
+    background-color:brown;
+    padding-bottom: 3%;
+}
+.container-bar a{
+    margin-bottom: -5%;
+    color:white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.navbar-brand{
+    margin-top: -1%;
+}
+.navbar-brand:hover{
+    color: white;
+}
+
+/* Sets details for the labels of the html */
+label {
+    color: brown;
+    text-align: left;
+    width: 150px;
+}
+
+body .genre .type {
+    float: left;
+    margin-right: 100%;
+}
+
+/* Sets h2 tags as regards their font and color */
+body h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: brown;
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+
+/* Sets form tag as regards its font and color */
+form {
+    font-family: Times, serif;
+    font-size: medium;
+    color: rgb(160, 14, 14);
+    font-weight: bold;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+option {
+    width: 50%;
+}
+
+/* Sets h3 tags as regards their font and color */
+body h3 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(100, 11, 11);
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.type,
+.genre,
+.property,
+.keeper-type {
+    text-align: left;
+    padding-left: 155px;
+}
+
+.type label,
+.genre label,
+.property label,
+.keeper-type label {
+    display: flex;
+    padding-left: 35%;
+    width: 100%;
+    position: relative;
+}
+
+
+#catprice {
+    position: relative fixed;
+    display: flex;
+    margin-left: 48.8%;
+    margin-top: -7.8%;
+}
+
+#register{
+    background-color: brown;
+    color: #fff;
+    border-radius: 5px;
+}
+
+#login{
+    background-color: brown;
+    color: #fff;
+    border-radius: 5px;
+    width:11%;
+    margin-left:0.2%;
+}
+#catprice-label {
+    position: relative fixed;
+    display: flex;
+    margin-left: 24.5%;
+    margin-top: 5%;
+    padding-bottom: 2%;
+    text-align: left;
+    width: 150px;
+}
+
+form i {
+    margin-left: -25px;
+    margin-top: 0.5%;
+    cursor: pointer;
+    position: absolute;
+}
+
+/* Sets footer tags as regards its font and color */
+footer {
+    color: rgba(14, 1, 1, 0.541);
+    font-weight: bold;
+    text-align: center;
+    font-size: small;
+    position: absolute fixed;
+}
+
+/* Sets the select dropdown menu */
+select {
+    width: 26.8%;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+select option {
+    width: 7 em;
+}
+
+/* Adjusts details for date input fields */
+input[type=date],
+input[type=number] {
+    width: 26.8%;
+    text-align: center;
+}
+
+#confirm_message {
+    padding-top: 12.3%;
+    display: inline-block;
+    margin-left: 15%;
+    position: absolute;
+    color: crimson;
+}
+
+#message {
+    padding-top: 8.3%;
+    display: inline-block;
+    margin-left: 15%;
+    position: absolute;
+    color: crimson;
+}
+
+#osm_message,
+#country_message {
+    padding-top: 53%;
+    display: inline-block;
+    margin-left: -45%;
+    position: absolute;
+    color: crimson;
+}
+
+/* Adjusts details for checkbox input fields */
+input[type=checkbox] {
+    text-align: center;
+    width: 100%;
+}
+
+#pet-keeper {
+    position: relative;
+    margin-left: 60%;
+    margin-top: -70%;
+}
+
+#address {
+    position: relative fixed;
+    margin-right: -6.5%;
+    text-align: center;
+}
+
+p button {
+    background-color: rgb(209, 208, 208);
+    margin-left: -1%;
+    margin-top: -1%;
+    position: relative fixed;
+}
+/*
+.Map {
+    padding-left: 100px;
+    height: 300px;
+    width: 350px;
+    left: 150px;
+    position: relative;
+}*/
+
+label[for="propertyDescription"] {
+    /*position: relative;*/
+    margin-right: 27.5%;
+}
+
+#propertyDescription{
+    margin-left:24.6%;
+    margin-top:-15%;
+    margin-bottom:2%;
+    width:27%;
+}
