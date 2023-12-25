@@ -16,13 +16,28 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var userspan = document.getElementById("user");
+
                 if (userspan) {
                     var username = localStorage.getItem("username");
-                    if (username !== 'admin') {
-                        console.log("error!!!");
-                    } else {
-                        userspan.innerHTML = 'admin';
+                    if (!username) {
+                        var cookies = getAllCookiePairs();
+                        userspan.innerHTML = cookies["username"];
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("nav-item", "nav-link");
+                        usersLink.setAttribute("onclick", "getKeeperBookings()");
+                        usersLink.textContent = "Bookings";
+                        var navbar = document.getElementById("navbarNavAltMarkup");
+                        navbar.appendChild(usersLink);
                     }
+                } else {
+                    userspan.innerHTML = username;
+                    var usersLink = document.createElement("a");
+                    usersLink.classList.add("nav-item", "nav-link");
+                    usersLink.setAttribute("onclick", "getUsers()");
+                    usersLink.textContent = "Users";
+                    var navbar = document.getElementById("navbarNavAltMarkup");
+                    navbar.appendChild(usersLink);
+
                 }
                 drawCharts();
             });
@@ -36,15 +51,16 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <a class="nav-item nav-link" onclick='getUsers()'>Users</a>
-                    <a class="nav-item nav-link" onclick='drawCharts()'>Statistics</a>
+                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
                 </div>
             </nav>
             <div class="account-management">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span id="user"></span>  
                 </a>
+
                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
                     <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>

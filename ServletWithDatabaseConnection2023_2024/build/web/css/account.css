@@ -170,3 +170,19 @@ div .dogprice input{
 #back{
     width:67.5px;
 }
+
+.collapse .nav-item{
+    font-size: 20px;
+}
+
+.collapse{
+    margin-left:50%;
+    margin-right: 10%;
+    margin-bottom:-2.6%;
+}
+.collapse .nav-item{
+    color: white;
+}
+.collapse .nav-item:hover{
+    color: white;
+}

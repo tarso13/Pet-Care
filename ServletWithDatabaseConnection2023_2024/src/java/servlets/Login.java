@@ -92,6 +92,8 @@ public class Login extends HttpServlet {
                     response.addCookie(cookie);
                     cookie = new Cookie("password", su.getPassword());
                     response.addCookie(cookie);
+                    cookie = new Cookie("keeper_id", String.valueOf(su.getKeeperId()));
+                    response.addCookie(cookie);
                     cookie = new Cookie("email", su.getEmail());
                     response.addCookie(cookie);
                     cookie = new Cookie("firstname", su.getFirstname());
@@ -148,6 +150,8 @@ public class Login extends HttpServlet {
                     Cookie cookie = new Cookie("username", suu.getUsername());
                     response.addCookie(cookie);
                     cookie = new Cookie("password", suu.getPassword());
+                    response.addCookie(cookie);
+                    cookie = new Cookie("owner_id", String.valueOf(suu.getOwnerId()));
                     response.addCookie(cookie);
                     cookie = new Cookie("email", suu.getEmail());
                     response.addCookie(cookie);

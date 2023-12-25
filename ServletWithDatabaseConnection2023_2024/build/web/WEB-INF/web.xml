@@ -84,6 +84,18 @@
         <servlet-name>getMoneyEarned</servlet-name>
         <servlet-class>servlets.getMoneyEarned</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getKeeperBookings</servlet-name>
+        <servlet-class>servlets.getKeeperBookings</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateBooking</servlet-name>
+        <servlet-class>servlets.updateBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>askCHATGPT</servlet-name>
+        <servlet-class>servlets.askCHATGPT</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -163,6 +175,18 @@
     <servlet-mapping>
         <servlet-name>getMoneyEarned</servlet-name>
         <url-pattern>/getMoneyEarned</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKeeperBookings</servlet-name>
+        <url-pattern>/getKeeperBookings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateBooking</servlet-name>
+        <url-pattern>/updateBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>askCHATGPT</servlet-name>
+        <url-pattern>/askCHATGPT</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

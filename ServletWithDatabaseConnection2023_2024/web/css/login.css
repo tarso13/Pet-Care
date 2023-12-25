@@ -33,16 +33,19 @@ body {
 }
 
 .login-container {
-    margin-top:10%;
+    margin-top:8%;
     margin-left:25%;
-    background-color: #fff;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 50%;
+    height: 60%;
     width: 50%;
 }
 
+.login-container #guest{
+    margin-top:-4%;
+}
 h1 {
     text-align: center;
     /*color: #333;*/

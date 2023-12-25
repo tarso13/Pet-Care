@@ -1,0 +1,141 @@
+.container-bar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    width: 100%;
+    background-color:brown;
+}
+
+body {
+    padding-top: 15px;
+    background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
+    font-family: Arial, sans-serif;
+    margin-top:7%;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+#card-container {
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right:-2%;
+}
+
+
+
+.card {
+    width: 200px;
+    margin-bottom: 20px;
+    /*margin-left:5%;*/
+}
+
+@media (max-width: 767px) {
+    .category-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 100%; 
+    }
+}
+.card-button {
+    display: block;
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-button-accept {
+    display: block;
+    padding: 5px 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.card-button-reject,card-button {
+    display: block;
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container-bar a{
+    margin-bottom: -5%;
+    color:white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    padding-left: 1%;
+}
+.account-management{
+    margin-left:90%;
+    padding-top: -2%;
+    color:white;
+}
+.collapse .nav-item{
+    font-size: 20px;
+}
+
+.collapse{
+    margin-left:50%;
+    margin-right: 10%;
+    margin-bottom:-2.6%;
+}
+.collapse .nav-item{
+    color: white;
+}
+.collapse .nav-item:hover{
+    color: white;
+}
+.navbar-brand{
+    margin-top: -1%;
+}
+
+.navbar-brand:hover{
+    color: white;
+
+}
+
+.dropdown-menu{
+    height:15%;
+}
+
+.dropdown-menu a{
+    margin-bottom: 2%;
+
+}
+
+.dropdown-toggle{
+    font-size: 20px;
+    margin-top:-5%;
+    margin-left:-12%;
+}
+
+.dropdown-toggle:hover{
+    color:white;
+}
+
+h3{
+    margin-top:-2%;
+    margin-bottom:10%;
+    font-size:20px;
+    font-family: Arial, sans-serif;
+    color:brown;
+    font-weight: bolder;
+    padding-right:90%;
+}

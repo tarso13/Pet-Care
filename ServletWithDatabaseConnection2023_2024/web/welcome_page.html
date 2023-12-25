@@ -19,7 +19,7 @@
                 var userspan = document.getElementById("user");
                 if (userspan) {
                     var cookies = getAllCookiePairs();
-                    userspan.innerHTML = cookies["username"]; 
+                    userspan.innerHTML = cookies["username"];
                 }
             });
         </script>
@@ -27,12 +27,13 @@
     <body>
         <div class="container-bar">
             <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="#">Best Pet Keeping Platform</a>
+                <a class="navbar-brand" href="#">Pet Care</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <!-- Add your navigation links here if needed -->
+                    <a class="nav-item nav-link" onclick='getKeeperBookings()'>Bookings</a>
+                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
                 </div>
             </nav>
             <div class="account-management">

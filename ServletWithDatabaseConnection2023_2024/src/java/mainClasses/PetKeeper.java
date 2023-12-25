@@ -10,15 +10,16 @@ package mainClasses;
  * @author mountant
  */
 public class PetKeeper {
+
     int keeper_id;
-    String username,email,password,firstname,lastname,birthdate;
-    String gender,job;
-    String country,city,address;
-    Double lat,lon;
+    String username, email, password, firstname, lastname, birthdate;
+    String gender, job;
+    String country, city, address;
+    Double lat, lon;
     String telephone;
     String personalpage;
-    String property,propertydescription;
-    String catkeeper,dogkeeper;
+    String property, propertydescription;
+    String catkeeper, dogkeeper;
     int catprice, dogprice;
 
     public String getProperty() {
@@ -65,6 +66,14 @@ public class PetKeeper {
         return dogprice;
     }
 
+    public void setKeeperId(int keeper_id) {
+        this.keeper_id = keeper_id;
+    }
+
+    public int getKeeperId() {
+        return keeper_id;
+    }
+
     public void setDogprice(int dogprice) {
         this.dogprice = dogprice;
     }
@@ -84,8 +93,7 @@ public class PetKeeper {
     public void setPersonalpage(String personalpage) {
         this.personalpage = personalpage;
     }
-   
-    
+
     public String getAddress() {
         return address;
     }
@@ -109,9 +117,7 @@ public class PetKeeper {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
-    
-    
+
     public String getTelephone() {
         return telephone;
     }
@@ -119,7 +125,6 @@ public class PetKeeper {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
-    
 
     public String getUsername() {
         return username;
@@ -145,8 +150,6 @@ public class PetKeeper {
         this.password = password;
     }
 
-   
-    
     public String getBirthdate() {
         return birthdate;
     }
@@ -155,7 +158,6 @@ public class PetKeeper {
         this.birthdate = birthDate;
     }
 
-   
     public String getCountry() {
         return country;
     }
@@ -172,7 +174,6 @@ public class PetKeeper {
         this.city = city;
     }
 
- 
     public Double getLat() {
         return lat;
     }
@@ -189,8 +190,6 @@ public class PetKeeper {
         this.lon = lon;
     }
 
-
-
     public String getGender() {
         return gender;
     }
@@ -199,5 +198,4 @@ public class PetKeeper {
         this.gender = gender;
     }
 
- 
 }

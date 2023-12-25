@@ -74,6 +74,14 @@ public class PetOwner {
         this.telephone = telephone;
     }
     
+    public int getOwnerId() {
+        return owner_id;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.owner_id = ownerId;
+    }
+    
 
     public String getUsername() {
         return username;
