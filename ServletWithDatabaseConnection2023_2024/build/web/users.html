@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <title>Assignment 3 Tarso Keletzi CS359 AccountData</title>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="css/users.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="js/script.js"></script>
+        <meta name="Author" content="Tarso Keletzi">
+        <meta name="Description" content="This is Tarso Keletzi's pet keeping site.">
+        <meta name="keywords" lang="en-us" content="Pets, Cats, Dogs, Birds, Platform, Animals, Keepers, Owners">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var userspan = document.getElementById("user");
+                if (userspan) {
+                    var username = localStorage.getItem("username");
+                    if (username !== 'admin') {
+                        console.log("error!!!");
+                    } else {
+                        userspan.innerHTML = 'admin';
+                    }
+                }
+                addUserCards();
+
+            });
+        </script> 
+
+    </head>
+    <body>
+        <div class="container-bar">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#">Pet Care</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <a class="nav-item nav-link" onclick='getUsers()'>Users</a>
+                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
+                </div>
+            </nav>
+            <div class="account-management">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span id="user"></span>  
+                </a>
+                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" onclick='logout()'>Logout</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div id="card-container"></div>
+    </body>
+</html>

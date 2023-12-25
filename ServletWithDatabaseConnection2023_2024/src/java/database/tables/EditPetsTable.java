@@ -62,7 +62,6 @@ public class EditPetsTable {
         return null;
     }
 
-    
     public Pet petOfOwner(String id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -70,12 +69,12 @@ public class EditPetsTable {
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
-           
+
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
                 pet = gson.fromJson(json, Pet.class);
-               
+
             }
             return pet;
         } catch (Exception e) {
@@ -84,7 +83,7 @@ public class EditPetsTable {
         }
         return null;
     }
-    
+
     public ArrayList<Pet> databaseToPets(String type) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -92,7 +91,7 @@ public class EditPetsTable {
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM pets WHERE type= '" + type + "'");
-           
+
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -105,6 +104,38 @@ public class EditPetsTable {
             System.err.println(e.getMessage());
         }
         return null;
+    }
+
+    public int getCatCount() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT COUNT(*) AS row_count FROM pets WHERE type='cat'");
+            if (rs.next()) {
+                return rs.getInt("row_count");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getDogCount() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT COUNT(*) AS row_count FROM pets WHERE type='dog'");
+            if (rs.next()) {
+                return rs.getInt("row_count");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return 0;
     }
 
     public void updatePet(String id, String name) throws SQLException, ClassNotFoundException {
@@ -164,10 +195,10 @@ public class EditPetsTable {
                     + "'" + bt.getPet_id() + "',"
                     + "'" + bt.getOwner_id() + "',"
                     + "'" + bt.getName() + "',"
-                    + "'" + bt.getType()+ "',"
-                    + "'" + bt.getBreed()+ "',"
-                    + "'" + bt.getGender()+ "',"
-                    + "'" + bt.getBirthyear()+ "',"
+                    + "'" + bt.getType() + "',"
+                    + "'" + bt.getBreed() + "',"
+                    + "'" + bt.getGender() + "',"
+                    + "'" + bt.getBirthyear() + "',"
                     + "'" + bt.getWeight() + "',"
                     + "'" + bt.getDescription() + "',"
                     + "'" + bt.getPhoto() + "'"

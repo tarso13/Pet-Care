@@ -144,14 +144,14 @@ public class InitDatabase {
 
         //all catkeepers
         ArrayList<PetKeeper> catKeepers = new ArrayList<PetKeeper>();
-        catKeepers = editkeepers.getKeepers("catkeeper");
+//        catKeepers = editkeepers.getKeepers("catkeeper");
         Gson gson2 = new Gson();
         JsonArray catKeepersJSON = gson2.toJsonTree(catKeepers).getAsJsonArray();
         System.out.println("Cat Keepers\n" + catKeepersJSON + "\n");
 
         //all dogkeepers
         ArrayList<PetKeeper> dogKeepers = new ArrayList<PetKeeper>();
-        dogKeepers = editkeepers.getKeepers("dogkeeper");
+//        dogKeepers = editkeepers.getKeepers("dogkeeper");
         Gson gson3 = new Gson();
         JsonArray dogKeepersJSON = gson3.toJsonTree(dogKeepers).getAsJsonArray();
         System.out.println("Dog Keepers\n" + dogKeepersJSON + "\n");

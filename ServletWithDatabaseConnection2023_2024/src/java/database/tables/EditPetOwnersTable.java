@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +65,7 @@ public class EditPetOwnersTable {
                 + "WHERE username = '" + user.getUsername() + "'";
 
         stmt.executeUpdate(updateQuery);
-}
+    }
 
     public PetOwner databaseToPetOwners(String username, String password) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
@@ -89,6 +90,45 @@ public class EditPetOwnersTable {
             System.err.println(e.getMessage());
         }
         return null;
+    }
+
+    public ArrayList<PetOwner> getOwners() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<PetOwner> owners = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM petowners");
+
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                PetOwner owner = gson.fromJson(json, PetOwner.class);
+                owners.add(owner);
+            }
+            return owners;
+        } catch (JsonSyntaxException | SQLException e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public int getOwnerCount() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT COUNT(*) AS row_count FROM petowners");
+
+            if (rs.next()) {
+                return rs.getInt("row_count");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return 0;
     }
 
     public PetOwner databaseToPetOwnersEmail(String email) throws SQLException, ClassNotFoundException {
@@ -222,4 +262,21 @@ public class EditPetOwnersTable {
         }
     }
 
+    public void deletePetKeeper(String owner_id) {
+        try {
+            Connection con = DB_Connection.getConnection();
+
+            Statement stmt = con.createStatement();
+
+            String deleteQuery = "DELETE FROM petowners WHERE owner_id='" + owner_id + "'";
+
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

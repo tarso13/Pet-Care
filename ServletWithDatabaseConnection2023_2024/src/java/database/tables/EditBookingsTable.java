@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,10 +59,10 @@ public class EditBookingsTable {
         return json;
     }
 
-    public void updateBooking(int bookingID,  String status) throws SQLException, ClassNotFoundException {
+    public void updateBooking(int bookingID, String status) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String updateQuery = "UPDATE bookings SET status='"+status+"' WHERE booking_id= '"+bookingID+"'";
+        String updateQuery = "UPDATE bookings SET status='" + status + "' WHERE booking_id= '" + bookingID + "'";
         stmt.executeUpdate(updateQuery);
         stmt.close();
         con.close();
@@ -89,6 +90,31 @@ public class EditBookingsTable {
 
     }
 
+    public HashMap<String, Integer> getMoneyEarned() throws SQLException, ClassNotFoundException {
+        HashMap<String, Integer> earnings = new HashMap<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT keeper_id, price FROM bookings WHERE status='finished'");
+            while (rs.next()) {
+                // find keeper username
+                int keeper_id = rs.getInt("keeper_id");
+                int price = rs.getInt("price");
+                ResultSet rs2 = stmt.executeQuery("SELECT username FROM petkeepers WHERE keeper_id='" + keeper_id + "'");
+                if (rs2.next()) {
+                    String username = rs2.getString("username");
+                    earnings.put(username, price);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return earnings;
+    }
+
     /**
      * Establish a database connection and add in the database.
      *
@@ -105,11 +131,11 @@ public class EditBookingsTable {
                     + " VALUES ("
                     + "'" + bor.getOwner_id() + "',"
                     + "'" + bor.getPet_id() + "',"
-                     + "'" + bor.getKeeper_id()+ "',"
+                    + "'" + bor.getKeeper_id() + "',"
                     + "'" + bor.getFromDate() + "',"
                     + "'" + bor.getToDate() + "',"
                     + "'" + bor.getStatus() + "',"
-                     + "'" + bor.getPrice() + "'"
+                    + "'" + bor.getPrice() + "'"
                     + ")";
             //stmt.execute(table);
 

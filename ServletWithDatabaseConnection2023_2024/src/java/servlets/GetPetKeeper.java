@@ -63,7 +63,7 @@ public class GetPetKeeper extends HttpServlet {
             else{
             String json = eut.petKeeperToJSON(su);
             out.println(json); 
-                response.setStatus(200);
+            response.setStatus(200);
             }
         } catch (SQLException ex) {
             Logger.getLogger(GetPetKeeper.class.getName()).log(Level.SEVERE, null, ex);
