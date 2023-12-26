@@ -20,6 +20,12 @@
                 if (userspan) {
                     var username = localStorage.getItem("username");
                     if (!username) {
+                        var usersLink2 = document.createElement("a");
+                        usersLink2.classList.add("nav-item", "nav-link");
+                        usersLink2.setAttribute("onclick", "getMessages()");
+                        usersLink2.textContent = "Messages";
+                        var navbar = document.getElementById("navbarNavAltMarkup");
+                        navbar.appendChild(usersLink2);
                         var cookies = getAllCookiePairs();
                         userspan.innerHTML = cookies["username"];
                         var usersLink = document.createElement("a");
@@ -37,7 +43,6 @@
                     usersLink.textContent = "Users";
                     var navbar = document.getElementById("navbarNavAltMarkup");
                     navbar.appendChild(usersLink);
-
                 }
                 drawCharts();
             });

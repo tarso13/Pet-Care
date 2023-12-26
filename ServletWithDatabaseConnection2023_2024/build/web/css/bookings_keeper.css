@@ -41,39 +41,26 @@ body {
         align-items: center;
     }
     .card {
-        width: 100%; 
+        width: 100%;
     }
 }
-.card-button {
+.card-button, .card-button-message , .card-button-reject{
     display: block;
     padding: 5px 10px;
     background-color: brown;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    color: white;   
     cursor: pointer;
+    border: 1px solid maroon;
 }
 
-.card-button-accept {
+.card-button-accept  {
     display: block;
     padding: 5px 10px;
     background-color: green;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border: 1px solid black;
 }
 
-
-.card-button-reject,card-button {
-    display: block;
-    padding: 5px 10px;
-    background-color: brown;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 .container-bar a{
     margin-bottom: -5%;

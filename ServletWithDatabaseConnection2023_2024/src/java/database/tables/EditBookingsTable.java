@@ -137,6 +137,50 @@ public class EditBookingsTable {
         return null;
     }
 
+    public ArrayList getKeeperAcceptedBookings(String keeper_id) throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE keeper_id='" + keeper_id + "' AND status='accepted'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class);
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList getOwnerAcceptedBookings(String owner_id) throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE owner_id='" + owner_id + "' AND status='accepted'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class);
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
     /**
      * Establish a database connection and add in the database.
      *

@@ -1,26 +1,20 @@
 var lat_value, lon_value;
 var user_data = null;
-
-
 function displayLoginPage() {
     window.open('login.html', '_self');
 }
 function addKeeperBookingCards() {
     let container = document.getElementById('card-container');
-
     let keepers_header = document.createElement('h3');
     keepers_header.textContent = 'Keepers';
     keepers_header.className = 'mt-4';
     container.appendChild(keepers_header);
-
     var bookings = JSON.parse(localStorage.getItem("bookings"));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
-
     bookings.forEach(entry => {
-        container.appendChild(createBookingCard(entry, false));
+        container.appendChild(createBookingCard(entry));
     });
-
     container.appendChild(categoryContainer);
 }
 
@@ -31,34 +25,90 @@ function ask_chatgpt() {
                 question: user_question
             }
     );
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // show response
         }
     };
-
     xhr.open("POST", "askCHATGPT");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(jsonData);
 }
-function createBookingCard(booking, status) {
+
+function sendMessage(booking) {
+    Swal.fire({
+        title: 'Enter your message',
+        html: '<input type="text" id="swal-input-field" class="swal2-input">',
+        showCancelButton: true,
+        confirmButtonText: 'Send',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: 'green',
+        cancelButtonColor: 'brown',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            const inputValue = document.getElementById('swal-input-field').value;
+            return inputValue;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Message Sent',
+                confirmButtonColor: 'brown',
+                icon: 'success'
+            });
+        }
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var hours = ('0' + currentDate.getHours()).slice(-2);
+        var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+        var seconds = ('0' + currentDate.getSeconds()).slice(-2);
+        var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        var sender = "owner";
+        var path = "sendMessageToKeeper";
+        if (`${booking.sender}` === 'owner') {
+            sender = "keeper";
+            path = "sendMessageToOwner";
+        }
+        var jsonData = JSON.stringify(
+                {
+                    booking_id: `${booking.booking_id}`,
+                    message: result.value,
+                    sender: sender,
+                    datetime: formattedDate
+                }
+        );
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                ;
+            } else {
+                displayErrorMessage("Message could not be sent.");
+            }
+        };
+        xhr.open("POST", path);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(jsonData);
+    });
+}
+
+function createBookingCard(booking) {
     let card = document.createElement('div');
     card.className = 'card my-2';
     let fromdate = document.createElement('p');
     fromdate.textContent = `From Date: ${booking.fromdate}`;
     card.appendChild(fromdate);
-
     let todate = document.createElement('p');
     todate.textContent = `To Date: ${booking.todate}`;
     card.appendChild(todate);
-
     let pet_id = document.createElement('p');
     pet_id.textContent = `Pet Id: ${booking.pet_id}`;
     card.appendChild(pet_id);
-
     let owner_id = document.createElement('p');
     owner_id.textContent = `Owner Id: ${booking.owner_id}`;
     card.appendChild(owner_id);
@@ -77,6 +127,12 @@ function createBookingCard(booking, status) {
             ask_chatgpt();
         };
         card.appendChild(cardButton);
+        let cardButton2 = document.createElement('button');
+        cardButton2.className = 'card-button-message';
+        cardButton2.textContent = 'Message Owner';
+        cardButton2.onclick = function () {
+            sendMessage(booking);
+        };
     }
 
     if (status_cookie.textContent === "Status: requested") {
@@ -86,7 +142,6 @@ function createBookingCard(booking, status) {
         cardButton.onclick = function () {
             updateBooking(`${booking.booking_id}`, "accepted");
         };
-
         card.appendChild(cardButton);
         let cardButton2 = document.createElement('button');
         cardButton2.className = 'card-button-reject';
@@ -107,7 +162,6 @@ function updateBooking(booking_id, status) {
                 status: status
             }
     );
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -116,7 +170,6 @@ function updateBooking(booking_id, status) {
             console.log("success!");
         }
     };
-
     xhr.open("POST", "updateBooking");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -138,7 +191,6 @@ function createTableFromJSON(data) {
     }
     html += "</table>";
     return html;
-
 }
 
 function defineLabelName(cookie_key) {
@@ -168,7 +220,6 @@ function updateValues() {
     for (const cookie_key in updatedCookies) {
         if (updatedCookies.hasOwnProperty(cookie_key)) {
             const inputElement = document.querySelector(`.${cookie_key} input`);
-
             if (inputElement) {
                 var inputValue = inputElement.value;
                 if (cookie_key === "catkeeper" || cookie_key === "dogkeeper") {
@@ -200,7 +251,6 @@ function updateValues() {
                     '</div>';
         }
     };
-
     xhr.open('POST', path);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -261,7 +311,6 @@ function myAccount() {
     cookies = getAllCookiePairs();
     const disabledKeys = ["username", "email"];
     const dataDiv = document.getElementById('account-data');
-
     for (const cookie_key in cookies) {
         if (cookie_key === "keeper_id" || cookie_key === "owner_id") {
             continue;
@@ -270,12 +319,9 @@ function myAccount() {
             const container = document.createElement('div');
             container.style.display = 'flex';
             container.classList.add(`${cookie_key}`);
-
             const label = document.createElement('label');
             var label_name = defineLabelName(`${cookie_key}`);
-
             label.textContent = `${label_name}:`;
-
             const input = document.createElement('input');
             input.type = 'text';
             var cookie_value = cookies[cookie_key];
@@ -289,7 +335,6 @@ function myAccount() {
             }
 
             configInputField(label_name, input);
-
             if (label_name === 'Cat Keeper' || label_name === 'Dog Keeper') {
                 input.type = "radio";
                 if (cookie_value === "true") {
@@ -300,7 +345,6 @@ function myAccount() {
             }
 
             input.value = cookie_value;
-
             if (disabledKeys.includes(cookie_key)) {
                 input.disabled = true;
             }
@@ -319,14 +363,11 @@ function myAccount() {
 function getAllCookiePairs() {
     const cookieString = document.cookie;
     const cookiePairs = cookieString.split(';');
-
     const result = {};
-
     cookiePairs.forEach(pair => {
         const [key, value] = pair.trim().split('=');
         result[key] = value;
     });
-
     return result;
 }
 
@@ -344,7 +385,6 @@ function login() {
                     password: password_value
                 }
         );
-
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -353,7 +393,6 @@ function login() {
                 displayErrorMessage("Wrong credentials. Make sure you are registered and check your username and password again.");
             }
         };
-
         xhr.open("POST", "Login");
         xhr.setRequestHeader("Accept", "application/json");
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -393,7 +432,6 @@ function getCatCount() {
             localStorage.setItem('cat_count', this.responseText);
         }
     };
-
     xhr.open("GET", "getCatCount");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -407,7 +445,6 @@ function getDogCount() {
             localStorage.setItem('dog_count', this.responseText);
         }
     };
-
     xhr.open("GET", "getDogCount");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -421,7 +458,6 @@ function getKeeperCount() {
             localStorage.setItem('keeper_count', this.responseText);
         }
     };
-
     xhr.open("GET", "getPetKeepersCount");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -435,11 +471,77 @@ function getOwnerCount() {
             localStorage.setItem('owner_count', this.responseText);
         }
     };
-
     xhr.open("GET", "getPetOwnersCount");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
+}
+function addMessageCards() {
+    let container = document.getElementById('card-container');
+    let messages_header = document.createElement('h3');
+    messages_header.textContent = 'Messages';
+    messages_header.className = 'mt-4';
+    container.appendChild(messages_header);
+    var messages = JSON.parse(localStorage.getItem('messages'));
+    let categoryContainer = document.createElement('div');
+    categoryContainer.className = 'category-container';
+    messages.forEach(entry => {
+        container.appendChild(createMessageCard(entry));
+    });
+}
+
+function createMessageCard(entry) {
+    let card = document.createElement('div');
+    card.className = 'card my-2';
+    let booking = document.createElement('p');
+    booking.textContent = `Booking Id: ${entry.booking_id}`;
+    card.appendChild(booking);
+    let message = document.createElement('p');
+    message.textContent = `Message: ${entry.message}`;
+    card.appendChild(message);
+    let sender = document.createElement('p');
+    sender.textContent = `Sender: ${entry.sender}`;
+    card.appendChild(sender);
+    let datetime = document.createElement('p');
+    datetime.textContent = `Datetime: ${entry.datetime}`;
+    card.appendChild(datetime);
+    let cardButton = document.createElement('button');
+    cardButton.className = 'card-button';
+    cardButton.textContent = 'Reply';
+    cardButton.onclick = function () {
+        sendMessage(entry);
+    };
+    card.appendChild(cardButton);
+    return card;
+}
+
+function getMessages() {
+    var cookies = getAllCookiePairs();
+    var path, jsonData;
+    if (cookies.hasOwnProperty("keeper_id")) {
+        console.log("keeper");
+        path = 'getMessagesKeeper';
+        jsonData = JSON.stringify({
+            keeper_id: cookies["keeper_id"]
+        });
+    } else {
+        path = 'getMessagesOwner';
+        jsonData = JSON.stringify({
+            owner_id: cookies["owner_id"]
+        });
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            window.open("messages.html", "_self");
+            localStorage.setItem("messages", this.responseText);
+        }
+    };
+    xhr.open("POST", path);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
 }
 
 function getMoneyEarned() {
@@ -449,7 +551,6 @@ function getMoneyEarned() {
             localStorage.setItem("money_earned", this.responseText);
         }
     };
-
     xhr.open("GET", "getMoneyEarned");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -477,12 +578,10 @@ function drawPetStatistics() {
         ['Cats', parseInt(localStorage.getItem("cat_count"))],
         ['Dogs', parseInt(localStorage.getItem("dog_count"))]
     ]);
-
     // Set chart options
     var options = {'title': 'Pet Statistics',
         'width': 400,
         'height': 300};
-
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('pet_chart_div'));
     chart.draw(data, options);
@@ -498,12 +597,10 @@ function drawUserStatistics() {
         ['Keepers', parseInt(localStorage.getItem("keeper_count"))],
         ['Owners', parseInt(localStorage.getItem("owner_count"))]
     ]);
-
     // Set chart options
     var options = {'title': 'User Statistics',
         'width': 400,
         'height': 300};
-
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('user_chart_div'));
     chart.draw(data, options);
@@ -529,7 +626,6 @@ function drawEarningsStatistics() {
     var options = {'title': 'Money Earned Statistics',
         'width': 400,
         'height': 300};
-
     var chart = new google.visualization.PieChart(document.getElementById('money_chart_div'));
     chart.draw(data, options);
 }
@@ -544,7 +640,6 @@ function getKeepers() {
             console.log("error");
         }
     };
-
     xhr_keepers.open("GET", "getKeepers");
     xhr_keepers.setRequestHeader("Accept", "application/json");
     xhr_keepers.setRequestHeader("Content-Type", "application/json");
@@ -556,7 +651,6 @@ function getUsers() {
             {
             }
     );
-
     const xhr_keepers = new XMLHttpRequest();
     xhr_keepers.onload = function () {
         if (xhr_keepers.readyState === 4 && xhr_keepers.status === 200) {
@@ -566,12 +660,10 @@ function getUsers() {
             console.log("error");
         }
     };
-
     xhr_keepers.open("GET", "getKeepers");
     xhr_keepers.setRequestHeader("Accept", "application/json");
     xhr_keepers.setRequestHeader("Content-Type", "application/json");
     xhr_keepers.send(jsonData);
-
     const xhr_owners = new XMLHttpRequest();
     xhr_owners.onload = function () {
         if (xhr_owners.readyState === 4 && xhr_owners.status === 200) {
@@ -586,7 +678,6 @@ function getUsers() {
     xhr_owners.setRequestHeader("Accept", "application/json");
     xhr_owners.setRequestHeader("Content-Type", "application/json");
     xhr_owners.send(jsonData);
-
 }
 
 function createUserCard(user, admin) {
@@ -595,15 +686,12 @@ function createUserCard(user, admin) {
     let username = document.createElement('p');
     username.textContent = `Username: ${user.username}`;
     card.appendChild(username);
-
     let firstName = document.createElement('p');
     firstName.textContent = `First Name: ${user.firstname}`;
     card.appendChild(firstName);
-
     let lastName = document.createElement('p');
     lastName.textContent = `Last Name: ${user.lastname}`;
     card.appendChild(lastName);
-
     let job = document.createElement('p');
     job.textContent = `Occupation: ${user.job}`;
     card.appendChild(job);
@@ -630,7 +718,6 @@ function deletePetKeeper(keeper_id) {
     var jsonData = JSON.stringify({
         keeper_id: keeper_id
     });
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -640,7 +727,6 @@ function deletePetKeeper(keeper_id) {
             displayErrorMessage("Could not delete pet owner.");
         }
     };
-
     xhr.open("POST", "deletePetKeeper");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -650,7 +736,6 @@ function deletePetOwner(owner_id) {
     var jsonData = JSON.stringify({
         owner_id: owner_id
     });
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -660,7 +745,6 @@ function deletePetOwner(owner_id) {
             displayErrorMessage("Could not delete pet owner.");
         }
     };
-
     xhr.open("POST", "deletePetOwner");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -670,57 +754,42 @@ function deletePetOwner(owner_id) {
 
 function addKeeperCardsGuest() {
     let container = document.getElementById('card-container');
-
     let keepers_header = document.createElement('h3');
     keepers_header.textContent = 'Keepers';
     keepers_header.className = 'mt-4';
     container.appendChild(keepers_header);
-
     var keepers = JSON.parse(localStorage.getItem('keepers'));
-
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
-
     keepers.forEach(entry => {
         container.appendChild(createUserCard(entry, false));
     });
-
     container.appendChild(categoryContainer);
 }
 
 function addUserCards() {
     let container = document.getElementById('card-container');
-
     let keepers_header = document.createElement('h3');
     keepers_header.textContent = 'Keepers';
     keepers_header.className = 'mt-4';
     container.appendChild(keepers_header);
-
     var keepers = JSON.parse(localStorage.getItem('keepers'));
     var owners = JSON.parse(localStorage.getItem('owners'));
-
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
-
     keepers.forEach(entry => {
         container.appendChild(createUserCard(entry, true));
     });
-
     container.appendChild(categoryContainer);
-
     let owners_header = document.createElement('h3');
     owners_header.textContent = 'Owners';
     owners_header.className = 'mt-4';
-
     container.appendChild(owners_header);
-
     categoryContainer = document.createElement('div');
     categoryContainer.className = 'd-flex flex-wrap justify-content-start';
-
     owners.forEach(entry => {
         container.appendChild(createUserCard(entry, true));
     });
-
     container.appendChild(categoryContainer);
 }
 
@@ -735,8 +804,6 @@ function logout() {
             {
             }
     );
-
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -746,7 +813,6 @@ function logout() {
             console.log("error");
         }
     };
-
     xhr.open("POST", "Logout");
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -759,7 +825,6 @@ function getKeeperBookings() {
     var jsonData = JSON.stringify({
         keeper_id: keeper_id
     });
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -774,12 +839,10 @@ function getKeeperBookings() {
 }
 function config() {
     var regform = document.getElementById("regform");
-
     if (regform) {
         regform.addEventListener("submit", (e) => {
             validateForm();
             e.preventDefault();
-
         });
     } else {
         console.log("error!!!");
@@ -790,7 +853,6 @@ function checkPasswords() {
     const password_confirmation = document.getElementById(
             "password-confirmation"
             ).value;
-
     if (password !== password_confirmation) {
         $("#message").css("color", "crimson");
         document.getElementById("confirm_message").innerHTML =
@@ -849,7 +911,6 @@ function checkStrength() {
 
 function getGender() {
     var gender_checked = document.querySelector('input[name="genre"]:checked');
-
     if (gender_checked === null) {
         return "null";
     }
@@ -860,7 +921,6 @@ function getGender() {
 
 function getProperty() {
     var property_checked = document.querySelector('input[name="property"]:checked');
-
     if (property_checked === null) {
         return;
     }
@@ -871,7 +931,6 @@ function getProperty() {
 
 function checkType() {
     var keeper_checked = document.querySelector('input[name="type"]:checked');
-
     if (keeper_checked === null) {
         return;
     }
@@ -893,7 +952,6 @@ function checkKeeperType() {
 
 function selectPrice() {
     var keeper_type = document.querySelector('input[name = "keeper-type"]:checked');
-
     if (keeper_type === null) {
         return;
     }
@@ -917,7 +975,6 @@ function selectPrice() {
 
 function definePet() {
     var property = document.querySelector('input[name = "property"]:checked');
-
     if (property === null) {
         return;
     }
@@ -945,20 +1002,15 @@ function checkLocationUpdate(cookies) {
     var country = document.querySelector('input[name = "country"]');
     var city = document.querySelector('input[name = "city"]');
     var address = document.querySelector('input[name = "address"]');
-
     var country_value = country.value;
     var city_value = city.value;
     var address_value = address.value;
-
     const data = null;
-
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             const jsonResults = JSON.parse(this.responseText);
-
             if (jsonResults[0] === undefined || jsonResults[0].display_name.includes('Heraklion Regional Unit') === false) {
                 displayErrorMessage("Your location could not be verified. Please try again.");
                 return false;
@@ -968,10 +1020,8 @@ function checkLocationUpdate(cookies) {
             cookies["lon"] = jsonResults[0].lon;
         }
     });
-
     var address = address_value + " " + city_value + " " + country_value;
     xhr.open("GET", "https://forward-reverse-geocoding.p.rapidapi.com/v1/search?q=" + address + "&accept-language=en&polygon_threshold=0.0");
-
     xhr.setRequestHeader('X-RapidAPI-Key', '04c6c97612mshf9a7ac750c41d05p1793eejsnabd20a0b9528');
     xhr.setRequestHeader('X-RapidAPI-Host', 'forward-reverse-geocoding.p.rapidapi.com');
     xhr.send(data);
@@ -982,29 +1032,22 @@ function checkLocation() {
     var country = document.querySelector('select[name = "country"]');
     var city = document.querySelector('input[name = "city"]');
     var address = document.querySelector('input[name = "address"]');
-
     var country_value = country.value;
     var city_value = city.value;
     var address_value = address.value;
-
     document.getElementById("osm_message").innerHTML = "";
-
     if (country_value === 'OTH') {
         document.getElementById("country_message").innerHTML = "This service is only available to Greece.";
         return;
     }
 
     document.getElementById("country_message").innerHTML = "";
-
     const data = null;
-
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             const jsonResults = JSON.parse(this.responseText);
-
             if (jsonResults[0] === undefined) {
                 document.getElementById("osm_message").innerHTML = "This location could not be verified.";
                 return;
@@ -1016,15 +1059,12 @@ function checkLocation() {
             }
 
             document.getElementById("osm_message").innerHTML = "";
-
             lat_value = jsonResults[0].lat;
             lon_value = jsonResults[0].lon;
         }
     });
-
     var address = address_value + " " + city_value + " " + country_value;
     xhr.open("GET", "https://forward-reverse-geocoding.p.rapidapi.com/v1/search?q=" + address + "&accept-language=en&polygon_threshold=0.0");
-
     xhr.setRequestHeader('X-RapidAPI-Key', '04c6c97612mshf9a7ac750c41d05p1793eejsnabd20a0b9528');
     xhr.setRequestHeader('X-RapidAPI-Host', 'forward-reverse-geocoding.p.rapidapi.com');
     xhr.send(data);
@@ -1034,7 +1074,6 @@ function validateUsername() {
     var jsonData = JSON.stringify({
         username: document.getElementById("username").value
     });
-
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.status !== 200) {
@@ -1048,7 +1087,7 @@ function validateUsername() {
 }
 
 function displayErrorMessage(errorMessage) {
-    // Use SweetAlert to show the error message in a pop-up
+// Use SweetAlert to show the error message in a pop-up
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -1060,15 +1099,12 @@ function validateEmail() {
     var jsonData = JSON.stringify({
         email: document.getElementById("email").value
     });
-
     const xhr = new XMLHttpRequest();
-
     xhr.onload = function () {
         if (xhr.status !== 200) {
             displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
         }
     };
-
     xhr.open('POST', 'checkEmail');
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -1127,7 +1163,6 @@ function validateForm() {
                         catprice: document.getElementById("catprice").value,
                         dogprice: document.getElementById("dogprice").value
                     };
-
             if (checkKeeperType() === "cat-dog-keeper") {
                 jsonData['catkeeper'] = true;
                 jsonData['dogkeeper'] = true;

@@ -96,6 +96,22 @@
         <servlet-name>askCHATGPT</servlet-name>
         <servlet-class>servlets.askCHATGPT</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sendMessageToOwner</servlet-name>
+        <servlet-class>servlets.sendMessageToOwner</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendMessageToKeeper</servlet-name>
+        <servlet-class>servlets.sendMessageToKeeper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getMessagesKeeper</servlet-name>
+        <servlet-class>servlets.getMessagesKeeper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getMessagesOwner</servlet-name>
+        <servlet-class>servlets.getMessagesOwner</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -187,6 +203,22 @@
     <servlet-mapping>
         <servlet-name>askCHATGPT</servlet-name>
         <url-pattern>/askCHATGPT</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendMessageToOwner</servlet-name>
+        <url-pattern>/sendMessageToOwner</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendMessageToKeeper</servlet-name>
+        <url-pattern>/sendMessageToKeeper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getMessagesKeeper</servlet-name>
+        <url-pattern>/getMessagesKeeper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getMessagesOwner</servlet-name>
+        <url-pattern>/getMessagesOwner</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
