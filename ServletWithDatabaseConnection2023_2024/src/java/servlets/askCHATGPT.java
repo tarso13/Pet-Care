@@ -4,7 +4,10 @@
  */
 package servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,17 +76,25 @@ public class askCHATGPT extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ChatGPT chatgpt = new ChatGPT();
-        String text = "Which is the birth place of Lakis Lazopoulos";
-        String model = "turbo";
+        response.setContentType("text/html;charset=UTF-8");
+        StringBuilder requestData = new StringBuilder();
+        InputStream inputStream = request.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestData.append(line);
+        }
+
+//        String model = "turbo";
         String chatgpt_response;
         try {
-            chatgpt_response = chatgpt.getChatGPTResponse(text, model);
+            chatgpt.chatGPT(requestData.toString());
             response.setStatus(200);
-            response.getWriter().print(chatgpt_response);
+//            response.getWriter().print(chatgpt_response);
         } catch (Exception ex) {
             Logger.getLogger(askCHATGPT.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**

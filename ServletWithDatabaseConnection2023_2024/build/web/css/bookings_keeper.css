@@ -18,6 +18,7 @@ body {
     align-items: center;
     height: 100vh;
     background-attachment: fixed;
+    margin-top:5%;
 }
 
 #card-container {
@@ -27,18 +28,17 @@ body {
     margin-right:-2%;
 }
 
-
-
 .card {
     width: 200px;
     margin-bottom: 20px;
     /*margin-left:5%;*/
 }
 
-@media (max-width: 767px) {
+@media (max-width: 700px) {
     .category-container {
         flex-direction: column;
         align-items: center;
+        max-width: 1200px;
     }
     .card {
         width: 100%;
@@ -48,7 +48,7 @@ body {
     display: block;
     padding: 5px 10px;
     background-color: brown;
-    color: white;   
+    color: white;
     cursor: pointer;
     border: 1px solid maroon;
 }
@@ -95,11 +95,12 @@ body {
 
 .navbar-brand:hover{
     color: white;
-
 }
 
 .dropdown-menu{
-    height:15%;
+   width:2%;
+   position: absolute;
+   right: 0;
 }
 
 .dropdown-menu a{
@@ -110,8 +111,9 @@ body {
 .dropdown-toggle{
     font-size: 20px;
     margin-top:-5%;
-    margin-left:-12%;
+    margin-left:-15%;
 }
+
 
 .dropdown-toggle:hover{
     color:white;
@@ -124,5 +126,5 @@ h3{
     font-family: Arial, sans-serif;
     color:brown;
     font-weight: bolder;
-    padding-right:90%;
+    padding-right:80%;
 }

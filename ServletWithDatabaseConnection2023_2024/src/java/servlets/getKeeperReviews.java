@@ -4,27 +4,30 @@
  */
 package servlets;
 
-import database.tables.EditMessagesTable;
-import database.tables.EditPetKeepersTable;
+import com.google.gson.Gson;
+import database.tables.EditReviewsTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mainClasses.Message;
-import mainClasses.PetKeeper;
+import mainClasses.Review;
 
 /**
  *
  * @author kelet
  */
-public class sendMessageToOwner extends HttpServlet {
+public class getKeeperReviews extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +46,10 @@ public class sendMessageToOwner extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sendMessageToOwner</title>");
+            out.println("<title>Servlet getKeeperReviews</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sendMessageToOwner at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet getKeeperReviews at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,24 +81,37 @@ public class sendMessageToOwner extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            StringBuilder requestData = new StringBuilder();
-            InputStream inputStream = request.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        response.setContentType("text/html;charset=UTF-8");
+        StringBuilder requestData = new StringBuilder();
+        InputStream inputStream = request.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                requestData.append(line);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestData.append(line);
+        }
+        String json = requestData.toString();
+        Gson gson = new Gson();
+        Map<String, String> jsonObject = gson.fromJson(json, Map.class);
+        try (PrintWriter out = response.getWriter()) {
+            EditReviewsTable eut = new EditReviewsTable();
+            ArrayList<Review> reviews = eut.databaseTokeeperReviews(jsonObject.get("keeper_id"));
+            HashMap<Integer, HashMap<String, String>> bookingReviews = new HashMap<>();
+            int count = 0;
+            for (Review review : reviews) {
+                HashMap<String, String> textScore = new HashMap<>();
+                textScore.put("message",review.getReviewText());
+                textScore.put("score", review.getReviewScore());
+                bookingReviews.put(count, textScore);
+                count += 1;
             }
-
-            EditMessagesTable eut = new EditMessagesTable();
-            Message m = eut.jsonToMessage(requestData.toString());
-            eut.createNewMessage(m);
+            Gson gsonStats = new Gson();
+            String reviewsJson = gsonStats.toJson(bookingReviews);
+            out.print(reviewsJson);
+            System.out.println(reviewsJson);
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (ClassNotFoundException ex) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            Logger.getLogger(InsertPetOwner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(getKeepers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

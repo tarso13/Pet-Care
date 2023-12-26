@@ -20,6 +20,19 @@
                 if (userspan) {
                     var cookies = getAllCookiePairs();
                     userspan.innerHTML = cookies["username"];
+                    if (cookies.hasOwnProperty("keeper_id")) {
+                        var menu = document.getElementById("menu");
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("dropdown-item");
+                        usersLink.setAttribute("onclick", "getKeeperStats()");
+                        usersLink.textContent = "My Stats";
+                        menu.appendChild(usersLink);
+                        var usersLink2 = document.createElement("a");
+                        usersLink2.classList.add("dropdown-item");
+                        usersLink2.setAttribute("onclick", "logout()");
+                        usersLink2.textContent = "Logout";
+                        menu.appendChild(usersLink2);
+                    }
                 }
             });
         </script>
@@ -33,7 +46,6 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
-                    <a class="nav-item nav-link" onclick='getKeeperBookings()'>Bookings</a>
                     <a class="nav-item nav-link" onclick='getMessages()'>Messages</a>
                 </div>
             </nav>
@@ -41,9 +53,9 @@
                 <a class="nav-link dropdown-toggle" href="welcome_page.html" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span id="user"></span>  
                 </a>
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='logout()'>Logout</a>
+                    
                 </div>
             </div>
         </div>

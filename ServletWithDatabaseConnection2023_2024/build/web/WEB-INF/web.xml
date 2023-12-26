@@ -112,6 +112,14 @@
         <servlet-name>getMessagesOwner</servlet-name>
         <servlet-class>servlets.getMessagesOwner</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getKeepersBookingDetails</servlet-name>
+        <servlet-class>servlets.getKeepersBookingDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getKeeperReviews</servlet-name>
+        <servlet-class>servlets.getKeeperReviews</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -219,6 +227,14 @@
     <servlet-mapping>
         <servlet-name>getMessagesOwner</servlet-name>
         <url-pattern>/getMessagesOwner</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKeepersBookingDetails</servlet-name>
+        <url-pattern>/getKeepersBookingDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKeeperReviews</servlet-name>
+        <url-pattern>/getKeeperReviews</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

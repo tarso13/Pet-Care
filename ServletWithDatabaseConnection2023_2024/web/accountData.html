@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>Assignment 3 Tarso Keletzi CS359 AccountData</title>
-         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="css/account.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,20 +15,33 @@
         <meta name="Description" content="This is Tarso Keletzi's pet keeping site.">
         <meta name="keywords" lang="en-us" content="Pets, Cats, Dogs, Birds, Platform, Animals, Keepers, Owners">
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-       <script>
+        <script>
             document.addEventListener('DOMContentLoaded', function () {
                 myAccount();
                 var userspan = document.getElementById("user");
                 if (userspan) {
                     var cookies = getAllCookiePairs();
-                    userspan.innerHTML = cookies["username"]; 
+                    userspan.innerHTML = cookies["username"];
+                   if (cookies.hasOwnProperty("keeper_id")) {
+                        var menu = document.getElementById("menu");
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("dropdown-item");
+                        usersLink.setAttribute("onclick", "getKeeperStats()");
+                        usersLink.textContent = "My Stats";
+                        menu.appendChild(usersLink);
+                        var usersLink2 = document.createElement("a");
+                        usersLink2.classList.add("dropdown-item");
+                        usersLink2.setAttribute("onclick", "logout()");
+                        usersLink2.textContent = "Logout";
+                        menu.appendChild(usersLink2);
+                    }
                 }
                 document.getElementById("updateForm").addEventListener("submit", (e) => {
                     updateValues();
                     e.preventDefault();
                 });
             }, false);
-       </script>
+        </script>
     </head>
     <body>
         <div class="container-bar">
@@ -38,33 +51,34 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                     <a class="nav-item nav-link" onclick='getKeeperBookings()'>Bookings</a>
-                     <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
+                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
+                    <a class="nav-item nav-link" onclick='getMessages()'>Messages</a>
+                    <a class="nav-item nav-link" onclick='getKeeperBookings()'>Bookings</a>
+
                 </div>
             </nav>
             <div class="account-management">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span id="user"></span> 
                 </a>
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>
         </div>
         <br>
         <h3>My Account</h3><br>
         <form id="updateForm">
-        <div id="account-data"></div>
-        <div id="buttons">
-            <input type="submit" id="updateButton" value="Update">
-            <button id="back" onclick="welcome_page()">Back</button>
-            <script>
-                function welcome_page(){
-                    window.open('welcome_page.html', '_self');
-                }
-            </script>
-        </div>
+            <div id="account-data"></div>
+            <div id="buttons">
+                <input type="submit" id="updateButton" value="Update">
+                <button id="back" onclick="welcome_page()">Back</button>
+                <script>
+                    function welcome_page() {
+                        window.open('welcome_page.html', '_self');
+                    }
+                </script>
+            </div>
         </form>
     </body>
 </html>

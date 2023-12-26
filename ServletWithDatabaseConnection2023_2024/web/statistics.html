@@ -34,6 +34,19 @@
                         usersLink.textContent = "Bookings";
                         var navbar = document.getElementById("navbarNavAltMarkup");
                         navbar.appendChild(usersLink);
+                        if (cookies.hasOwnProperty("keeper_id")) {
+                            var menu = document.getElementById("menu");
+                            var usersLink = document.createElement("a");
+                            usersLink.classList.add("dropdown-item");
+                            usersLink.setAttribute("onclick", "getKeeperStats()");
+                            usersLink.textContent = "My Stats";
+                            menu.appendChild(usersLink);
+                            var usersLink2 = document.createElement("a");
+                            usersLink2.classList.add("dropdown-item");
+                            usersLink2.setAttribute("onclick", "logout()");
+                            usersLink2.textContent = "Logout";
+                            menu.appendChild(usersLink2);
+                        }
                     }
                 } else {
                     userspan.innerHTML = username;
@@ -64,9 +77,9 @@
                     <span id="user"></span>  
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='logout()'>Logout</a>
+                    <!--<a class="dropdown-item" onclick='logout()'>Logout</a>-->
                 </div>
             </div>
         </div>

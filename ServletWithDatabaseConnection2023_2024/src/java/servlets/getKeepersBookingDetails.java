@@ -4,27 +4,35 @@
  */
 package servlets;
 
+import com.google.gson.Gson;
+import database.tables.EditBookingsTable;
 import database.tables.EditMessagesTable;
-import database.tables.EditPetKeepersTable;
+import database.tables.EditReviewsTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mainClasses.Booking;
 import mainClasses.Message;
-import mainClasses.PetKeeper;
 
 /**
  *
  * @author kelet
  */
-public class sendMessageToOwner extends HttpServlet {
+public class getKeepersBookingDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +51,10 @@ public class sendMessageToOwner extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sendMessageToOwner</title>");
+            out.println("<title>Servlet getKeepersBookingDetails</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sendMessageToOwner at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet getKeepersBookingDetails at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,24 +86,38 @@ public class sendMessageToOwner extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            StringBuilder requestData = new StringBuilder();
-            InputStream inputStream = request.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        response.setContentType("text/html;charset=UTF-8");
+        StringBuilder requestData = new StringBuilder();
+        InputStream inputStream = request.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                requestData.append(line);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestData.append(line);
+        }
+        String json = requestData.toString();
+        Gson gson = new Gson();
+        Map<String, String> jsonObject = gson.fromJson(json, Map.class);
+        try (PrintWriter out = response.getWriter()) {
+            EditBookingsTable eut = new EditBookingsTable();
+            ArrayList<Booking> bookings = eut.getKeeperFinishedBookings(jsonObject.get("keeper_id"));
+            HashMap<String, Integer> days_and_bookings = new HashMap<>();
+            int total_days = 0, total_bookings = 0;
+            for (Booking booking : bookings) {
+                total_bookings += 1;
+                LocalDate startDate = LocalDate.parse(booking.getFromDate());
+                LocalDate endDate = LocalDate.parse(booking.getToDate());
+                total_days += ChronoUnit.DAYS.between(startDate, endDate);
             }
-
-            EditMessagesTable eut = new EditMessagesTable();
-            Message m = eut.jsonToMessage(requestData.toString());
-            eut.createNewMessage(m);
+            days_and_bookings.put("Total Bookings", total_bookings);
+            days_and_bookings.put("Total Days", total_days);
+            Gson gsonStats = new Gson();
+            String daysBookingsJson = gsonStats.toJson(days_and_bookings);
+            out.print(daysBookingsJson);
+            System.out.println(daysBookingsJson);
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (ClassNotFoundException ex) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            Logger.getLogger(InsertPetOwner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(getKeepers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

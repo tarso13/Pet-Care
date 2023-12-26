@@ -6,7 +6,7 @@ function displayLoginPage() {
 function addKeeperBookingCards() {
     let container = document.getElementById('card-container');
     let keepers_header = document.createElement('h3');
-    keepers_header.textContent = 'Keepers';
+    keepers_header.textContent = 'Bookings';
     keepers_header.className = 'mt-4';
     container.appendChild(keepers_header);
     var bookings = JSON.parse(localStorage.getItem("bookings"));
@@ -17,9 +17,90 @@ function addKeeperBookingCards() {
     });
     container.appendChild(categoryContainer);
 }
+function getKeeperStats() {
+    window.open("keeper_stats.html", "_self");
+}
 
-function ask_chatgpt() {
-    var user_question = document.getElementById("user_question").value;
+function createTableWithStats() {
+    var main_element = document.getElementById("main-content");
+    var stats = JSON.parse(localStorage.getItem("keeper-stats"));
+    var table = document.createElement("table");
+    table.className = "stats";
+    var headerRow = table.insertRow(0);
+    var headerCell1 = headerRow.insertCell(0);
+    var headerCell2 = headerRow.insertCell(1);
+    headerCell1.innerHTML = "<b>Total Bookings</b>";
+    headerCell2.innerHTML = "<b>Total Days</b>";
+    var row1 = table.insertRow(1);
+    var row1_cell1 = row1.insertCell(0);
+    var row1_cell2 = row1.insertCell(1);
+    row1_cell1.innerHTML = stats["Total Bookings"];
+    row1_cell2.innerHTML = stats["Total Days"];
+    main_element.appendChild(table);
+}
+
+function createTableWithReviewStats() {
+    var main_element = document.getElementById("main-content");
+    var stats = JSON.parse(localStorage.getItem("keeper-review-stats"));
+    let reviews_header = document.createElement('h3');
+    reviews_header.textContent = 'Reviews';
+    main_element.appendChild(reviews_header);
+    var table = document.createElement("table");
+    table.className = "review-stats";
+    var headerRow = table.insertRow(0);
+    var headerCell1 = headerRow.insertCell(0);
+    var headerCell2 = headerRow.insertCell(1);
+    headerCell1.innerHTML = "<b>Review Message</b>";
+    headerCell2.innerHTML = "<b>Review Score</b>";
+    var count = 0;
+    for (var key in stats) {
+        if (stats.hasOwnProperty(key)) {
+            count++;
+        }
+    }
+    for (var i = 1; i <= count; i++) {
+        var row = table.insertRow(i);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        let review = (stats[(i - 1).toString()]);
+//        let jsonReview = JSON.parse(review);
+        cell1.innerHTML = review["message"];
+        cell2.innerHTML = review["score"];
+    }
+    main_element.appendChild(table);
+}
+function retrieveStats() {
+    var cookies = getAllCookiePairs();
+    var jsonData = JSON.stringify(
+            {
+                keeper_id: cookies["keeper_id"]
+            }
+    );
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            localStorage.setItem("keeper-stats", this.responseText);
+        }
+    };
+    xhr.open("POST", "getKeepersBookingDetails");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
+
+    const xhr2 = new XMLHttpRequest();
+    xhr2.onload = function () {
+        if (xhr2.readyState === 4 && xhr2.status === 200) {
+            localStorage.setItem("keeper-review-stats", xhr2.responseText);
+            createTableWithStats();
+            createTableWithReviewStats();
+        }
+    };
+    xhr2.open("POST", "getKeeperReviews");
+    xhr2.setRequestHeader("Accept", "application/json");
+    xhr2.setRequestHeader("Content-Type", "application/json");
+    xhr2.send(jsonData);
+}
+function ask_chatgpt(user_question) {
     var jsonData = JSON.stringify(
             {
                 question: user_question
@@ -28,7 +109,7 @@ function ask_chatgpt() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // show response
+            console.log(this.responseText);
         }
     };
     xhr.open("POST", "askCHATGPT");
@@ -37,6 +118,29 @@ function ask_chatgpt() {
     xhr.send(jsonData);
 }
 
+function askCHATGPT() {
+    //ask_chatgpt();
+    Swal.fire({
+        title: 'Enter your message',
+        html: '<input type="text" id="swal-input-field" class="swal2-input">',
+        showCancelButton: true,
+        confirmButtonText: 'Send',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: 'green',
+        cancelButtonColor: 'brown',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            const inputValue = document.getElementById('swal-input-field').value;
+            return inputValue;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            ask_chatgpt(result.value);
+        }
+
+    });
+}
 function sendMessage(booking) {
     Swal.fire({
         title: 'Enter your message',
@@ -124,7 +228,7 @@ function createBookingCard(booking) {
         cardButton.className = 'card-button';
         cardButton.textContent = 'Ask CHATGPT';
         cardButton.onclick = function () {
-            ask_chatgpt();
+            askCHATGPT();
         };
         card.appendChild(cardButton);
         let cardButton2 = document.createElement('button');
@@ -133,6 +237,7 @@ function createBookingCard(booking) {
         cardButton2.onclick = function () {
             sendMessage(booking);
         };
+        card.appendChild(cardButton2);
     }
 
     if (status_cookie.textContent === "Status: requested") {
