@@ -131,7 +131,7 @@ public class InitDatabase {
 
         //Get Pets that are cats
         ArrayList<Pet> cats = new ArrayList<Pet>();
-        cats = editpets.databaseToPets("cat");
+//        cats = editpets.databaseToPets("cat");
         Gson gson1 = new Gson();
         JsonArray catsJSON = gson1.toJsonTree(cats).getAsJsonArray();
         System.out.println("Cats\n" + catsJSON + "\n");

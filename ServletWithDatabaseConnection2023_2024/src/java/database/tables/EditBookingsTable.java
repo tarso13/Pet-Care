@@ -137,6 +137,29 @@ public class EditBookingsTable {
         return null;
     }
 
+    public ArrayList getOwnerBookings(String owner_id) throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE owner_id='" + owner_id + "'");
+            System.out.println("SELECT * FROM bookings WHERE owner_id='" + owner_id + "'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class);
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
     public ArrayList getKeeperAcceptedBookings(String keeper_id) throws SQLException, ClassNotFoundException {
         ArrayList<Booking> bookings = new ArrayList<>();
         Connection con = DB_Connection.getConnection();
@@ -159,7 +182,7 @@ public class EditBookingsTable {
         return null;
     }
 
-     public ArrayList getKeeperFinishedBookings(String keeper_id) throws SQLException, ClassNotFoundException {
+    public ArrayList getKeeperFinishedBookings(String keeper_id) throws SQLException, ClassNotFoundException {
         ArrayList<Booking> bookings = new ArrayList<>();
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -180,7 +203,7 @@ public class EditBookingsTable {
         }
         return null;
     }
-     
+
     public ArrayList getOwnerAcceptedBookings(String owner_id) throws SQLException, ClassNotFoundException {
         ArrayList<Booking> bookings = new ArrayList<>();
         Connection con = DB_Connection.getConnection();

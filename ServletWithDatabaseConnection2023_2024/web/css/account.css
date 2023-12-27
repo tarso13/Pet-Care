@@ -3,7 +3,7 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
     background-color: #f4f4f4;
-    }
+}
 
 /*
 .container {
@@ -17,7 +17,8 @@ body {
 */
 h3 {
     color: brown;
-    font-family: Georgia, 'Times New Roman', Times, serif;text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
 }
 div[id=account-data]{
     font-family: Times, serif;
@@ -42,14 +43,14 @@ div .password input{
 }
 
 div .firstname input{
-   margin-left:13.9%;
+    margin-left:13.9%;
 }
 div .lastname input{
-   margin-left:14.3%;
+    margin-left:14.3%;
 }
 
 .container-bar {
-    width: 100%; 
+    width: 100%;
     background-color:brown;
 }
 .container-bar a{
@@ -58,19 +59,24 @@ div .lastname input{
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
     padding-left: 1%;
+    margin-left:-2%;
 }
 .account-management{
-    margin-left:90%;
-    padding-top: -2%;
+    margin-left:88%;
+    margin-top:0.2%;
     color:white;
+    padding-right:0px;
+    padding-left:0px;
 }
-
+#navbarNavAltMarkup{
+     margin-right:13%;
+}
 .navbar-brand{
     margin-top: -1%;
 }
 .navbar-brand:hover{
     color: white;
-    
+
 }
 
 .dropdown-menu{
@@ -80,7 +86,7 @@ div .lastname input{
 
 .dropdown-menu a{
     margin-bottom: 2%;
-    
+
 }
 
 .dropdown-toggle{
@@ -94,67 +100,67 @@ div .lastname input{
 }
 
 div .birthdate input{
-   margin-left:15.6%;
+    margin-left:15.6%;
 }
 
 div .gender input{
-   margin-left:17.8%;
+    margin-left:17.8%;
 }
 
 div .job input{
-   margin-left:21.9%;
+    margin-left:21.9%;
 }
 div .lat input{
-   margin-left:22%;
+    margin-left:22%;
 }
 
 div .lon input{
-   margin-left:21.4%;
+    margin-left:21.4%;
 }
 
 div .country input{
-   margin-left:16.6%;
+    margin-left:16.6%;
 }
 
 div .city input{
-   margin-left:21%;
+    margin-left:21%;
 }
 
 div .address input{
-   margin-left:16.8%;
+    margin-left:16.8%;
 }
 
 div .telephone input{
-   margin-left:14.6%;
+    margin-left:14.6%;
 }
 
 div .personalpage input{
-   margin-left:10.4%;
+    margin-left:10.4%;
 }
 
 div .property input{
-   margin-left:16%;
+    margin-left:16%;
 }
 
 div .propertydescription input{
-   margin-left:2.8%;
-   padding-bottom: 4%;
+    margin-left:2.8%;
+    padding-bottom: 4%;
 }
 div .catkeeper input{
-   margin-top:1%;
-   margin-left:13.1%;
-   height:13px;
+    margin-top:1%;
+    margin-left:13.1%;
+    height:13px;
 }
 div .dogkeeper input{
     margin-top:1%;
-   margin-left:12.7%;
-   height:13px;
+    margin-left:12.7%;
+    height:13px;
 }
 div .catprice input{
-   margin-left:15.3%;
+    margin-left:15.3%;
 }
 div .dogprice input{
-   margin-left:14.9%;
+    margin-left:14.9%;
 }
 #buttons{
     margin-top:1.5%;
@@ -163,9 +169,11 @@ div .dogprice input{
 }
 
 #buttons button, #updateButton{
-     background-color: brown;
-     color:white;
-     border-radius:5px;
+    background-color: brown;
+    color:white;
+    outline: white;
+    margin-left:3.5%;
+    width:113px;
 }
 
 #back{

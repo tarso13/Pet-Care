@@ -1,7 +1,6 @@
 body {
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
-    font-family: Arial, sans-serif;
-    /*background-color: #f4f4f4;*/
+    font-family: Georgia, 'Times New Roman', Times, serif;
     margin-top:5%;
     /*display: flex;*/
     justify-content: center;
@@ -9,6 +8,9 @@ body {
     height: 100vh;
     /*width:50%;*/
     overflow-x: hidden;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    background-color: #f4f4f4;
 }
 
 #navbarNavAltMarkup{
@@ -25,13 +27,7 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
 }
-/*.account-management{
-    position:relative;
-    margin-left:89%;
-    padding-top: -2%;
-    color:white;
-    padding-right:1%;
-}*/
+
 .account-management{
     margin-left:88%;
     margin-top:0.2%;
@@ -47,7 +43,7 @@ body {
 .collapse{
     /*margin-left:50%;*/
     /*margin-right: 10%;*/
-   margin-top:0.1%;
+    margin-top:0.1%;
 }
 .collapse .nav-item{
     color: white;
@@ -90,10 +86,86 @@ body {
     margin-top:5%;
 }
 
-.charts div{
-    outline: 1px solid brown;
-    gap:5px;
-    border-radius: 1%;
-    /*margin-left:2%;*/
+
+input[type="text"]{
+    margin-left: 15%;
+    width:155px;
+    margin-bottom:  5px;
 }
 
+div[id=pet-data] select{
+    margin-left: 15%;
+    width:155px;
+    margin-bottom:  5px;
+}
+
+div textarea{
+    margin-left: 15%;
+    width:155px;
+    margin-bottom:  5px;
+}
+
+label{
+    color:brown;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: left;
+    font-weight:200;
+    color:brown;
+}
+
+h3{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color:brown;
+}
+
+#petForm{
+    margin-left:37%;
+}
+#owner_id{
+    margin-left:12.1%;
+}
+#name{
+    margin-left:15.5%;
+}
+
+#type{
+    margin-left:16.35%;
+}
+
+#breed{
+    margin-left:15.5%;
+}
+
+#gender{
+    margin-left:14.2%;
+    padding-bottom: 4px;
+}
+
+#birthyear{
+    margin-left:11.7%;
+}
+
+#weight{
+    margin-left:14.4%;
+}
+
+#description{
+    margin-left:10.5%;
+}
+
+#photo{
+    margin-left:15.6%;
+    margin-bottom:0%;
+}
+
+#description_label{
+    position:relative;
+}
+
+input[type="submit"]{
+    background-color:brown;
+    color:white;
+    margin-left:15%;
+    width:113px;
+}

@@ -3,16 +3,17 @@ var user_data = null;
 function displayLoginPage() {
     window.open('login.html', '_self');
 }
-function addKeeperBookingCards() {
+function addBookingCards() {
     let container = document.getElementById('card-container');
-    let keepers_header = document.createElement('h3');
-    keepers_header.textContent = 'Bookings';
-    keepers_header.className = 'mt-4';
-    container.appendChild(keepers_header);
+    let header = document.createElement('h3');
+    header.textContent = 'Bookings';
+    header.className = 'mt-4';
+    container.appendChild(header);
     var bookings = JSON.parse(localStorage.getItem("bookings"));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
     bookings.forEach(entry => {
+        console.log("kkk");
         container.appendChild(createBookingCard(entry));
     });
     container.appendChild(categoryContainer);
@@ -172,11 +173,12 @@ function sendMessage(booking) {
         var minutes = ('0' + currentDate.getMinutes()).slice(-2);
         var seconds = ('0' + currentDate.getSeconds()).slice(-2);
         var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-        var sender = "owner";
-        var path = "sendMessageToKeeper";
-        if (`${booking.sender}` === 'owner') {
-            sender = "keeper";
-            path = "sendMessageToOwner";
+        var sender = "keeper";
+        var path = "sendMessageToOwner";
+        var cookies = getAllCookiePairs();
+        if (cookies.hasOwnProperty('owner_id')) {
+            sender = "owner";
+            path = "sendMessageToKeeper";
         }
         var jsonData = JSON.stringify(
                 {
@@ -224,16 +226,22 @@ function createBookingCard(booking) {
     console.log(status_cookie.textContent);
     card.appendChild(status_cookie);
     if (status_cookie.textContent === "Status: accepted") {
-        let cardButton = document.createElement('button');
-        cardButton.className = 'card-button';
-        cardButton.textContent = 'Ask CHATGPT';
-        cardButton.onclick = function () {
-            askCHATGPT();
-        };
-        card.appendChild(cardButton);
+        if (`${booking.sender}` === 'keeper') {
+            let cardButton = document.createElement('button');
+            cardButton.className = 'card-button';
+            cardButton.textContent = 'Ask CHATGPT';
+            cardButton.onclick = function () {
+                askCHATGPT();
+            };
+            card.appendChild(cardButton);
+        }
         let cardButton2 = document.createElement('button');
         cardButton2.className = 'card-button-message';
-        cardButton2.textContent = 'Message Owner';
+        if (`${booking.sender}` === 'keeper') {
+            cardButton2.textContent = 'Message Owner';
+        } else {
+            cardButton2.textContent = 'Message Keeper';
+        }
         cardButton2.onclick = function () {
             sendMessage(booking);
         };
@@ -934,7 +942,7 @@ function getKeeperBookings() {
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             localStorage.setItem("bookings", this.responseText);
-            window.open("bookings_keeper.html", "_self");
+            window.open("bookings.html", "_self");
         }
     };
     xhr.open('POST', 'getKeeperBookings');
@@ -942,6 +950,26 @@ function getKeeperBookings() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(jsonData);
 }
+
+function getOwnerBookings() {
+    var cookies = getAllCookiePairs();
+    var owner_id = cookies["owner_id"];
+    var jsonData = JSON.stringify({
+        owner_id: owner_id
+    });
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            localStorage.setItem("bookings", this.responseText);
+            window.open("bookings.html", "_self");
+        }
+    };
+    xhr.open('POST', 'getOwnersBookings');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
+}
+
 function config() {
     var regform = document.getElementById("regform");
     if (regform) {
@@ -1200,6 +1228,22 @@ function displayErrorMessage(errorMessage) {
         confirmButtonColor: 'brown'
     });
 }
+
+function displaySuccessMessage(Message) {
+// Use SweetAlert to show the error message in a pop-up
+    Swal.fire({
+        icon: 'success',
+        title: 'Good news!',
+        text: Message,
+        confirmButtonColor: 'brown'
+    }).then((result) => {
+        if (result['isConfirmed']) {
+            location.reload();
+        }
+    });
+
+}
+
 function validateEmail() {
     var jsonData = JSON.stringify({
         email: document.getElementById("email").value
@@ -1215,7 +1259,38 @@ function validateEmail() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(jsonData);
 }
+function addPetPage() {
+    window.open("pet.html", "_self");
+}
+function insertPetForm() {
+    var jsonData =
+            {
+                pet_id: document.getElementById("pet_id").value,
+                owner_id: document.getElementById("owner_id").value,
+                name: document.getElementById("name").value,
+                type: document.getElementById("type").value,
+                breed: document.getElementById("breed").value,
+                gender: document.getElementById("gender").value,
+                birthyear: document.getElementById("birthyear").value,
+                weight: document.getElementById("weight").value,
+                description: document.getElementById("description").value,
+                photo: document.getElementById("photo").value
+            };
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.status !== 200) {
+            displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
+            setTimeout(3000);
+        } else {
+            displaySuccessMessage('The pet has been added to the database!');
 
+        }
+    };
+    xhr.open('POST', 'addPet');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(jsonData));
+}
 function validateForm() {
     var validation = checkStrength();
     if (validation === true) {

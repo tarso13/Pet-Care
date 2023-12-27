@@ -120,6 +120,14 @@
         <servlet-name>getKeeperReviews</servlet-name>
         <servlet-class>servlets.getKeeperReviews</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPet</servlet-name>
+        <servlet-class>servlets.addPet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getOwnersBookings</servlet-name>
+        <servlet-class>servlets.getOwnersBookings</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -235,6 +243,14 @@
     <servlet-mapping>
         <servlet-name>getKeeperReviews</servlet-name>
         <url-pattern>/getKeeperReviews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPet</servlet-name>
+        <url-pattern>/addPet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getOwnersBookings</servlet-name>
+        <url-pattern>/getOwnersBookings</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

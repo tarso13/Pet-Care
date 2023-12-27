@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Assignment 3 Tarso Keletzi CS359 Welcome Page</title>
-        <link rel="stylesheet" href="css/welcome.css">
+        <link rel="stylesheet" href="css/pet.css">
         <!--        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -20,38 +21,12 @@
                 if (userspan) {
                     var cookies = getAllCookiePairs();
                     userspan.innerHTML = cookies["username"];
-                    var navBarAltMarkUp = document.getElementById("navbarNavAltMarkup");
-                    var usersLinkk = document.createElement("a");
-                    usersLinkk.classList.add("nav-item", "nav-link");
-                    usersLinkk.textContent = "Bookings";
-                    if (cookies.hasOwnProperty("keeper_id")) {
-                        usersLinkk.setAttribute("onclick", "getKeepersBookings()");
-                        var usersLink = document.createElement("a");
-                        usersLink.classList.add("nav-item", "nav-link");
-                        usersLink.setAttribute("onclick", "getStatistics()");
-                        usersLink.textContent = "Statistics";
-                        navBarAltMarkUp.appendChild(usersLink);
-                        var menu = document.getElementById("menu");
-                        var usersLink1 = document.createElement("a");
-                        usersLink1.classList.add("dropdown-item");
-                        usersLink1.setAttribute("onclick", "getKeeperStats()");
-                        usersLink1.textContent = "My Stats";
-                        menu.appendChild(usersLink1);
-                        var usersLink2 = document.createElement("a");
-                        usersLink2.classList.add("dropdown-item");
-                        usersLink2.setAttribute("onclick", "logout()");
-                        usersLink2.textContent = "Logout";
-                        menu.appendChild(usersLink2);
-                    } else {
-                        usersLinkk.setAttribute("onclick", "getOwnerBookings()");
-                        var menu = document.getElementById("navbarNavAltMarkup");
-                        var usersLink = document.createElement("a");
-                        usersLink.classList.add("nav-item", "nav-link");
-                        usersLink.setAttribute("onclick", "addPetPage()");
-                        usersLink.textContent = "Add Pet";
-                        menu.appendChild(usersLink);
-                    }
-                    navBarAltMarkUp.appendChild(usersLinkk);
+                    var menu = document.getElementById("navbarNavAltMarkup");
+                    var usersLink = document.createElement("a");
+                    usersLink.classList.add("nav-item", "nav-link");
+                    usersLink.setAttribute("onclick", "addPetPage()");
+                    usersLink.textContent = "Add Pet";
+                    menu.appendChild(usersLink);
                 }
             });
         </script>
@@ -76,6 +51,48 @@
                     <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>
+
+        </div>  <br>    <h3> Pet Data </h3><br><div id="pet-data">
+            <form id="petForm" onsubmit="insertPetForm();return false;">
+                <label for="pet_id">Pet ID:</label>
+                <input type="text" id="pet_id" name="pet_id" required>
+                <br>
+                <label for="owner_id">Owner ID:</label>
+                <input type="text" id="owner_id" name="owner_id" required>
+                <br>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <label for="type">Type:</label>
+                <input type="text" id="type" name="type" required>
+                <br>
+                <label for="breed">Breed:</label>
+                <input type="text" id="breed" name="breed" required>
+                <br>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option selected disabled>Choose gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br>
+                <label for="birthyear">Birth Year:</label>
+                <input type="text" id="birthyear" name="birthyear" required>
+                <br>
+                <label for="weight">Weight:</label>
+                <input type="text" id="weight" name="weight" required>
+                <br>
+                <label for="description" id="description_label">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+                <br>
+                <label for="photo">Photo:</label>
+                <input type="text" id="photo" name="photo" required>
+                <br>
+                <div id="buttons">
+                    <input type="submit" id="insertButton" value="Add Pet">
+                </div>
+                <br>
+            </form>
         </div>
     </body>
 </html>

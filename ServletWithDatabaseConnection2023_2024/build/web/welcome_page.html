@@ -20,19 +20,38 @@
                 if (userspan) {
                     var cookies = getAllCookiePairs();
                     userspan.innerHTML = cookies["username"];
+                    var navBarAltMarkUp = document.getElementById("navbarNavAltMarkup");
+                    var usersLinkk = document.createElement("a");
+                    usersLinkk.classList.add("nav-item", "nav-link");
+                    usersLinkk.textContent = "Bookings";
                     if (cookies.hasOwnProperty("keeper_id")) {
-                        var menu = document.getElementById("menu");
+                        usersLinkk.setAttribute("onclick", "getKeepersBookings()");
                         var usersLink = document.createElement("a");
-                        usersLink.classList.add("dropdown-item");
-                        usersLink.setAttribute("onclick", "getKeeperStats()");
-                        usersLink.textContent = "My Stats";
-                        menu.appendChild(usersLink);
+                        usersLink.classList.add("nav-item", "nav-link");
+                        usersLink.setAttribute("onclick", "getStatistics()");
+                        usersLink.textContent = "Statistics";
+                        navBarAltMarkUp.appendChild(usersLink);
+                        var menu = document.getElementById("menu");
+                        var usersLink1 = document.createElement("a");
+                        usersLink1.classList.add("dropdown-item");
+                        usersLink1.setAttribute("onclick", "getKeeperStats()");
+                        usersLink1.textContent = "My Stats";
+                        menu.appendChild(usersLink1);
                         var usersLink2 = document.createElement("a");
                         usersLink2.classList.add("dropdown-item");
                         usersLink2.setAttribute("onclick", "logout()");
                         usersLink2.textContent = "Logout";
                         menu.appendChild(usersLink2);
+                    } else {
+                        usersLinkk.setAttribute("onclick", "getOwnerBookings()");
+                        var menu = document.getElementById("navbarNavAltMarkup");
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("nav-item", "nav-link");
+                        usersLink.setAttribute("onclick", "addPetPage()");
+                        usersLink.textContent = "Add Pet";
+                        menu.appendChild(usersLink);
                     }
+                    navBarAltMarkUp.appendChild(usersLinkk);
                 }
             });
         </script>
@@ -45,7 +64,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
                     <a class="nav-item nav-link" onclick='getMessages()'>Messages</a>
                 </div>
             </nav>
@@ -55,7 +73,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    
+                    <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>
         </div>

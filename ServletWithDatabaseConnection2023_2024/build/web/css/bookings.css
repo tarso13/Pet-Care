@@ -69,11 +69,11 @@ body {
     font-weight: bold;
     padding-left: 1%;
 }
-.account-management{
+/*.account-management{
     margin-left:90%;
     padding-top: -2%;
     color:white;
-}
+}*/
 .collapse .nav-item{
     font-size: 20px;
 }
@@ -98,9 +98,9 @@ body {
 }
 
 .dropdown-menu{
-   width:2%;
-   position: absolute;
-   right: 0;
+    width:2%;
+    position: absolute;
+    /*right: 0;*/
 }
 
 .dropdown-menu a{
@@ -114,15 +114,26 @@ body {
     margin-left:-15%;
 }
 
+.account-management{
+    margin-left:88%;
+    margin-top:0.2%;
+    color:white;
+    padding-right:0px;
+    padding-left:0px;
+}
+
+#navbarNavAltMarkup{
+    margin-right:13%;
+}
 
 .dropdown-toggle:hover{
     color:white;
 }
 
 h3{
-    margin-top:-2%;
-    margin-bottom:10%;
-    font-size:20px;
+    /*margin-top:-2%;*/
+    /*margin-bottom:10%;*/
+    font-size:15px;
     font-family: Arial, sans-serif;
     color:brown;
     font-weight: bolder;

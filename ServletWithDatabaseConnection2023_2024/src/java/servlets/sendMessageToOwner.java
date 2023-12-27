@@ -95,7 +95,7 @@ public class sendMessageToOwner extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (ClassNotFoundException ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            Logger.getLogger(InsertPetOwner.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(sendMessageToOwner.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

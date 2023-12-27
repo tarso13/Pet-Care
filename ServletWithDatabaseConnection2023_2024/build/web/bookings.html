@@ -4,7 +4,7 @@
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <title>Assignment 3 Tarso Keletzi CS359 Bookings</title>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" href="css/bookings_keeper.css">
+        <link rel="stylesheet" href="css/bookings.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -24,12 +24,22 @@
                     userspan.innerHTML = cookies["username"];
                     var usersLink = document.createElement("a");
                     usersLink.classList.add("nav-item", "nav-link");
-                    usersLink.setAttribute("onclick", "getKeeperBookings()");
+                    if (cookies.hasOwnProperty("keeper_id")) {
+                        usersLink.setAttribute("onclick", "getKeeperBookings()");
+                        var menu = document.getElementById("menu");
+                        var usersLink1 = document.createElement("a");
+                        usersLink1.classList.add("dropdown-item");
+                        usersLink1.setAttribute("onclick", "getKeeperStats()");
+                        usersLink1.textContent = "My Stats";
+                        menu.appendChild(usersLink1);
+                    } else {
+                        usersLink.setAttribute("onclick", "getOwnerBookings()");
+                    }
                     usersLink.textContent = "Bookings";
                     var navbar = document.getElementById("navbarNavAltMarkup");
                     navbar.appendChild(usersLink);
                 }
-                addKeeperBookingCards();
+                addBookingCards();
             });
         </script> 
 
@@ -42,8 +52,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-
-                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
                     <a class="nav-item nav-link" onclick='getMessages()'>Messages</a>
                 </div>
             </nav>
@@ -53,7 +61,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='getKeeperStats()'>My Stats</a>
                     <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>

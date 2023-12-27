@@ -3,7 +3,6 @@ body {
     font-family: Arial, sans-serif;
     /*background-color: #f4f4f4;*/
     margin-top:5%;
-    padding: 0;
     /*display: flex;*/
     justify-content: center;
     align-items: center;
@@ -11,8 +10,13 @@ body {
     /*width:50%;*/
     overflow-x: hidden;
 }
+
+#navbarNavAltMarkup{
+    margin-right:13%;
+}
+
 .container-bar {
-    width: 100%; 
+    width: 100%;
     background-color:brown;
 }
 .container-bar a{
@@ -20,28 +24,36 @@ body {
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
-    padding-left: 1%;
 }
-.account-management{
-    /*position:relative;*/
-    margin-left:90%;
+/*.account-management{
+    position:relative;
+    margin-left:89%;
     padding-top: -2%;
     color:white;
+    padding-right:1%;
+}*/
+.account-management{
+    margin-left:88%;
+    margin-top:0.2%;
+    color:white;
+    padding-right:0px;
+    padding-left:0px;
 }
+
 .collapse .nav-item{
     font-size: 20px;
 }
 
 .collapse{
-    margin-left:50%;
-    margin-right: 10%;
-    margin-bottom:-2.6%;
+    /*margin-left:50%;*/
+    /*margin-right: 10%;*/
+   margin-top:0.1%;
 }
 .collapse .nav-item{
-    color: white;    
+    color: white;
 }
 .collapse .nav-item:hover{
-    color: white;    
+    color: white;
 }
 .navbar-brand{
     margin-top: -1%;
@@ -49,7 +61,7 @@ body {
 
 .navbar-brand:hover{
     color: white;
-    
+
 }
 
 .dropdown-menu{
@@ -59,7 +71,7 @@ body {
 
 .dropdown-menu a{
     margin-bottom: 2%;
-    
+
 }
 
 .dropdown-toggle{
@@ -73,7 +85,7 @@ body {
 }
 
 .charts{
-    display:flex;  
+    display:flex;
     margin-left:2.8%;
     margin-top:5%;
 }
@@ -81,7 +93,7 @@ body {
 .charts div{
     outline: 1px solid brown;
     gap:5px;
-    border-radius: 1%; 
+    border-radius: 1%;
     /*margin-left:2%;*/
 }
 

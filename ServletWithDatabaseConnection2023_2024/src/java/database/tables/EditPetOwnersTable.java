@@ -114,6 +114,21 @@ public class EditPetOwnersTable {
         return null;
     }
 
+    public boolean databasePetOwnerExists(String ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM petowners WHERE owner_id = '" + ownerId + "'");
+            return rs.next();
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+
     public int getOwnerCount() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
