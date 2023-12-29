@@ -44,7 +44,10 @@ body {
     color: white;
 
 }
-
+.card-button{
+   background-color:brown;
+   color:white;
+}
 #card-container {
     padding: 5px;
     display: flex;

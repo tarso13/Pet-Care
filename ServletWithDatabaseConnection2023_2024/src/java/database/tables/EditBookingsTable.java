@@ -9,9 +9,12 @@ import com.google.gson.Gson;
 import mainClasses.Booking;
 import database.DB_Connection;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -53,9 +56,38 @@ public class EditBookingsTable {
         return r;
     }
 
+    public ArrayList<Integer> getReservedKeeperIds() throws SQLException, ClassNotFoundException, ParseException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs;
+        try {
+            ArrayList <Integer> ids_future_dates = new ArrayList();
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE status='requested' OR status='accepted'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class);
+                Date currentDate = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date bookingToDate = sdf.parse(booking.getToDate());
+                if (bookingToDate.after(currentDate)) {
+                    ids_future_dates.add(booking.getKeeper_id());
+                } 
+            }
+            
+            return ids_future_dates;
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+
+        return null;
+    }
+
     public String bookingToJSON(Booking r) {
         Gson gson = new Gson();
-        String json = gson.toJson(r, Booking.class);
+        String json = gson.toJson(r, Booking.class
+        );
         return json;
     }
 
@@ -126,7 +158,8 @@ public class EditBookingsTable {
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
-                Booking booking = gson.fromJson(json, Booking.class);
+                Booking booking = gson.fromJson(json, Booking.class
+                );
                 bookings.add(booking);
             }
             return bookings;
@@ -149,7 +182,8 @@ public class EditBookingsTable {
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
-                Booking booking = gson.fromJson(json, Booking.class);
+                Booking booking = gson.fromJson(json, Booking.class
+                );
                 bookings.add(booking);
             }
             return bookings;
@@ -171,7 +205,8 @@ public class EditBookingsTable {
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
-                Booking booking = gson.fromJson(json, Booking.class);
+                Booking booking = gson.fromJson(json, Booking.class
+                );
                 bookings.add(booking);
             }
             return bookings;
@@ -193,7 +228,8 @@ public class EditBookingsTable {
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
-                Booking booking = gson.fromJson(json, Booking.class);
+                Booking booking = gson.fromJson(json, Booking.class
+                );
                 bookings.add(booking);
             }
             return bookings;
@@ -215,7 +251,8 @@ public class EditBookingsTable {
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
-                Booking booking = gson.fromJson(json, Booking.class);
+                Booking booking = gson.fromJson(json, Booking.class
+                );
                 bookings.add(booking);
             }
             return bookings;
@@ -257,7 +294,8 @@ public class EditBookingsTable {
             stmt.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditBookingsTable.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

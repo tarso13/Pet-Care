@@ -48,6 +48,11 @@
                         usersLink.setAttribute("onclick", "addPetPage()");
                         usersLink.textContent = "Add Pet";
                         navBarAltMarkUp.appendChild(usersLink);
+                        var usersLinkk = document.createElement("a");
+                        usersLinkk.classList.add("nav-item", "nav-link");
+                        usersLinkk.setAttribute("onclick", "redirectToPage('keepers')");
+                        usersLinkk.textContent = "Keepers";
+                        navBarAltMarkUp.appendChild(usersLinkk);
                     }
                     var usersLink2 = document.createElement("a");
                     usersLink2.classList.add("dropdown-item");

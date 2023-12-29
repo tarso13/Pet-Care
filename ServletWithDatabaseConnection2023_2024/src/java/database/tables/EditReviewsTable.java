@@ -84,7 +84,7 @@ public class EditReviewsTable {
         con.close();
 
     }
-
+    
     /**
      * Establish a database connection and add in the database.
      *

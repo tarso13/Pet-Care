@@ -13,13 +13,56 @@ function addBookingCards() {
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
     bookings.forEach(entry => {
-        console.log("kkk");
         container.appendChild(createBookingCard(entry));
     });
     container.appendChild(categoryContainer);
 }
 function getKeeperStats() {
     window.open("keeper_stats.html", "_self");
+}
+
+function addReview(keeper_id, owner_id) {
+    (async () => {
+
+        const {value: formValues} = await Swal.fire({
+            title: 'Your review matters!',
+            html:
+                    '<input id="swal-input1" class="swal2-input" placeholder="Your text...">' +
+                    '<input type="number"  id="swal-input2" class="swal2-input" style="width: 57.5%;" min="0" max="5" placeholder="Your score (out of 5)...">',
+            focusConfirm: false,
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                    document.getElementById('swal-input2').value
+                ];
+            }
+        });
+
+        if (formValues) {
+            if (formValues[0] === "" || formValues[1] === "") {
+                displayErrorMessage("Please fill out both fields.");
+            }
+            var jsonData = JSON.stringify({
+                owner_id: owner_id,
+                keeper_id: keeper_id,
+                reviewText: formValues[0],
+                reviewScore: formValues[1]
+            });
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    displaySuccessMessage("Thank you! Your review has been added.");
+                } else {
+                    displayErrorMessage("Sorry...Review could not be added at the moment.")
+                }
+            };
+            xhr.open("POST", "addReview");
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(jsonData);
+        }
+
+    })();
 }
 
 function createTableWithStats() {
@@ -223,8 +266,8 @@ function createBookingCard(booking) {
     card.appendChild(price);
     let status_cookie = document.createElement('p');
     status_cookie.textContent = `Status: ${booking.status}`;
-    console.log(status_cookie.textContent);
     card.appendChild(status_cookie);
+    var cookies = getAllCookiePairs();
     if (status_cookie.textContent === "Status: accepted") {
         if (`${booking.sender}` === 'keeper') {
             let cardButton = document.createElement('button');
@@ -246,6 +289,29 @@ function createBookingCard(booking) {
             sendMessage(booking);
         };
         card.appendChild(cardButton2);
+
+        if (cookies.hasOwnProperty("owner_id")) {
+            let cardButton3 = document.createElement('button');
+            cardButton3.className = 'card-button-message';
+            cardButton3.textContent = 'Finish Booking';
+            cardButton3.onclick = function () {
+                updateBooking(`${booking.booking_id}`, "finished");
+            };
+            card.appendChild(cardButton3);
+        }
+    }
+
+    if (status_cookie.textContent === "Status: finished") {
+        if (cookies.hasOwnProperty("owner_id")) {
+            let cardButton = document.createElement('button');
+            cardButton.className = 'card-button-message';
+            cardButton.textContent = 'Add Review';
+            cardButton.onclick = function () {
+                console.log("review");
+                addReview(`${booking.keeper_id}`, `${booking.owner_id}`);
+            };
+            card.appendChild(cardButton);
+        }
     }
 
     if (status_cookie.textContent === "Status: requested") {
@@ -279,7 +345,12 @@ function updateBooking(booking_id, status) {
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             localStorage.removeItem('bookings');
-            getKeeperBookings();
+            var cookies = getAllCookiePairs();
+            if (cookies.hasOwnProperty("owner_id")) {
+                getOwnerBookings();
+            } else {
+                getKeeperBookings();
+            }
             console.log("success!");
         }
     };
@@ -822,8 +893,20 @@ function createUserCard(user, admin) {
         };
         card.appendChild(cardButton);
     }
+    var cookies = getAllCookiePairs();
+    if (cookies.hasOwnProperty("owner_id")) {
+        let cardButton = document.createElement('button');
+        cardButton.className = 'card-button';
+        cardButton.textContent = 'Make a booking';
+        cardButton.onclick = function () {
+            localStorage.setItem("keeper_chosen", JSON.stringify(user));
+            window.open("bookingForm.html", "_self");
+        };
+        card.appendChild(cardButton);
+    }
     return card;
 }
+
 function getInfoLinks() {
     window.open("guest_info.html", "_self");
 }
@@ -864,6 +947,98 @@ function deletePetOwner(owner_id) {
     xhr.send(jsonData);
 }
 
+function insertBooking() {
+    var jsonData =
+            {
+                owner_id: document.getElementById("owner_id").value,
+                pet_id: document.getElementById("pet_id").value,
+                keeper_id: document.getElementById("keeper_id").value,
+                fromdate: document.getElementById("fromdate").value,
+                todate: document.getElementById("todate").value,
+                status: "requested"
+
+            };
+    var startDate = new Date(document.getElementById("fromdate").value);
+    var endDate = new Date(document.getElementById("todate").value);
+    var timeDifference = endDate.getTime() - startDate.getTime();
+    var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+    var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
+    if (pet_type === "cat") {
+        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"])* daysDifference;
+    } else {
+        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["dogprice"]) * daysDifference;
+    }
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.status !== 200) {
+            displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
+            setTimeout(3000);
+        } else {
+            displaySuccessMessage('The pet has been added to the database!');
+
+        }
+    };
+    xhr.open('POST', 'addBooking');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(jsonData));
+}
+
+function getAvailableKeepers() {
+    var cookies = getAllCookiePairs();
+    var jsonData = JSON.stringify({
+        owner_id: cookies["owner_id"]
+    });
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            localStorage.setItem("pet", this.responseText);
+            var keeper_type;
+            if (JSON.parse(this.responseText)["type"] === "cat") {
+                keeper_type = "catkeeper";
+            } else {
+                keeper_type = "dogkeeper";
+            }
+            var jsonDataType = JSON.stringify({
+                owner_id: cookies["owner_id"],
+                type: keeper_type
+            });
+
+            const xhr1 = new XMLHttpRequest();
+            xhr1.onload = function () {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    localStorage.setItem("available_keepers", xhr1.responseText);
+                    addKeeperCardsOwners();
+                }
+            };
+            xhr1.open("POST", "getAvailableKeepers");
+            xhr1.setRequestHeader("Accept", "application/json");
+            xhr1.setRequestHeader("Content-Type", "application/json");
+            xhr1.send(jsonDataType);
+        } else {
+            displayErrorMessage(this.responseText);
+        }
+    };
+    xhr.open("POST", "getOwnersPet");
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
+}
+
+function addKeeperCardsOwners() {
+    let container = document.getElementById('card-container');
+    let keepers_header = document.createElement('h3');
+    keepers_header.textContent = 'Keepers';
+    keepers_header.className = 'mt-4';
+    container.appendChild(keepers_header);
+    var keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    let categoryContainer = document.createElement('div');
+    categoryContainer.className = 'category-container';
+    keepers.forEach(entry => {
+        container.appendChild(createUserCard(entry, false));
+    });
+    container.appendChild(categoryContainer);
+}
 
 function addKeeperCardsGuest() {
     let container = document.getElementById('card-container');
@@ -1160,7 +1335,6 @@ function checkLocationUpdate(cookies) {
     xhr.send(data);
     return true;
 }
-
 function checkLocation() {
     var country = document.querySelector('select[name = "country"]');
     var city = document.querySelector('input[name = "city"]');
@@ -1228,6 +1402,7 @@ function displayErrorMessage(errorMessage) {
         confirmButtonColor: 'brown'
     });
 }
+
 
 function displaySuccessMessage(Message) {
 // Use SweetAlert to show the error message in a pop-up

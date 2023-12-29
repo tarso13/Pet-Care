@@ -128,6 +128,22 @@
         <servlet-name>getOwnersBookings</servlet-name>
         <servlet-class>servlets.getOwnersBookings</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addReview</servlet-name>
+        <servlet-class>servlets.addReview</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getAvailableKeepers</servlet-name>
+        <servlet-class>servlets.getAvailableKeepers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getOwnersPet</servlet-name>
+        <servlet-class>servlets.getOwnersPet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addBooking</servlet-name>
+        <servlet-class>servlets.addBooking</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -251,6 +267,22 @@
     <servlet-mapping>
         <servlet-name>getOwnersBookings</servlet-name>
         <url-pattern>/getOwnersBookings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addReview</servlet-name>
+        <url-pattern>/addReview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getAvailableKeepers</servlet-name>
+        <url-pattern>/getAvailableKeepers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getOwnersPet</servlet-name>
+        <url-pattern>/getOwnersPet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addBooking</servlet-name>
+        <url-pattern>/addBooking</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
