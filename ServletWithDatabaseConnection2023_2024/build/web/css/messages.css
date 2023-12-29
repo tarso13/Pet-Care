@@ -1,6 +1,6 @@
 body {
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
-    font-family: Arial, sans-serif;
+    font-family:Georgia, 'Times New Roman', Times, serif;
     /*background-color: #f4f4f4;*/
     margin-top:5%;
     /*display: flex;*/
@@ -25,13 +25,7 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
 }
-/*.account-management{
-    position:relative;
-    margin-left:89%;
-    padding-top: -2%;
-    color:white;
-    padding-right:1%;
-}*/
+
 .account-management{
     margin-left:88%;
     margin-top:0.2%;
@@ -45,8 +39,6 @@ body {
 }
 
 .collapse{
-    /*margin-left:50%;*/
-    /*margin-right: 10%;*/
     margin-top:0.1%;
 }
 .collapse .nav-item{
@@ -65,7 +57,6 @@ body {
 }
 
 .dropdown-menu{
-    /*height:15%;*/
     padding-bottom: 5px;
 }
 
@@ -84,6 +75,25 @@ body {
     color:white;
 }
 
+h3{
+    padding-top: 20px;
+    font-size:20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:brown;
+    font-weight: bolder;
+    padding-right:90%;
+}
+#card-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left:1%;
+}
+
+.card{
+    width:200px;
+    height:245px;
+}
+
 .card-button{
     display: block;
     padding: 5px 10px;
@@ -91,46 +101,8 @@ body {
     color: white;
     cursor: pointer;
     border: 1px solid maroon;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-#card-container {
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    padding-left:1%;
-}
-
-.card {
-    width: 200px;
-    margin-bottom: 20px;
-}
-
-h3{
-    /*margin-top:3%;*/
-    padding-top: 18px;
-    font-size:15px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color:brown;
-    font-weight: bolder;
-    padding-right:80%;
-}
-
-.card-button, .card-button-message , .card-button-reject{
-    display: block;
-    padding: 5px 10px;
-    background-color: brown;
-    color: white;
-    cursor: pointer;
-    border: 1px solid maroon;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.card-button-accept  {
-    display: block;
-    padding: 5px 10px;
-    background-color: green;
-    color: white;
-    border: 1px solid black;
+    position:absolute;
+    bottom:0;
+    width:200px;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }

@@ -1,6 +1,6 @@
 body {
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
-    font-family: Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     /*background-color: #f4f4f4;*/
     margin-top:5%;
     padding: 0;
@@ -11,7 +11,7 @@ body {
 }
 
 .container-bar {
-    width: 100%; 
+    width: 100%;
     background-color:brown;
     padding-bottom: 3%;
 }
@@ -29,7 +29,7 @@ body {
 
 .navbar-brand:hover{
     color: white;
-    
+
 }
 
 .login-container {
@@ -46,9 +46,9 @@ body {
 .login-container #guest{
     margin-top:-4%;
 }
+
 h1 {
     text-align: center;
-    /*color: #333;*/
     color: brown;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
@@ -56,7 +56,6 @@ h1 {
 label {
     font-family: Georgia, 'Times New Roman', Times, serif;
     display: block;
-    /*margin-bottom: 8px;*/
     color: #333;
 }
 
@@ -89,4 +88,9 @@ p{
     text-align: center;
     margin:auto;
     font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#guest{
+    padding-top: 2px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }

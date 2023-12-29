@@ -5,10 +5,10 @@ function displayLoginPage() {
 }
 function addBookingCards() {
     let container = document.getElementById('card-container');
-    let header = document.createElement('h3');
-    header.textContent = 'Bookings';
-    header.className = 'mt-4';
-    container.appendChild(header);
+//    let header = document.createElement('h3');
+//    header.textContent = 'Bookings';
+//    header.className = 'mt-4';
+//    container.appendChild(header);
     var bookings = JSON.parse(localStorage.getItem("bookings"));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
@@ -662,10 +662,10 @@ function getOwnerCount() {
 }
 function addMessageCards() {
     let container = document.getElementById('card-container');
-    let messages_header = document.createElement('h3');
-    messages_header.textContent = 'Messages';
-    messages_header.className = 'mt-4';
-    container.appendChild(messages_header);
+//    let messages_header = document.createElement('h3');
+//    messages_header.textContent = 'Messages';
+//    messages_header.className = 'mt-4';
+//    container.appendChild(messages_header);
     var messages = JSON.parse(localStorage.getItem('messages'));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
@@ -815,11 +815,16 @@ function drawEarningsStatistics() {
 }
 
 function getKeepers() {
+    var cookies = getAllCookiePairs();
+    if(cookies.hasOwnProperty("owner_id")){
+        window.open("keepers.html", "_self");
+    }
     const xhr_keepers = new XMLHttpRequest();
     xhr_keepers.onload = function () {
         if (xhr_keepers.readyState === 4 && xhr_keepers.status === 200) {
             localStorage.removeItem('keepers');
             localStorage.setItem('keepers', this.responseText);
+            location.reload();
         } else {
             console.log("error");
         }
@@ -879,6 +884,7 @@ function createUserCard(user, admin) {
     let job = document.createElement('p');
     job.textContent = `Occupation: ${user.job}`;
     card.appendChild(job);
+
     if (admin) {
         let cardButton = document.createElement('button');
         cardButton.className = 'card-button';
@@ -895,6 +901,13 @@ function createUserCard(user, admin) {
     }
     var cookies = getAllCookiePairs();
     if (cookies.hasOwnProperty("owner_id")) {
+        let price = document.createElement('p');
+        if (localStorage.getItem("petprice") === 'catprice') {
+            price.textContent = `Price: ${user.catprice}€/Night`;
+        } else {
+            price.textContent = `Price: ${user.dogprice}€/Night`;
+        }
+        card.appendChild(price);
         let cardButton = document.createElement('button');
         cardButton.className = 'card-button';
         cardButton.textContent = 'Make a booking';
@@ -964,7 +977,7 @@ function insertBooking() {
     var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
     var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
     if (pet_type === "cat") {
-        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"])* daysDifference;
+        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"]) * daysDifference;
     } else {
         jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["dogprice"]) * daysDifference;
     }
@@ -994,11 +1007,15 @@ function getAvailableKeepers() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             localStorage.setItem("pet", this.responseText);
             var keeper_type;
+            var pet_price;
             if (JSON.parse(this.responseText)["type"] === "cat") {
                 keeper_type = "catkeeper";
+                pet_price = "catprice";
             } else {
                 keeper_type = "dogkeeper";
+                pet_price = "dogprice";
             }
+            localStorage.setItem("pet_price", pet_price);
             var jsonDataType = JSON.stringify({
                 owner_id: cookies["owner_id"],
                 type: keeper_type
@@ -1027,10 +1044,10 @@ function getAvailableKeepers() {
 
 function addKeeperCardsOwners() {
     let container = document.getElementById('card-container');
-    let keepers_header = document.createElement('h3');
-    keepers_header.textContent = 'Keepers';
-    keepers_header.className = 'mt-4';
-    container.appendChild(keepers_header);
+//    let keepers_header = document.createElement('h3');
+//    keepers_header.textContent = 'Keepers';
+//    keepers_header.className = 'mt-4';
+//    container.appendChild(keepers_header);
     var keepers = JSON.parse(localStorage.getItem('available_keepers'));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
@@ -1042,10 +1059,10 @@ function addKeeperCardsOwners() {
 
 function addKeeperCardsGuest() {
     let container = document.getElementById('card-container');
-    let keepers_header = document.createElement('h3');
-    keepers_header.textContent = 'Keepers';
-    keepers_header.className = 'mt-4';
-    container.appendChild(keepers_header);
+//    let keepers_header = document.createElement('h3');
+//    keepers_header.textContent = 'Keepers';
+//    keepers_header.className = 'mt-4';
+//    container.appendChild(keepers_header);
     var keepers = JSON.parse(localStorage.getItem('keepers'));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
@@ -1057,10 +1074,10 @@ function addKeeperCardsGuest() {
 
 function addUserCards() {
     let container = document.getElementById('card-container');
-    let keepers_header = document.createElement('h3');
-    keepers_header.textContent = 'Keepers';
-    keepers_header.className = 'mt-4';
-    container.appendChild(keepers_header);
+//    let keepers_header = document.createElement('h3');
+//    keepers_header.textContent = 'Keepers';
+//    keepers_header.className = 'mt-4';
+//    container.appendChild(keepers_header);
     var keepers = JSON.parse(localStorage.getItem('keepers'));
     var owners = JSON.parse(localStorage.getItem('owners'));
     let categoryContainer = document.createElement('div');
@@ -1071,7 +1088,7 @@ function addUserCards() {
     container.appendChild(categoryContainer);
     let owners_header = document.createElement('h3');
     owners_header.textContent = 'Owners';
-    owners_header.className = 'mt-4';
+//    owners_header.className = 'mt-4';
     container.appendChild(owners_header);
     categoryContainer = document.createElement('div');
     categoryContainer.className = 'd-flex flex-wrap justify-content-start';

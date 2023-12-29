@@ -27,6 +27,12 @@
                     usersLink.setAttribute("onclick", "addPetPage()");
                     usersLink.textContent = "Add Pet";
                     menu.appendChild(usersLink);
+                    var navBarAltMarkUp = document.getElementById("navbarNavAltMarkup");
+                    var usersLinkk = document.createElement("a");
+                    usersLinkk.classList.add("nav-item", "nav-link");
+                    usersLinkk.setAttribute("onclick", "redirectToPage('keepers')");
+                    usersLinkk.textContent = "Keepers";
+                    navBarAltMarkUp.appendChild(usersLinkk);
                 }
             });
         </script>
@@ -53,7 +59,8 @@
             </div>
 
         </div>  <br>   <br> <h3> Booking Details </h3><br><div id="booking-data">
-            <form id="bookingForm" onsubmit="insertBooking();return false;">
+            <form id="bookingForm" onsubmit="insertBooking();
+                    return false;">
                 <label for="owner_id">Owner ID:</label>
                 <input type="text" id="owner_id" name="owner_id" required>
                 <br>

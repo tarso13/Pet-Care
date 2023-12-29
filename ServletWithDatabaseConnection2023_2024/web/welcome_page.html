@@ -24,6 +24,7 @@
                     var usersLinkk = document.createElement("a");
                     usersLinkk.classList.add("nav-item", "nav-link");
                     usersLinkk.textContent = "Bookings";
+                    var menu = document.getElementById("menu");
                     if (cookies.hasOwnProperty("keeper_id")) {
                         usersLinkk.setAttribute("onclick", "getKeepersBookings()");
                         var usersLink = document.createElement("a");
@@ -31,26 +32,37 @@
                         usersLink.setAttribute("onclick", "getStatistics()");
                         usersLink.textContent = "Statistics";
                         navBarAltMarkUp.appendChild(usersLink);
-                        var menu = document.getElementById("menu");
+
                         var usersLink1 = document.createElement("a");
                         usersLink1.classList.add("dropdown-item");
                         usersLink1.setAttribute("onclick", "getKeeperStats()");
                         usersLink1.textContent = "My Stats";
                         menu.appendChild(usersLink1);
-                        var usersLink2 = document.createElement("a");
-                        usersLink2.classList.add("dropdown-item");
-                        usersLink2.setAttribute("onclick", "logout()");
-                        usersLink2.textContent = "Logout";
-                        menu.appendChild(usersLink2);
+//                        var usersLink2 = document.createElement("a");
+//                        usersLink2.classList.add("dropdown-item");
+//                        usersLink2.setAttribute("onclick", "logout()");
+//                        usersLink2.textContent = "Logout";
+//                        menu.appendChild(usersLink2);
+                        menu.style.padding.bottom = '20px';
                     } else {
                         usersLinkk.setAttribute("onclick", "getOwnerBookings()");
-                        var menu = document.getElementById("navbarNavAltMarkup");
+//                        var navBar = document.getElementById("navbarNavAltMarkup");
                         var usersLink = document.createElement("a");
                         usersLink.classList.add("nav-item", "nav-link");
                         usersLink.setAttribute("onclick", "addPetPage()");
                         usersLink.textContent = "Add Pet";
-                        menu.appendChild(usersLink);
+                        navBarAltMarkUp.appendChild(usersLink);
+                        var usersLink1 = document.createElement("a");
+                        usersLink1.classList.add("nav-item", "nav-link");
+                        usersLink1.setAttribute("onclick", "getKeepers()");
+                        usersLink1.textContent = "Keepers";
+                        navBarAltMarkUp.appendChild(usersLink1);
                     }
+                    var usersLink2 = document.createElement("a");
+                    usersLink2.classList.add("dropdown-item");
+                    usersLink2.setAttribute("onclick", "logout()");
+                    usersLink2.textContent = "Logout";
+                    menu.appendChild(usersLink2);
                     navBarAltMarkUp.appendChild(usersLinkk);
                 }
             });
@@ -73,7 +85,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='logout()'>Logout</a>
                 </div>
             </div>
         </div>

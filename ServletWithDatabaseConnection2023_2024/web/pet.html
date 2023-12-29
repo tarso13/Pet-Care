@@ -17,16 +17,29 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                var navbar = document.getElementById("navbarNavAltMarkup");
                 var userspan = document.getElementById("user");
                 if (userspan) {
                     var cookies = getAllCookiePairs();
                     userspan.innerHTML = cookies["username"];
                     var menu = document.getElementById("navbarNavAltMarkup");
-                    var usersLink = document.createElement("a");
-                    usersLink.classList.add("nav-item", "nav-link");
-                    usersLink.setAttribute("onclick", "addPetPage()");
-                    usersLink.textContent = "Add Pet";
-                    menu.appendChild(usersLink);
+                    var usersLink0 = document.createElement("a");
+                    usersLink0.classList.add("nav-item", "nav-link");
+                    usersLink0.setAttribute("onclick", "getOwnerBookings()");
+                    usersLink0.textContent = "Bookings";
+                    navbar.appendChild(usersLink0);
+                
+//                    menu.appendChild(usersLink);
+                    var usersLinkk = document.createElement("a");
+                    usersLinkk.classList.add("nav-item", "nav-link");
+                    usersLinkk.setAttribute("onclick", "addPetPage()");
+                    usersLinkk.textContent = "Add Pet";
+                    navbar.appendChild(usersLinkk);
+                    var usersLink1 = document.createElement("a");
+                    usersLink1.classList.add("nav-item", "nav-link");
+                    usersLink1.setAttribute("onclick", "getKeepers()");
+                    usersLink1.textContent = "Keepers";
+                    navbar.appendChild(usersLink1);
                 }
             });
         </script>
@@ -53,7 +66,8 @@
             </div>
 
         </div>  <br>    <h3> Pet Data </h3><br><div id="pet-data">
-            <form id="petForm" onsubmit="insertPetForm();return false;">
+            <form id="petForm" onsubmit="insertPetForm();
+                    return false;">
                 <label for="pet_id">Pet ID:</label>
                 <input type="text" id="pet_id" name="pet_id" required>
                 <br>

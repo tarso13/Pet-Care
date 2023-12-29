@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <title>Assignment 3 Tarso Keletzi CS359 Bookings</title>
+        <title>Assignment 3 Tarso Keletzi CS359 Messages</title>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" href="css/bookings.css">
+        <link rel="stylesheet" href="css/messages.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -30,12 +30,11 @@
                     if (cookies.hasOwnProperty("keeper_id")) {
                         usersLink.setAttribute("onclick", "getKeeperBookings()");
                         navbar.appendChild(usersLink);
-                        var navBarAltMarkUp = document.getElementById("navbarNavAltMarkup");
                         var usersLinkk = document.createElement("a");
                         usersLinkk.classList.add("nav-item", "nav-link");
                         usersLinkk.setAttribute("onclick", "getStatistics()");
                         usersLinkk.textContent = "Statistics";
-                        navBarAltMarkUp.appendChild(usersLinkk);
+                        navbar.appendChild(usersLinkk);
                         var usersLink1 = document.createElement("a");
                         usersLink1.classList.add("dropdown-item");
                         usersLink1.setAttribute("onclick", "getKeeperStats()");
@@ -44,7 +43,17 @@
                     } else {
                         usersLink.setAttribute("onclick", "getOwnerBookings()");
                         navbar.appendChild(usersLink);
-
+                        var usersLinkk = document.createElement("a");
+                        usersLinkk.classList.add("nav-item", "nav-link");
+                        usersLinkk.setAttribute("onclick", "addPetPage()");
+                        usersLinkk.textContent = "Add Pet";
+                        navbar.appendChild(usersLinkk);
+                        var usersLink1 = document.createElement("a");
+                        usersLink1.classList.add("nav-item", "nav-link");
+                        usersLink1.setAttribute("onclick", "getKeepers()");
+                        usersLink1.textContent = "Keepers";
+                        navbar.appendChild(usersLink1);
+//                        menu.style.marginLeft = "90%";
                     }
                     var usersLink2 = document.createElement("a");
                     usersLink2.classList.add("dropdown-item");
@@ -68,7 +77,7 @@
                     <a class="nav-item nav-link" onclick='getMessages()'>Messages</a>
                 </div>
             </nav>
-            <div class="account-management">
+            <div class="account-management" id="account">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span id="user"></span>  
                 </a>
@@ -77,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <br>
-        <div id="card-container"></div>
+        
+        <div id="card-container"><h3>Messages</h3></div>
     </body>
 </html>

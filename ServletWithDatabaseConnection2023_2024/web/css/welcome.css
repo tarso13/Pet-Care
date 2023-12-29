@@ -97,3 +97,18 @@ body {
     /*margin-left:2%;*/
 }
 
+.card-button{
+   background-color:brown;
+   color:white;
+}
+
+#card-container {
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 200px;
+    margin-bottom: 20px;
+}

@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/getOwnersBookings.java</file>
             <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/bookings.css</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/sendMessageToKeeper.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/keepers.css</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/addPet.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/pet.css</file>
             <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/messages.html</file>
             <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/js/script.js</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/sendMessageToOwner.java</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/pet.html</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/keepers.html</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/database/tables/EditPetKeepersTable.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/bookingForm.css</file>
             <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/bookings.html</file>
         </group>
     </open-files>

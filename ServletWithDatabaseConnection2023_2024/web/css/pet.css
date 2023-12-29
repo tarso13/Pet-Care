@@ -41,16 +41,17 @@ body {
 }
 
 .collapse{
-    /*margin-left:50%;*/
-    /*margin-right: 10%;*/
     margin-top:0.1%;
 }
+
 .collapse .nav-item{
     color: white;
 }
+
 .collapse .nav-item:hover{
     color: white;
 }
+
 .navbar-brand{
     margin-top: -1%;
 }
@@ -61,7 +62,6 @@ body {
 }
 
 .dropdown-menu{
-    /*height:15%;*/
     padding-bottom: 5px;
 }
 
@@ -80,29 +80,25 @@ body {
     color:white;
 }
 
-.charts{
-    display:flex;
-    margin-left:2.8%;
-    margin-top:5%;
-}
-
-
 input[type="text"]{
     margin-left: 15%;
     width:155px;
     margin-bottom:  5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 div[id=pet-data] select{
     margin-left: 15%;
     width:155px;
     margin-bottom:  5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 div textarea{
     margin-left: 15%;
     width:155px;
     margin-bottom:  5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 label{
@@ -168,4 +164,5 @@ input[type="submit"]{
     color:white;
     margin-left:15%;
     width:113px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }

@@ -6,7 +6,6 @@ package servlets;
 
 import com.google.gson.Gson;
 import database.tables.EditBookingsTable;
-import database.tables.EditMessagesTable;
 import database.tables.EditPetKeepersTable;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,8 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mainClasses.Booking;
-import mainClasses.Message;
 import mainClasses.PetKeeper;
 
 /**
@@ -105,7 +102,7 @@ public class getAvailableKeepers extends HttpServlet {
             ArrayList<PetKeeper> availableKeepers = new ArrayList();
             for (PetKeeper keeper : keepers) {
                 if (reservedKeeperIds.contains(keeper.getKeeperId())) {
-                    System.out.println(keeper.getKeeperId());
+
                 } else {
                     availableKeepers.add(keeper);
                 }

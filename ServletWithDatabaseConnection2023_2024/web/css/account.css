@@ -5,48 +5,8 @@ body {
     background-color: #f4f4f4;
 }
 
-/*
-.container {
-    margin: 70px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-*/
-h3 {
-    color: brown;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    text-align: center;
-}
-div[id=account-data]{
-    font-family: Times, serif;
-    font-size: medium;
-    color: rgb(160, 14, 14);
-    font-weight: bold;
-    text-align: center;
-    width: 50%;
-    margin-left:38%;
-}
-
-div[id=account-data] input{
-    margin-left: 15%;
-    width:155px;
-    margin-bottom:  5px;
-}
-div .email input{
-    margin-left:19.4%;
-}
-div .password input{
-    margin-left:15.6%;
-}
-
-div .firstname input{
-    margin-left:13.9%;
-}
-div .lastname input{
-    margin-left:14.3%;
+#navbarNavAltMarkup{
+    margin-right:13%;
 }
 
 .container-bar {
@@ -58,9 +18,8 @@ div .lastname input{
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
-    padding-left: 1%;
-    margin-left:-2%;
 }
+
 .account-management{
     margin-left:88%;
     margin-top:0.2%;
@@ -68,12 +27,25 @@ div .lastname input{
     padding-right:0px;
     padding-left:0px;
 }
-#navbarNavAltMarkup{
-     margin-right:13%;
+
+.collapse .nav-item{
+    font-size: 20px;
+}
+
+.collapse{
+   margin-top:0.1%;
+}
+
+.collapse .nav-item{
+    color: white;
+}
+.collapse .nav-item:hover{
+    color: white;
 }
 .navbar-brand{
     margin-top: -1%;
 }
+
 .navbar-brand:hover{
     color: white;
 
@@ -81,7 +53,7 @@ div .lastname input{
 
 .dropdown-menu{
     /*height:15%;*/
-    padding:5px;
+    padding-bottom: 5px;
 }
 
 .dropdown-menu a{
@@ -98,6 +70,36 @@ div .lastname input{
 .dropdown-toggle:hover{
     color:white;
 }
+
+.charts{
+    display:flex;
+    margin-left:2.8%;
+    margin-top:5%;
+}
+
+.charts div{
+    outline: 1px solid brown;
+    gap:5px;
+    border-radius: 1%;
+    /*margin-left:2%;*/
+}
+
+.card-button{
+   background-color:brown;
+   color:white;
+}
+
+#card-container {
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
 
 div .birthdate input{
     margin-left:15.6%;
@@ -175,23 +177,106 @@ div .dogprice input{
     margin-left:3.5%;
     width:113px;
 }
-
-#back{
-    width:67.5px;
+h3 {
+    color: brown;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
 }
 
-.collapse .nav-item{
-    font-size: 20px;
+div[id=account-data]{
+    font-family: Times, serif;
+    font-size: medium;
+    color: rgb(160, 14, 14);
+    font-weight: bold;
+    text-align: center;
+    width: 50%;
+    margin-left:38%;
 }
 
-.collapse{
-    margin-left:50%;
-    margin-right: 10%;
-    margin-bottom:-2.6%;
+div[id=account-data] input{
+    margin-left: 15%;
+    width:155px;
+    margin-bottom:  5px;
 }
-.collapse .nav-item{
-    color: white;
+
+div .email input{
+    margin-left:19.4%;
 }
-.collapse .nav-item:hover{
-    color: white;
+
+div .password input{
+    margin-left:15.6%;
+}
+
+div .firstname input{
+    margin-left:13.9%;
+}
+div .lastname input{
+    margin-left:14.3%;
+}
+
+div .birthdate input{
+    margin-left:15.6%;
+}
+
+div .gender input{
+    margin-left:17.8%;
+}
+div .job input{
+    margin-left:21.9%;
+}
+div .lat input{
+    margin-left:22%;
+}
+
+div .lon input{
+    margin-left:21.4%;
+}
+
+div .country input{
+    margin-left:16.6%;
+}
+
+div .city input{
+    margin-left:21%;
+}
+
+div .address input{
+    margin-left:16.8%;
+}
+
+div .telephone input{
+    margin-left:14.6%;
+}
+
+div .personalpage input{
+    margin-left:10.4%;
+}
+
+div .property input{
+    margin-left:16%;
+}
+
+div .propertydescription input{
+    margin-left:2.8%;
+    padding-bottom: 4%;
+}
+
+div .catkeeper input{
+    margin-top:1%;
+    margin-left:13.1%;
+    height:13px;
+}
+
+div .dogkeeper input{
+    margin-top:1%;
+    margin-left:12.7%;
+    height:13px;
+}
+
+div .catprice input{
+    margin-left:15.3%;
+}
+
+div .dogprice input{
+    margin-left:14.9%;
 }

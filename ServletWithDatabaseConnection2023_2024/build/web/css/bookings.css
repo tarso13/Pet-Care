@@ -1,86 +1,53 @@
-.container-bar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    background-color: #fff;
-    width: 100%;
-    background-color:brown;
-}
-
 body {
-    padding-top: 15px;
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
     font-family: Arial, sans-serif;
-    margin-top:7%;
-    padding: 0;
+    /*background-color: #f4f4f4;*/
+    margin-top:5%;
+    /*display: flex;*/
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-attachment: fixed;
-    margin-top:5%;
+    /*width:50%;*/
+    overflow-x: hidden;
 }
 
-#card-container {
-    padding: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-right:-2%;
+#navbarNavAltMarkup{
+    margin-right:13%;
 }
 
-.card {
-    width: 200px;
-    margin-bottom: 20px;
+.container-bar {
+    width: 100%;
+    background-color:brown;
 }
-
-@media (max-width: 700px) {
-    .category-container {
-        flex-direction: column;
-        align-items: center;
-        max-width: 1200px;
-    }
-    .card {
-        width: 100%;
-    }
-}
-.card-button, .card-button-message , .card-button-reject{
-    display: block;
-    padding: 5px 10px;
-    background-color: brown;
-    color: white;
-    cursor: pointer;
-    border: 1px solid maroon;
-}
-
-.card-button-accept  {
-    display: block;
-    padding: 5px 10px;
-    background-color: green;
-    color: white;
-    border: 1px solid black;
-}
-
-
 .container-bar a{
     margin-bottom: -5%;
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
-    padding-left: 1%;
 }
 /*.account-management{
-    margin-left:90%;
+    position:relative;
+    margin-left:89%;
     padding-top: -2%;
     color:white;
+    padding-right:1%;
 }*/
+.account-management{
+    margin-left:88%;
+    margin-top:0.2%;
+    color:white;
+    padding-right:0px;
+    padding-left:0px;
+}
+
 .collapse .nav-item{
     font-size: 20px;
 }
 
 .collapse{
-    margin-left:50%;
-    margin-right: 10%;
-    margin-bottom:-2.6%;
+    /*margin-left:50%;*/
+    /*margin-right: 10%;*/
+    margin-top:0.1%;
 }
 .collapse .nav-item{
     color: white;
@@ -94,12 +61,12 @@ body {
 
 .navbar-brand:hover{
     color: white;
+
 }
 
 .dropdown-menu{
-    width:2%;
-    position: absolute;
-    /*right: 0;*/
+    /*height:15%;*/
+    padding-bottom: 5px;
 }
 
 .dropdown-menu a{
@@ -110,31 +77,60 @@ body {
 .dropdown-toggle{
     font-size: 20px;
     margin-top:-5%;
-    margin-left:-15%;
-}
-
-.account-management{
-    margin-left:88%;
-    margin-top:0.2%;
-    color:white;
-    padding-right:0px;
-    padding-left:0px;
-}
-
-#navbarNavAltMarkup{
-    margin-right:13%;
+    margin-left:-12%;
 }
 
 .dropdown-toggle:hover{
     color:white;
 }
 
+.card-button{
+    display: block;
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+    border: 1px solid maroon;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#card-container {
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left:1%;
+}
+
+.card {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
 h3{
-    /*margin-top:-2%;*/
-    /*margin-bottom:10%;*/
+    /*margin-top:3%;*/
+    padding-top: 18px;
     font-size:15px;
-    font-family: Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color:brown;
     font-weight: bolder;
     padding-right:80%;
+}
+
+.card-button, .card-button-message , .card-button-reject{
+    display: block;
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+    border: 1px solid maroon;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.card-button-accept  {
+    display: block;
+    padding: 5px 10px;
+    background-color: green;
+    color: white;
+    border: 1px solid black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }

@@ -1,24 +1,40 @@
 body {
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
     font-family: Arial, sans-serif;
-    /*padding: 0;*/
+    /*background-color: #f4f4f4;*/
+    margin-top:5%;
     /*display: flex;*/
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin-bottom:5%;
+    /*width:50%;*/
+    overflow-x: hidden;
 }
+
+#navbarNavAltMarkup{
+    /*margin-left:10%;*/
+    margin-left:2%;
+    /*margin-bottom:0.2%;*/
+}
+
 .container-bar {
     width: 100%;
     background-color:brown;
-    padding-bottom:3%;
 }
 .container-bar a{
-    margin-bottom: -5%;
+    /*margin-bottom: 5%;*/
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
-    padding-left: 1%;
+}
+.navbar{
+    margin-bottom:  20px;
+}
+.account-management{
+    margin-left:1%;
+    margin-top:0.4%;
+    color:white;
+    padding-left:0px;
 }
 
 .collapse .nav-item{
@@ -26,9 +42,7 @@ body {
 }
 
 .collapse{
-    margin-left:57%;
-    margin-right: 0%;
-    margin-bottom:-2.6%;
+    margin-top:0.1%;
 }
 .collapse .nav-item{
     color: white;
@@ -36,70 +50,65 @@ body {
 .collapse .nav-item:hover{
     color: white;
 }
-.navbar-brand{
-    margin-top: -1%;
-}
 
 .navbar-brand:hover{
     color: white;
 
 }
-.card-button{
-   background-color:brown;
-   color:white;
-}
-#card-container {
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
+
+.dropdown-menu{
+    /*height:15%;*/
+    padding-bottom: 5px;
 }
 
+.dropdown-menu a{
+    margin-bottom: 2%;
+
+}
+
+.dropdown-toggle{
+    font-size: 20px;
+    margin-top:-5%;
+    margin-left:-12%;
+}
+
+.dropdown-toggle:hover{
+    color:white;
+}
+
+.card-button{
+    display: block;
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+    border: 1px solid maroon;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#card-container {
+    /*padding: 5px;*/
+    display: flex;
+    flex-wrap: wrap;
+    padding-left:1%;
+}
+.navbar{
+    height: 60px;
+}
 .card {
     width: 200px;
     margin-bottom: 20px;
 }
 
-@media (max-width: 767px) {
-    .category-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .card {
-        width: 100%;
-    }
-}
-
 h3{
-    font-size:20px;
-    font-family: Arial, sans-serif;
+    padding-top: 0px;
+    font-size:15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color:brown;
     font-weight: bolder;
     padding-right:90%;
 }
 
-h2{
-    font-size:20px;
-    font-family: Arial, sans-serif;
-    color:brown;
-    font-weight: bolder;
-}
-
-h4{
-    color:maroon;
-    font-style: oblique;
-    margin-bottom:14px;
-    font-family: sans-serif;
-    padding-top:1%;
-    padding-bottom:2%;
-}
-.info{
-    margin-top:1%;
-    margin-left:2%;
-}
-
-li{
-    margin-bottom:5px;
-}
-li a{
-    font-style: oblique;
+#menu{
+    margin-left:85%;
 }
