@@ -33,6 +33,22 @@
                     usersLinkk.setAttribute("onclick", "redirectToPage('keepers')");
                     usersLinkk.textContent = "Keepers";
                     navBarAltMarkUp.appendChild(usersLinkk);
+                    var keeperId = document.getElementById("keeper_id");
+                    keeperId.setAttribute("value", JSON.parse(localStorage.getItem("keeper_chosen"))["keeper_id"]);
+                    keeperId.setAttribute("disabled", "true");
+                    var ownerId = document.getElementById("owner_id");
+                    var cookies = getAllCookiePairs();
+                    ownerId.setAttribute("value", cookies["owner_id"]);
+                    ownerId.setAttribute("disabled", "true");
+                    var petIds = document.getElementById("pet_id");
+                    var pets = JSON.parse(localStorage.getItem("pets"));
+                    var concatenatedPets = pets[0]["pet_id"];
+                    for (let i = 1; i < pets.length; i++) {
+                        concatenatedPets += ","+pets[i]["pet_id"];
+                    }
+                    petIds.setAttribute("value", concatenatedPets);
+                    petIds.setAttribute("disabled", "true");
+
                 }
             });
         </script>

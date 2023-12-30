@@ -95,20 +95,21 @@ public class EditPetsTable {
         return 0;
     }
 
-    public Pet petOfOwner(String id) throws SQLException, ClassNotFoundException {
+    public ArrayList<Pet> petOfOwner(String id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         Pet pet = null;
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
-
+            ArrayList <Pet> pets = new ArrayList();
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
                 pet = gson.fromJson(json, Pet.class);
+                pets.add(pet);
             }
-            return pet;
+            return pets;
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());

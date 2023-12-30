@@ -865,7 +865,7 @@ function drawEarningsStatistics() {
     chart.draw(data, options);
 }
 
-function goToKeepersPage(){
+function goToKeepersPage() {
     window.open("keepers.html", "_self");
 }
 function getKeepers() {
@@ -957,9 +957,14 @@ function createUserCard(user, admin) {
     if (cookies.hasOwnProperty("owner_id")) {
         let price = document.createElement('p');
         if (localStorage.getItem("petprice") === 'catprice') {
-            price.textContent = `Price: ${user.catprice}€/Night`;
+            price.textContent = `Cat Price: ${user.catprice}€/Night`;
+        } else if (localStorage.getItem("petprice") === 'dogprice') {
+            price.textContent = `Dog Price: ${user.dogprice}€/Night`;
         } else {
-            price.textContent = `Price: ${user.dogprice}€/Night`;
+            price.textContent = `Dog Price: ${user.dogprice}€/Night`;
+            let price2 = document.createElement('p');
+            price2.textContent = `Cat Price: ${user.catprice}€/Night`;
+            card.appendChild(price2);
         }
         card.appendChild(price);
         let cardButton = document.createElement('button');
@@ -1015,40 +1020,55 @@ function deletePetOwner(owner_id) {
 }
 
 function insertBooking() {
-    var jsonData =
-            {
-                owner_id: document.getElementById("owner_id").value,
-                pet_id: document.getElementById("pet_id").value,
-                keeper_id: document.getElementById("keeper_id").value,
-                fromdate: document.getElementById("fromdate").value,
-                todate: document.getElementById("todate").value,
-                status: "requested"
+    var pets = JSON.parse(localStorage.getItem("pets"));
 
-            };
-    var startDate = new Date(document.getElementById("fromdate").value);
-    var endDate = new Date(document.getElementById("todate").value);
-    var timeDifference = endDate.getTime() - startDate.getTime();
-    var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-    var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
-    if (pet_type === "cat") {
-        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"]) * daysDifference;
-    } else {
-        jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["dogprice"]) * daysDifference;
-    }
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (xhr.status !== 200) {
-            displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
-            setTimeout(3000);
-        } else {
-            displaySuccessMessage('The pet has been added to the database!');
-
+    for (let i = 0; i < pets.length; i++) {
+        var jsonData =
+                {
+                    owner_id: document.getElementById("owner_id").value,
+                    pet_id: pets[i]["pet_id"],
+                    keeper_id: document.getElementById("keeper_id").value,
+                    fromdate: document.getElementById("fromdate").value,
+                    todate: document.getElementById("todate").value,
+                    status: "requested"
+                };
+        var startDate = new Date(document.getElementById("fromdate").value);
+        var endDate = new Date(document.getElementById("todate").value);
+        var timeDifference = endDate.getTime() - startDate.getTime();
+        var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+        var owners_pets = JSON.parse(localStorage.getItem("pets"));
+        var pet_type = owners_pets[0]["type"];
+        console.log(owners_pets[0]);
+        for (let i = 1; i < owners_pets.length; i++) {
+            if (owners_pets[i]["type"] !== pet_type) {
+                pet_type = "catdogkeeper";
+            }
         }
-    };
-    xhr.open('POST', 'addBooking');
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(jsonData));
+        var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
+        if (pet_type === "cat") {
+            jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"]) * daysDifference;
+        } else if (pet_type === "catdogkeeper") {
+            let catprice = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"]) * daysDifference;
+            let dogprice = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["dogprice"]) * daysDifference;
+            jsonData["price"] = catprice + dogprice;
+        } else {
+            jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["dogprice"]) * daysDifference;
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.status !== 200) {
+                displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
+                setTimeout(3000);
+            } else {
+                displaySuccessMessage('The booking has been added!');
+
+            }
+        };
+        xhr.open('POST', 'addBooking');
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(jsonData));
+    }
 }
 
 function getAvailableKeepers() {
@@ -1059,20 +1079,28 @@ function getAvailableKeepers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            localStorage.setItem("pet", this.responseText);
-            var keeper_type;
+            localStorage.setItem("pets", this.responseText);
+            var owners_pets = JSON.parse(localStorage.getItem("pets"));
+            var pet_type = owners_pets[0]["type"];
+            for (let i = 1; i < owners_pets.length; i++) {
+                if (owners_pets[i]["type"] !== pet_type) {
+                    pet_type = "catdogkeeper";
+                }
+            }
+
             var pet_price;
-            if (JSON.parse(this.responseText)["type"] === "cat") {
-                keeper_type = "catkeeper";
+
+            if (pet_type === "catkeeper") {
                 pet_price = "catprice";
+            } else if (pet_type === "catdogkeeper") {
+                pet_price = "catdogprice";
             } else {
-                keeper_type = "dogkeeper";
                 pet_price = "dogprice";
             }
             localStorage.setItem("pet_price", pet_price);
             var jsonDataType = JSON.stringify({
                 owner_id: cookies["owner_id"],
-                type: keeper_type
+                type: pet_type
             });
 
             const xhr1 = new XMLHttpRequest();

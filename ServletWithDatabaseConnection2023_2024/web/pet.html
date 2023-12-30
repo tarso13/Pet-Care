@@ -28,8 +28,6 @@
                     usersLink0.setAttribute("onclick", "getOwnerBookings()");
                     usersLink0.textContent = "Bookings";
                     navbar.appendChild(usersLink0);
-                
-//                    menu.appendChild(usersLink);
                     var usersLinkk = document.createElement("a");
                     usersLinkk.classList.add("nav-item", "nav-link");
                     usersLinkk.setAttribute("onclick", "addPetPage()");
@@ -40,6 +38,10 @@
                     usersLink1.setAttribute("onclick", "getKeepers()");
                     usersLink1.textContent = "Keepers";
                     navbar.appendChild(usersLink1);
+                    var ownerId = document.getElementById("owner_id");
+                    var cookies = getAllCookiePairs();
+                    ownerId.setAttribute("value", cookies["owner_id"]);
+                    ownerId.setAttribute("disabled", "true");
                 }
             });
         </script>

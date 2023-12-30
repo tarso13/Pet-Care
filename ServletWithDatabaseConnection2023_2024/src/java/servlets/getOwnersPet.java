@@ -96,18 +96,19 @@ public class getOwnersPet extends HttpServlet {
         String json = requestData.toString();
         Gson gson = new Gson();
         Map<String, String> jsonObject = gson.fromJson(json, Map.class);
+        
         try (PrintWriter out = response.getWriter()) {
             EditPetsTable eut = new EditPetsTable();
-            Pet ownersPet = eut.petOfOwner(jsonObject.get("owner_id"));
+            ArrayList<Pet>ownersPets = eut.petOfOwner(jsonObject.get("owner_id"));
 
-            if (ownersPet == null) {
+            if (ownersPets.isEmpty()) {
                 response.setStatus(406);
                 response.getWriter().print("You do not own a pet.");
                 return;
             }
 
             Gson gsonMessages = new Gson();
-            String petJson = gsonMessages.toJson(ownersPet);
+            String petJson = gsonMessages.toJson(ownersPets);
             out.print(petJson);
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (SQLException ex) {

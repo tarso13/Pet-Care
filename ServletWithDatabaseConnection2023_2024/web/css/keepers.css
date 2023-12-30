@@ -84,6 +84,9 @@ body {
     cursor: pointer;
     border: 1px solid maroon;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    position:absolute;
+    bottom:0;
+    width:200px;
 }
 
 #card-container {
@@ -98,6 +101,7 @@ body {
 .card {
     width: 200px;
     margin-bottom: 20px;
+    height:265px;
 }
 
 h3{

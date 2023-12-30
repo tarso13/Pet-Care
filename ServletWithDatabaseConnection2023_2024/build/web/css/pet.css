@@ -118,6 +118,7 @@ h3{
 #petForm{
     margin-left:37%;
 }
+
 #owner_id{
     margin-left:12.1%;
 }
@@ -156,7 +157,7 @@ h3{
 }
 
 #description_label{
-    position:relative;
+    /*position:relative;*/
 }
 
 input[type="submit"]{
@@ -165,4 +166,8 @@ input[type="submit"]{
     margin-left:15%;
     width:113px;
     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#pet_id{
+    margin-right:15%;
 }

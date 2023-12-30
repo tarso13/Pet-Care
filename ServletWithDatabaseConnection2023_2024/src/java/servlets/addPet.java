@@ -93,6 +93,7 @@ public class addPet extends HttpServlet {
             requestData.append(line);
         }
         String json = requestData.toString();
+        System.out.println(json);
         try (PrintWriter out = response.getWriter()) {
             Pet pet = ept.jsonToPet(json);
             Boolean ownerExistsOwnersTable = eut.databasePetOwnerExists(String.valueOf(pet.getOwnerId()));
@@ -103,12 +104,12 @@ public class addPet extends HttpServlet {
                 return;
             }
 
-            Pet ownerExistsPetsTable = ept.petOfOwner(String.valueOf(pet.getOwnerId()));
-            if (ownerExistsPetsTable != null) {
-                response.setStatus(406);
-                response.getWriter().print("Owner already has a pet");
-                return;
-            }
+//            Pet ownerExistsPetsTable = ept.petOfOwner(String.valueOf(pet.getOwnerId()));
+//            if (ownerExistsPetsTable != null) {
+//                response.setStatus(406);
+//                response.getWriter().print("Owner already has a pet");
+//                return;
+//            }
 
             String petId = String.valueOf(pet.getPetId());
             Boolean petExists = ept.databaseToPetId(petId);

@@ -82,7 +82,14 @@ public class EditPetKeepersTable {
 
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE " + type + "='true'");
+            String query = "SELECT * FROM petkeepers WHERE ";
+            String rest_of_query;
+            if (type.equals("catdogkeeper")) {
+                rest_of_query = "catkeeper='true' AND dogkeeper='true'";
+            }else{
+                 rest_of_query = type + "='true'";
+            }
+            rs = stmt.executeQuery(query + rest_of_query);
             PetKeeper user;
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);

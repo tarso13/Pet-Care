@@ -125,9 +125,9 @@ public class InitDatabase {
 
         //Get Pet of Owner
         EditPetsTable editpets = new EditPetsTable();
-        Pet pet = editpets.petOfOwner("4");
-        String petjson = editpets.petToJSON(pet);
-        System.out.println("Pet of Owner 4\n" + petjson + "\n");
+//        Pet pet = editpets.petOfOwner("4");
+//        String petjson = editpets.petToJSON(pet);
+//        System.out.println("Pet of Owner 4\n" + petjson + "\n");
 
         //Get Pets that are cats
         ArrayList<Pet> cats = new ArrayList<Pet>();
