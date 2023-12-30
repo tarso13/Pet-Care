@@ -61,7 +61,7 @@ public class EditBookingsTable {
         Statement stmt = con.createStatement();
         ResultSet rs;
         try {
-            ArrayList <Integer> ids_future_dates = new ArrayList();
+            ArrayList<Integer> ids_future_dates = new ArrayList();
             rs = stmt.executeQuery("SELECT * FROM bookings WHERE status='requested' OR status='accepted'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
@@ -72,9 +72,9 @@ public class EditBookingsTable {
                 Date bookingToDate = sdf.parse(booking.getToDate());
                 if (bookingToDate.after(currentDate)) {
                     ids_future_dates.add(booking.getKeeper_id());
-                } 
+                }
             }
-            
+
             return ids_future_dates;
         } catch (Exception e) {
             System.err.println("Got an exception!");
@@ -194,6 +194,28 @@ public class EditBookingsTable {
         return null;
     }
 
+    public Booking getOwnerBookingId(String owner_id) throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE owner_id='" + owner_id + "'");
+            if (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class
+                );
+               return booking;
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
     public ArrayList getKeeperAcceptedBookings(String keeper_id) throws SQLException, ClassNotFoundException {
         ArrayList<Booking> bookings = new ArrayList<>();
         Connection con = DB_Connection.getConnection();
@@ -201,7 +223,7 @@ public class EditBookingsTable {
 
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM bookings WHERE keeper_id='" + keeper_id + "' AND status='accepted'");
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE keeper_id='" + keeper_id + "' AND status='accepted' OR status='finished'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -247,7 +269,7 @@ public class EditBookingsTable {
 
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM bookings WHERE owner_id='" + owner_id + "' AND status='accepted'");
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE owner_id='" + owner_id + "' AND status='accepted' OR status='finished'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -297,5 +319,28 @@ public class EditBookingsTable {
             Logger.getLogger(EditBookingsTable.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<Booking> getAllBookings() throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM bookings WHERE status='accepted' OR status='finished'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Booking booking = gson.fromJson(json, Booking.class
+                );
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 }

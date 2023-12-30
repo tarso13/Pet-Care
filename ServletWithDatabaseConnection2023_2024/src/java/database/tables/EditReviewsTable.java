@@ -22,18 +22,17 @@ import mainClasses.Review;
  */
 public class EditReviewsTable {
 
-    
-     public void addReviewFromJSON(String json) throws ClassNotFoundException{
-         Review msg=jsonToReview(json);
-         createNewReview(msg);
+    public void addReviewFromJSON(String json) throws ClassNotFoundException {
+        Review msg = jsonToReview(json);
+        createNewReview(msg);
     }
-    
-      public Review jsonToReview(String json) {
+
+    public Review jsonToReview(String json) {
         Gson gson = new Gson();
         Review msg = gson.fromJson(json, Review.class);
         return msg;
     }
-     
+
     public String reviewToJSON(Review msg) {
         Gson gson = new Gson();
 
@@ -41,16 +40,36 @@ public class EditReviewsTable {
         return json;
     }
 
-   
-    
-    
-     public ArrayList<Review> databaseTokeeperReviews(String keeper_id) throws SQLException, ClassNotFoundException {
+    public ArrayList<Review> getAllReviews() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        ArrayList<Review> revs=new ArrayList<Review>();
+        ArrayList<Review> revs = new ArrayList<Review>();
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM reviews where keeper_id='"+keeper_id+"'");
+            rs = stmt.executeQuery("SELECT * FROM reviews");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Review rev = gson.fromJson(json, Review.class);
+                revs.add(rev);
+            }
+            return revs;
+
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+
+    }
+
+    public ArrayList<Review> databaseTokeeperReviews(String keeper_id) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<Review> revs = new ArrayList<Review>();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM reviews where keeper_id='" + keeper_id + "'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -65,7 +84,6 @@ public class EditReviewsTable {
         }
         return null;
     }
-
 
     public void createReviewTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
@@ -84,7 +102,7 @@ public class EditReviewsTable {
         con.close();
 
     }
-    
+
     /**
      * Establish a database connection and add in the database.
      *
@@ -99,8 +117,8 @@ public class EditReviewsTable {
             String insertQuery = "INSERT INTO "
                     + " reviews (owner_id, keeper_id,reviewText,reviewScore) "
                     + " VALUES ("
-                    + "'" + rev.getOwner_id()+ "',"
-                    + "'" + rev.getKeeper_id()+ "',"
+                    + "'" + rev.getOwner_id() + "',"
+                    + "'" + rev.getKeeper_id() + "',"
                     + "'" + rev.getReviewText() + "',"
                     + "'" + rev.getReviewScore() + "'"
                     + ")";

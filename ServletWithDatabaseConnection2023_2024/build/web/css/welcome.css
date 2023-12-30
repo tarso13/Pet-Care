@@ -47,7 +47,7 @@ body {
 .collapse{
     /*margin-left:50%;*/
     /*margin-right: 10%;*/
-   margin-top:0.1%;
+    margin-top:0.1%;
 }
 .collapse .nav-item{
     color: white;
@@ -94,12 +94,11 @@ body {
     outline: 1px solid brown;
     gap:5px;
     border-radius: 1%;
-    /*margin-left:2%;*/
 }
 
 .card-button{
-   background-color:brown;
-   color:white;
+    background-color:brown;
+    color:white;
 }
 
 #card-container {
@@ -111,4 +110,46 @@ body {
 .card {
     width: 200px;
     margin-bottom: 20px;
+}
+
+
+h3{
+    padding-top: 20px;
+    font-size:20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:brown;
+    font-weight: bolder;
+    /*padding-right:80%;*/
+    width:100%;
+}
+h4{
+    font-size:15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:brown;
+    font-weight: bolder;
+    padding-right:80%;
+    width:100%;
+
+}
+#announcements{
+    padding-left:1%;
+}
+#giveaways{
+    margin-left:45%;
+    padding:0;
+}
+#announcements p, #giveaways p{
+    color:black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#giveaways button{
+    margin-top:15%;
+    margin-left:-19%;
+    width:400px;
+    height:200px;
+    background-color: brown;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size:25px;
 }

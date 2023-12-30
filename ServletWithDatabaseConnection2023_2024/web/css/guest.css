@@ -12,7 +12,7 @@ body {
 }
 
 #navbarNavAltMarkup{
-    margin-right:13%;
+    margin-right:-0.5%;
 }
 
 .container-bar {
@@ -20,7 +20,7 @@ body {
     background-color:brown;
 }
 .container-bar a{
-    margin-bottom: -5%;
+    margin-bottom: -3.5%;
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
@@ -47,7 +47,8 @@ body {
 .collapse{
     /*margin-left:50%;*/
     /*margin-right: 10%;*/
-    margin-top:0.1%;
+    /*margin-top:0.1%;*/
+    padding-bottom:35px;
 }
 .collapse .nav-item{
     color: white;
@@ -56,12 +57,15 @@ body {
     color: white;
 }
 .navbar-brand{
-    margin-top: -1%;
+    margin-top: -3.3%;
 }
 
 .navbar-brand:hover{
     color: white;
 
+}
+.navbar{
+    margin-bottom:  20px;
 }
 
 .dropdown-menu{
@@ -84,72 +88,33 @@ body {
     color:white;
 }
 
-.charts{
-    display:flex;
-    margin-left:2.8%;
-    margin-top:5%;
-}
-
-.charts div{
-    outline: 1px solid brown;
-    gap:5px;
-    border-radius: 1%;
-}
-
-.card-button{
-    background-color:brown;
-    color:white;
-}
-
-#card-container {
-    padding: 5px;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.card {
-    width: 200px;
-    margin-bottom: 20px;
-}
-
-
-h3{
+/*h3{
     padding-top: 20px;
     font-size:20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color:brown;
     font-weight: bolder;
-    /*padding-right:80%;*/
+    padding-right:80%;
     width:100%;
-}
+}*/
 h4{
     font-size:15px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color:brown;
     font-weight: bolder;
-    padding-right:80%;
+    padding-right:60%;
     width:100%;
 
 }
-#announcements{
+
+.info{
     padding-left:1%;
 }
-#giveaways{
-    margin-left:45%;
-    padding:0;
-}
-#announcements p, #giveaways p{
-    color:black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.info ul{
+    margin-top:2%;
+    margin-right:2%;
 }
 
-#giveaways button{
-    margin-top:15%;
-    margin-left:-19%;
-    width:400px;
-    height:200px;
-    background-color: brown;
-    color: white;
+.info ul li{
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size:25px;
 }

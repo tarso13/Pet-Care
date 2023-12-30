@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Assignment 3 Tarso Keletzi CS359 Guest</title>
+        <title>Assignment 3 Tarso Keletzi CS359 Keepers</title>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="css/keepers.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -21,6 +21,7 @@
                 var userspan = document.getElementById("user");
                 userspan.innerHTML = cookies["username"];
                 var navbar = document.getElementById("navbarNavAltMarkup");
+                var account_management = document.getElementById('account-management');
                 if (cookies.hasOwnProperty("owner_id")) {
                     var usersLink = document.createElement("a");
                     usersLink.classList.add("nav-item", "nav-link");
@@ -47,12 +48,18 @@
                     navbar.appendChild(usersLink3);
                     getAvailableKeepers();
                 } else {
-                    addKeeperCardsGuest();
+                    account_management.style.display = "none";
+                    var usersLink3 = document.createElement("a");
+                    usersLink3.classList.add("nav-item", "nav-link");
+                    usersLink3.setAttribute("onclick", "getKeepers()");
+                    usersLink3.textContent = "Keepers";
+                    navbar.appendChild(usersLink3);
                     var usersLink = document.createElement("a");
                     usersLink.classList.add("nav-item", "nav-link");
                     usersLink.textContent = "Useful Links";
                     usersLink.setAttribute("onclick", "getInfoLinks()");
-                    navbar.add(usersLink);
+                    navbar.appendChild(usersLink);
+                    addKeeperCardsGuest();
                 }
             });
         </script> 
@@ -67,7 +74,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
 
                 </div>
-                <div class="account-management">
+                <div class="account-management" id="account-management">
                     <a class="nav-link dropdown-toggle" href="welcome_page.html" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span id="user"></span>  
                     </a>

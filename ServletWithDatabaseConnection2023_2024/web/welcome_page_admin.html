@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <title>Assignment 3 Tarso Keletzi CS359 Welcome Page Admin</title>
         <link rel="stylesheet" href="css/welcome.css">
@@ -49,11 +50,12 @@
                 </div>
             </div>
         </div>
-        <br>
+        <div id="giveaways"> <h3> Giveaway</h3><button type="button" onclick="runGiveaway()">Run Giveaway</button></div>
         <div class="charts">
             <div id="pet_chart_div"></div>
             <div id="user_chart_div"></div>
             <div id="money_chart_div"></div>
         </div>
+
     </body>
 </html>

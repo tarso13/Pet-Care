@@ -185,6 +185,56 @@ function askCHATGPT() {
 
     });
 }
+function runGiveaway() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let bookings = JSON.parse(this.responseText);
+            sendMessageGiveaway("Congratulations! You have won the a 100€ gift card for a pet shop of your choice!", bookings[0].booking_id);
+            sendMessageGiveaway("Congratulations! You have won a free cup of coffee at a cat cafe!", bookings[1].booking_id);
+
+        } else {
+            displayErrorMessage("Giveaway for this month already exists.");
+        }
+    };
+    xhr.open("GET", 'runGiveaway');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
+}
+function sendMessageGiveaway(message, booking_id) {
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    var day = ('0' + currentDate.getDate()).slice(-2);
+    var hours = ('0' + currentDate.getHours()).slice(-2);
+    var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    var seconds = ('0' + currentDate.getSeconds()).slice(-2);
+    var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    var path = "sendMessageToOwner";
+
+    var jsonData = JSON.stringify(
+            {
+                booking_id: booking_id,
+                message: message,
+                sender: "admin",
+                datetime: formattedDate
+            }
+    );
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            ;
+        } else {
+            displayErrorMessage("Message could not be sent.");
+        }
+    };
+    xhr.open("POST", path);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
+}
+
 function sendMessage(booking) {
     Swal.fire({
         title: 'Enter your message',
@@ -662,10 +712,6 @@ function getOwnerCount() {
 }
 function addMessageCards() {
     let container = document.getElementById('card-container');
-//    let messages_header = document.createElement('h3');
-//    messages_header.textContent = 'Messages';
-//    messages_header.className = 'mt-4';
-//    container.appendChild(messages_header);
     var messages = JSON.parse(localStorage.getItem('messages'));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
@@ -689,21 +735,23 @@ function createMessageCard(entry) {
     let datetime = document.createElement('p');
     datetime.textContent = `Datetime: ${entry.datetime}`;
     card.appendChild(datetime);
-    let cardButton = document.createElement('button');
-    cardButton.className = 'card-button';
-    cardButton.textContent = 'Reply';
-    cardButton.onclick = function () {
-        sendMessage(entry);
-    };
-    card.appendChild(cardButton);
+    if (`${entry.sender}` !== "admin" && `${entry.status}` === "accepted") {
+        let cardButton = document.createElement('button');
+        cardButton.className = 'card-button';
+        cardButton.textContent = 'Reply';
+        cardButton.onclick = function () {
+            sendMessage(entry);
+        };
+        card.appendChild(cardButton);
+    }
     return card;
 }
 
 function getMessages() {
+
     var cookies = getAllCookiePairs();
     var path, jsonData;
     if (cookies.hasOwnProperty("keeper_id")) {
-        console.log("keeper");
         path = 'getMessagesKeeper';
         jsonData = JSON.stringify({
             keeper_id: cookies["keeper_id"]
@@ -718,8 +766,10 @@ function getMessages() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            window.open("messages.html", "_self");
+            console.log(this.responseText);
             localStorage.setItem("messages", this.responseText);
+            window.open("messages.html", "_self");
+
         }
     };
     xhr.open("POST", path);
@@ -750,6 +800,7 @@ function drawCharts() {
     google.charts.setOnLoadCallback(drawPetStatistics);
     google.charts.setOnLoadCallback(drawUserStatistics);
     google.charts.setOnLoadCallback(drawEarningsStatistics);
+//    location.reload();
 }
 
 function drawPetStatistics() {
@@ -814,9 +865,12 @@ function drawEarningsStatistics() {
     chart.draw(data, options);
 }
 
+function goToKeepersPage(){
+    window.open("keepers.html", "_self");
+}
 function getKeepers() {
     var cookies = getAllCookiePairs();
-    if(cookies.hasOwnProperty("owner_id")){
+    if (cookies.hasOwnProperty("owner_id")) {
         window.open("keepers.html", "_self");
     }
     const xhr_keepers = new XMLHttpRequest();
@@ -1074,10 +1128,10 @@ function addKeeperCardsGuest() {
 
 function addUserCards() {
     let container = document.getElementById('card-container');
-//    let keepers_header = document.createElement('h3');
-//    keepers_header.textContent = 'Keepers';
-//    keepers_header.className = 'mt-4';
-//    container.appendChild(keepers_header);
+    let keepers_header = document.createElement('h3');
+    keepers_header.textContent = 'Keepers';
+    keepers_header.className = 'mt-4';
+    container.appendChild(keepers_header);
     var keepers = JSON.parse(localStorage.getItem('keepers'));
     var owners = JSON.parse(localStorage.getItem('owners'));
     let categoryContainer = document.createElement('div');
@@ -1099,8 +1153,8 @@ function addUserCards() {
 }
 
 function logout() {
+    localStorage.clear();
     if (localStorage.getItem("username") === 'admin') {
-        localStorage.clear();
         window.location.href = 'login.html';
         return;
     }

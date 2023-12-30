@@ -3,7 +3,7 @@
     <head>
         <title>Assignment 3 Tarso Keletzi CS359 Guest</title>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" href="css/keepers.css">
+        <link rel="stylesheet" href="css/guest.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -17,33 +17,35 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                addKeeperCardsGuest();
+//                addKeeperCardsGuest();
             });
         </script> 
     </head>
     <body>
         <div class="container-bar">
             <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="login.html">Pet Care</a>
+                <a class="navbar-brand" href="#">Pet Care</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <a class="nav-item nav-link" onclick='getKeepers()'>Keepers</a>
+                    <a class="nav-item nav-link" onclick='goToKeepersPage()'>Keepers</a>
                     <a class="nav-item nav-link" onclick='getInfoLinks()'>Useful Links</a>
                 </div>
             </nav>
         </div>
         <div class="info">
-            <!--<h2>Useful Links</h2>-->
             <h4> Pet keeping sites, pet care & more!</h4>
+
             <ul>
+                <li><a href="https://www.i-pet.gr/">i-Pet</a></li>
+                <li><a href="https://allaboutpets.gr/katoikidia-zoa-gia-mesa-sto-spiti/">All About Pets</a></li>
                 <li><a href="https://www.keeppet.gr/">Keep Pet</a></li>
                 <li><a href="https://bestfriends.org/">Best Friends</a></li>
                 <li><a href="https://racooned.com/">Racooned</a></li>
                 <li><a href="https://iheartdogs.com/">I Heart Dogs</a></li>
                 <li><a href="https://www.gooddog.com/">Good Dog</a></li>
-                <li><a href="https://www.aspca.org/pet-care/cat-care/general-cat-care">Pet Care (Cat Focused)</a></li>
+                <li><a href="https://www.aspca.org/pet-care/cat-care/general-cat-care">Pet Care (Cat Care)</a></li>
             </ul>
         </div>
     </body>

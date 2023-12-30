@@ -16,7 +16,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var userspan = document.getElementById("user");
-
+                var menu = document.getElementById("menu");
                 if (userspan) {
                     var username = localStorage.getItem("username");
                     if (!username) {
@@ -34,31 +34,43 @@
                         usersLink.textContent = "Bookings";
                         var navbar = document.getElementById("navbarNavAltMarkup");
                         navbar.appendChild(usersLink);
+
                         if (cookies.hasOwnProperty("keeper_id")) {
-                            var menu = document.getElementById("menu");
                             var usersLink = document.createElement("a");
                             usersLink.classList.add("dropdown-item");
                             usersLink.setAttribute("onclick", "getKeeperStats()");
                             usersLink.textContent = "My Stats";
                             menu.appendChild(usersLink);
+                            var usersLink1 = document.createElement("a");
+                            usersLink1.classList.add("dropdown-item");
+                            usersLink1.setAttribute("onclick", "redirectToPage('accountData')");
+                            usersLink1.textContent = "MyAccount";
+                            menu.appendChild(usersLink1);
                             var usersLink2 = document.createElement("a");
                             usersLink2.classList.add("dropdown-item");
                             usersLink2.setAttribute("onclick", "logout()");
                             usersLink2.textContent = "Logout";
                             menu.appendChild(usersLink2);
                         }
+                    } else {
+                        userspan.innerHTML = username;
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("nav-item", "nav-link");
+                        usersLink.setAttribute("onclick", "getUsers()");
+                        usersLink.textContent = "Users";
+                        var navbar = document.getElementById("navbarNavAltMarkup");
+                        navbar.appendChild(usersLink);
+                        var usersLink2 = document.createElement("a");
+                        usersLink2.classList.add("dropdown-item");
+                        usersLink2.setAttribute("onclick", "logout()");
+                        usersLink2.textContent = "Logout";
+                        menu.appendChild(usersLink2);
                     }
-                } else {
-                    userspan.innerHTML = username;
-                    var usersLink = document.createElement("a");
-                    usersLink.classList.add("nav-item", "nav-link");
-                    usersLink.setAttribute("onclick", "getUsers()");
-                    usersLink.textContent = "Users";
-                    var navbar = document.getElementById("navbarNavAltMarkup");
-                    navbar.appendChild(usersLink);
+
                 }
                 drawCharts();
-            });
+            }
+            );
         </script>
     </head>
     <body>
@@ -78,7 +90,7 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
+                    <!--<a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>-->
                     <!--<a class="dropdown-item" onclick='logout()'>Logout</a>-->
                 </div>
             </div>

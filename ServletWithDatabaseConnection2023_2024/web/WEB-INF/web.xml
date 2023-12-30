@@ -144,6 +144,10 @@
         <servlet-name>addBooking</servlet-name>
         <servlet-class>servlets.addBooking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>runGiveaway</servlet-name>
+        <servlet-class>servlets.runGiveaway</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -283,6 +287,10 @@
     <servlet-mapping>
         <servlet-name>addBooking</servlet-name>
         <url-pattern>/addBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>runGiveaway</servlet-name>
+        <url-pattern>/runGiveaway</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

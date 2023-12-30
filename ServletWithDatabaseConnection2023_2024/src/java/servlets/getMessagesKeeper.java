@@ -55,7 +55,6 @@ public class getMessagesKeeper extends HttpServlet {
 //            out.println("</html>");
 //        }
 //    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -115,7 +114,6 @@ public class getMessagesKeeper extends HttpServlet {
 //            throws ServletException, IOException {
 //        processRequest(request, response);
 //    }
-
 //    /**
 //     * Returns a short description of the servlet.
 //     *
@@ -125,5 +123,4 @@ public class getMessagesKeeper extends HttpServlet {
 //    public String getServletInfo() {
 //        return "Short description";
 //    }// </editor-fold>
-
 }

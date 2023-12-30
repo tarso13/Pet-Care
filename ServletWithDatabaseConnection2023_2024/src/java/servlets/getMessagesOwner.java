@@ -47,7 +47,7 @@ public class getMessagesOwner extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet getMessagesOwner</title>");            
+            out.println("<title>Servlet getMessagesOwner</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet getMessagesOwner at " + request.getContextPath() + "</h1>");
@@ -82,7 +82,8 @@ public class getMessagesOwner extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       response.setContentType("text/html;charset=UTF-8");
+        System.out.println("hello");
+        response.setContentType("text/html;charset=UTF-8");
         StringBuilder requestData = new StringBuilder();
         InputStream inputStream = request.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -103,6 +104,15 @@ public class getMessagesOwner extends HttpServlet {
                 ArrayList<Message> bookingMessages = emt.keeperMessages(booking.getBorrowing_id());
                 if (!bookingMessages.isEmpty()) {
                     for (Message m : bookingMessages) {
+                        messages.add(m);
+                    }
+                }
+            }
+            bookings = eut.getOwnerBookings(jsonObject.get("owner_id"));
+            for (Booking booking : bookings) {
+                ArrayList<Message> adminMessages = emt.adminMessages(booking.getBorrowing_id());
+                if (!adminMessages.isEmpty()) {
+                    for (Message m : adminMessages) {
                         messages.add(m);
                     }
                 }

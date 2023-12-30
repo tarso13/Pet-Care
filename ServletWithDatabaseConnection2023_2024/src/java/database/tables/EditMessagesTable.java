@@ -69,7 +69,7 @@ public class EditMessagesTable {
         ArrayList<Message> messages = new ArrayList<>();
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM messages WHERE booking_id= '" + booking_id + "' AND sender='owner'");
+            rs = stmt.executeQuery("SELECT * FROM messages WHERE booking_id='" + booking_id + "' AND sender='owner'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -83,14 +83,58 @@ public class EditMessagesTable {
         }
         return null;
     }
-    
-        public ArrayList<Message> keeperMessages(int booking_id) throws SQLException, ClassNotFoundException {
+
+    public ArrayList<Message> getMessagesAdmin() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<Message> messages = new ArrayList<>();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM messages WHERE sender='admin'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Message msg = gson.fromJson(json, Message.class);
+                messages.add(msg);
+                System.out.println(msg);
+            }
+            return messages;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+
+        }
+        return null;
+    }
+
+    public ArrayList<Message> keeperMessages(int booking_id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         ArrayList<Message> messages = new ArrayList<>();
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM messages WHERE booking_id= '" + booking_id + "' AND sender='keeper'");
+            while (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                Gson gson = new Gson();
+                Message msg = gson.fromJson(json, Message.class);
+                messages.add(msg);
+            }
+            return messages;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+
+        }
+        return null;
+    }
+
+    public ArrayList<Message> adminMessages(int booking_id) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<Message> messages = new ArrayList<>();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM messages WHERE booking_id= '" + booking_id + "' AND sender='admin'");
+            System.out.println("SELECT * FROM messages WHERE booking_id= '" + booking_id + "' AND sender='admin'");
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
