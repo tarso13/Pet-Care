@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/welcome.css</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/account.css</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/database/tables/EditMessagesTable.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/database/tables/EditPetsTable.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/addPet.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/database/tables/EditBookingsTable.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/js/script.js</file>
             <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/web/css/messages.css</file>
-            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/runGiveaway.java</file>
+            <file>file:/C:/Users/kelet/OneDrive/Έγγραφα/GitHub/Pet-Care/ServletWithDatabaseConnection2023_2024/src/java/servlets/getOwnersPet.java</file>
         </group>
     </open-files>
 </project-private>

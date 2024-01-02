@@ -3,6 +3,16 @@ var user_data = null;
 function displayLoginPage() {
     window.open('login.html', '_self');
 }
+
+function petManagementInfo() {
+    Swal.fire({
+        icon: 'info',
+        title: 'Pet Management',
+        text: "To change your pet's weight, make a PUT request to: http://localhost:4567/PetsAPI/petWeight/:pet_id/:weight,\n\
+        To delete your pet, make a DELETE request to: http://localhost:4567/PetsAPI/petDeletion/:pet_id",
+        confirmButtonColor: 'brown'
+    });
+}
 function addBookingCards() {
     let container = document.getElementById('card-container');
 //    let header = document.createElement('h3');
