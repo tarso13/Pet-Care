@@ -63,10 +63,11 @@ body {
     padding-left: 1%;
 }
 .account-management{
-    margin-left:90%;
-    padding-top: -3%;
-    color:white;
-    /*padding-bottom: 15px;*/
+    margin-top: -10px; 
+    margin-left: 90%;
+    color: white;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 .collapse .nav-item{
     font-size: 20px;
@@ -94,7 +95,7 @@ body {
 }
 
 .dropdown-menu a{
-   margin-bottom:1%;
+    margin-bottom:1%;
 }
 
 
@@ -112,7 +113,8 @@ h3{
     margin-top:-2%;
     margin-bottom:10%;
     font-size:20px;
-    font-family: Georgia, 'Times New Roman', Times, serif;  ;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    ;
     color:brown;
     font-weight: bolder;
     padding-right:90%;

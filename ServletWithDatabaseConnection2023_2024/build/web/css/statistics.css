@@ -27,10 +27,11 @@ body {
 }
 
 .account-management{
-    margin-left:88%;
-    color:white;
-    padding-right:0px;
-    padding-left:0px;
+    margin-top: -10px; 
+    margin-left: 88%;
+    color: white;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .collapse .nav-item{
