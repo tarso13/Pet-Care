@@ -6,12 +6,17 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import database.tables.EditBookingsTable;
 import database.tables.EditPetKeepersTable;
+import database.tables.EditReviewsTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -76,22 +81,32 @@ public class deletePetKeeper extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        StringBuilder requestData = new StringBuilder();
-        InputStream inputStream = request.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            requestData.append(line);
-        }
-        String json = requestData.toString();
-        System.out.println(json);
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-        String keeperId = jsonObject.get("keeper_id").getAsString();
-        EditPetKeepersTable eut = new EditPetKeepersTable();
-        eut.deletePetKeeper(keeperId, response);
+//        try {
+            response.setContentType("text/html;charset=UTF-8");
+            StringBuilder requestData = new StringBuilder();
+            InputStream inputStream = request.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestData.append(line);
+            }
+            String json = requestData.toString();
+            System.out.println(json);
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+            String keeperId = jsonObject.get("keeper_id").getAsString();
+            EditReviewsTable ert = new EditReviewsTable();
+            ert.deleteReviewByKeeperId(keeperId);
+            EditBookingsTable ebt = new EditBookingsTable();
+            ebt.deleteBookingByKeeperId(keeperId);
+            EditPetKeepersTable eut = new EditPetKeepersTable();
+            eut.deletePetKeeper(keeperId, response);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(deletePetKeeper.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(deletePetKeeper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**

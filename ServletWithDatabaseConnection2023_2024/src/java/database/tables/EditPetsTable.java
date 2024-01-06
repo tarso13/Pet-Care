@@ -229,6 +229,21 @@ public class EditPetsTable {
         stmt.close();
         con.close();
     }
+    
+    public void deletePetByOwnerId(String owner_id) {
+        try {
+            Connection con = DB_Connection.getConnection();
+            Statement stmt = con.createStatement();
+            String deleteQuery = "DELETE FROM pets WHERE owner_id='" + owner_id + "'";
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPetsTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditPetsTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void createPetsTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();

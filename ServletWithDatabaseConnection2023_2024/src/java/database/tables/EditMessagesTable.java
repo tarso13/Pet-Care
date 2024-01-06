@@ -199,4 +199,12 @@ public class EditMessagesTable {
         }
     }
 
+    public void deleteMessageByBookingId(String booking_id) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        String deleteQuery = "DELETE FROM messages WHERE booking_id='" + booking_id + "'";
+        stmt.executeUpdate(deleteQuery);
+        stmt.close();
+        con.close();
+    }
 }

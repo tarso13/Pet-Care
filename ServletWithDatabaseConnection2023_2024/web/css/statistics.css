@@ -25,16 +25,9 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bold;
 }
-/*.account-management{
-    position:relative;
-    margin-left:89%;
-    padding-top: -2%;
-    color:white;
-    padding-right:1%;
-}*/
+
 .account-management{
     margin-left:88%;
-    margin-top:0.2%;
     color:white;
     padding-right:0px;
     padding-left:0px;
@@ -86,14 +79,16 @@ body {
 
 .charts{
     display:flex;
-    margin-left:2.8%;
+/*    margin-left:5%;*/
     margin-top:5%;
+    width:50%;
 }
 
 .charts div{
     outline: 1px solid brown;
     gap:5px;
     border-radius: 1%;
+
 }
 
 .card-button{
@@ -130,26 +125,4 @@ h4{
     padding-right:80%;
     width:100%;
 
-}
-#announcements{
-    padding-left:1%;
-}
-#giveaways{
-    margin-left:45%;
-    padding:0;
-}
-#announcements p, #giveaways p{
-    color:black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-#giveaways button{
-    margin-top:15%;
-    margin-left:-23%;
-    width:400px;
-    height:200px;
-    background-color: brown;
-    color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size:25px;
 }

@@ -6,12 +6,18 @@ package servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import database.tables.EditBookingsTable;
 import database.tables.EditPetOwnersTable;
+import database.tables.EditPetsTable;
+import database.tables.EditReviewsTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -75,23 +81,32 @@ public class deletePetOwner extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        StringBuilder requestData = new StringBuilder();
-        InputStream inputStream = request.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            requestData.append(line);
-        }
-        String json = requestData.toString();
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-        String ownerId = jsonObject.get("owner_id").getAsString();
-        EditPetOwnersTable eut = new EditPetOwnersTable();
-        eut.deletePetKeeper(ownerId);
-        response.setStatus(HttpServletResponse.SC_OK);
-    
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            StringBuilder requestData = new StringBuilder();
+            InputStream inputStream = request.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestData.append(line);
+            }
+            String json = requestData.toString();
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+            String ownerId = jsonObject.get("owner_id").getAsString();
+            EditBookingsTable ebt = new EditBookingsTable();
+            ebt.deleteBookingByOwnerId(ownerId);
+            EditPetsTable ept = new EditPetsTable();
+            ept.deletePetByOwnerId(ownerId);
+            EditReviewsTable ert = new EditReviewsTable();
+            ert.deleteReviewByOwnerId(ownerId);
+            EditPetOwnersTable eut = new EditPetOwnersTable();
+            eut.deletePetOwner(ownerId);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(deletePetOwner.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }
 
     /**

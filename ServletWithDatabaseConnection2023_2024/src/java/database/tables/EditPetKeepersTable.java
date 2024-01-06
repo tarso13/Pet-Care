@@ -378,11 +378,11 @@ public class EditPetKeepersTable {
 
         } catch (SQLException ex) {
             Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         }
     }

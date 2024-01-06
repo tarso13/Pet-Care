@@ -194,6 +194,57 @@ public class EditBookingsTable {
         return null;
     }
 
+    public void deleteBookingByKeeperId(String keeper_id) {
+        try {
+            Connection con = DB_Connection.getConnection();
+            Statement stmt = con.createStatement();
+            String deleteQuery = "DELETE FROM bookings WHERE keeper_id='" + keeper_id + "'";
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            try {
+                ArrayList<Booking> bookings = getKeeperBookings(keeper_id);
+                for (Booking b : bookings) {
+                    EditMessagesTable emt = new EditMessagesTable();
+                    emt.deleteMessageByBookingId(String.valueOf(b.getBorrowing_id()));
+                }
+//            Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (ClassNotFoundException ex1) {
+                Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteBookingByOwnerId(String owner_id) throws ClassNotFoundException {
+        try {
+            Connection con = DB_Connection.getConnection();
+            Statement stmt = con.createStatement();
+            String deleteQuery = "DELETE FROM bookings WHERE owner_id='" + owner_id + "'";
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            try {
+                ArrayList<Booking> bookings = getOwnerBookings(owner_id);
+                for (Booking b : bookings) {
+                    EditMessagesTable emt = new EditMessagesTable();
+                    emt.deleteMessageByBookingId(String.valueOf(b.getBorrowing_id()));
+                }
+            } catch (SQLException ex1) {
+                Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex1);
+            } catch (ClassNotFoundException ex1) {
+                Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            } catch (ClassNotFoundException e) {
+            Logger.getLogger(EditBookingsTable.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     public Booking getOwnerBookingId(String owner_id) throws SQLException, ClassNotFoundException {
         ArrayList<Booking> bookings = new ArrayList<>();
         Connection con = DB_Connection.getConnection();
@@ -207,7 +258,7 @@ public class EditBookingsTable {
                 Gson gson = new Gson();
                 Booking booking = gson.fromJson(json, Booking.class
                 );
-               return booking;
+                return booking;
             }
         } catch (Exception e) {
             System.err.println("Got an exception! ");

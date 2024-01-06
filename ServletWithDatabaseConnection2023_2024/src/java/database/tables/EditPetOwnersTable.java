@@ -277,7 +277,7 @@ public class EditPetOwnersTable {
         }
     }
 
-    public void deletePetKeeper(String owner_id) {
+    public void deletePetOwner(String owner_id) {
         try {
             Connection con = DB_Connection.getConnection();
 

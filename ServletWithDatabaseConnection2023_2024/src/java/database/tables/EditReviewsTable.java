@@ -103,6 +103,38 @@ public class EditReviewsTable {
 
     }
 
+    public void deleteReviewByKeeperId(String keeper_id) {
+        try {
+            Connection con = DB_Connection.getConnection();
+
+            Statement stmt = con.createStatement();
+
+            String deleteQuery = "DELETE FROM reviews WHERE keeper_id='" + keeper_id + "'";
+
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void deleteReviewByOwnerId(String owner_id) {
+        try {
+            Connection con = DB_Connection.getConnection();
+
+            Statement stmt = con.createStatement();
+
+            String deleteQuery = "DELETE FROM reviews WHERE owner_id='" + owner_id + "'";
+
+            stmt.executeUpdate(deleteQuery);
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditPetKeepersTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * Establish a database connection and add in the database.
      *

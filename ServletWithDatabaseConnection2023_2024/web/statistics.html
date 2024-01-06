@@ -3,7 +3,7 @@
     <head>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <title>Assignment 3 Tarso Keletzi CS359 Statistics Admin</title>
-        <link rel="stylesheet" href="css/welcome.css">
+        <link rel="stylesheet" href="css/statistics.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -65,9 +65,17 @@
                         usersLink2.setAttribute("onclick", "logout()");
                         usersLink2.textContent = "Logout";
                         menu.appendChild(usersLink2);
+
+//                         <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
                     }
 
                 }
+                var usersLinkk = document.createElement("a");
+                usersLinkk.classList.add("nav-item", "nav-link");
+                usersLinkk.setAttribute("onclick", "getStatistics()");
+                usersLinkk.textContent = "Statistics";
+//                        var navbar = document.getElementById("navbarNavAltMarkup");
+                navbar.appendChild(usersLinkk);
                 drawCharts();
             }
             );
@@ -81,7 +89,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <a class="nav-item nav-link" onclick='getStatistics()'>Statistics</a>
+
                 </div>
             </nav>
             <div class="account-management">
