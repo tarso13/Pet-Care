@@ -1,7 +1,95 @@
 var lat_value, lon_value;
 var user_data = null;
+
 function displayLoginPage() {
     window.open('login.html', '_self');
+}
+
+function sortKeepersByDistance() {
+    var distances_duration = JSON.parse(localStorage.getItem("distance_duration"));
+    var distances = distances_duration.distances[0];
+    var jsonDistances = {};
+
+    distances.forEach((entry, index) => {
+        jsonDistances[entry] = index;
+    });
+    var length = distances.length;
+    for (let i = 0; i < length - 1; i++) {
+        for (let j = 0; j < length - i - 1; j++) {
+            if (distances[j] > distances[j + 1]) {
+                temp = distances[j];
+                distances[j] = distances[j + 1];
+                distances[j + 1] = temp;
+            }
+        }
+    }
+    var available_keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    var reorganised_keepers = [];
+    for (let i = 0; i < length - 1; i++) {
+        let current_index = jsonDistances[distances[i]];
+        reorganised_keepers[i] = available_keepers[current_index];
+    }
+    localStorage.setItem("available_keepers", JSON.stringify(reorganised_keepers));
+}
+
+function sortKeepersByDuration() {
+    var distances_duration = JSON.parse(localStorage.getItem("distance_duration"));
+    var durations = distances_duration.durations[0];
+    var jsonDurations = {};
+
+    durations.forEach((entry, index) => {
+        jsonDurations[entry] = index;
+    });
+    var length = durations.length;
+    for (let i = 0; i < length - 1; i++) {
+        for (let j = 0; j < length - i - 1; j++) {
+            if (durations[j] > durations[j + 1]) {
+                temp = durations[j];
+                durations[j] = durations[j + 1];
+                durations[j + 1] = temp;
+            }
+        }
+    }
+    var available_keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    var reorganised_keepers = [];
+    for (let i = 0; i < length - 1; i++) {
+        let current_index = jsonDurations[durations[i]];
+        reorganised_keepers[i] = available_keepers[current_index];
+    }
+    localStorage.setItem("available_keepers", JSON.stringify(reorganised_keepers));
+
+}
+
+function sortKeepersByPrice() {
+
+}
+
+function getDistanceAndDuration() {
+    const data = null;
+
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener('readystatechange', function () {
+        if (this.readyState === this.DONE) {
+            localStorage.setItem("distance_duration", this.responseText);
+            sortKeepersByDistance();
+        }
+    });
+    var keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    var cookies = getAllCookiePairs();
+    var url = 'https://trueway-matrix.p.rapidapi.com/CalculateDrivingMatrix?origins=' + cookies["lat"] + '%2C' + cookies["lon"] + '&destinations=';
+    keepers.forEach((entry, index) => {
+        url = url + entry.lat + '%2C' + entry.lon;
+        if (index < keepers.length - 1) {
+            url += '%3B';
+        }
+    });
+    xhr.open('GET', url);
+    xhr.setRequestHeader('X-RapidAPI-Key', '7bf4e894e9mshe110f1b196a515cp1b013djsnbcec4ffd065e');
+    xhr.setRequestHeader('X-RapidAPI-Host', 'trueway-matrix.p.rapidapi.com');
+
+    xhr.send(data);
 }
 
 function petManagementInfo() {

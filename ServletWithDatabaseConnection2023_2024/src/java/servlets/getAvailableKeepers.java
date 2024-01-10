@@ -99,6 +99,7 @@ public class getAvailableKeepers extends HttpServlet {
             ArrayList<Integer> reservedKeeperIds = eut.getReservedKeeperIds();
             EditPetKeepersTable emt = new EditPetKeepersTable();
             ArrayList<PetKeeper> keepers = emt.getKeepersByPetType(jsonObject.get("type"));
+            System.out.print(jsonObject);
             ArrayList<PetKeeper> availableKeepers = new ArrayList();
             for (PetKeeper keeper : keepers) {
                 if (reservedKeeperIds.contains(keeper.getKeeperId())) {

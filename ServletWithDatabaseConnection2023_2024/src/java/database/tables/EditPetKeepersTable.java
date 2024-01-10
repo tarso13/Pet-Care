@@ -87,7 +87,7 @@ public class EditPetKeepersTable {
             if (type.equals("catdogkeeper")) {
                 rest_of_query = "catkeeper='true' AND dogkeeper='true'";
             }else{
-                 rest_of_query = type + "='true'";
+                 rest_of_query = type.concat("keeper") + "='true'";
             }
             rs = stmt.executeQuery(query + rest_of_query);
             PetKeeper user;
