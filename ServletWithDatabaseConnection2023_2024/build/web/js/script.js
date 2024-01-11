@@ -5,6 +5,42 @@ function displayLoginPage() {
     window.open('login.html', '_self');
 }
 
+function showSortOptionsKeepers() {
+    Swal.fire({
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:18px;">Sort Keepers By: </span>',
+        html: `
+                <select id="dropdown" class="swal2-input">
+                    <option value="price">Price</option>
+                    <option value="distance">Distance</option>
+                    <option value="arrival_time">Arrival Time</option>
+                </select>
+            `,
+        showCancelButton: true,
+        confirmButtonText: 'Sort',
+        confirmButtonColor: 'brown',
+        cancelButtonText: 'Cancel',
+        preConfirm: () => {
+            const dropdownValue = document.getElementById('dropdown').value;
+            var sort_type;
+            if (dropdownValue === 'price') {
+                sortKeepersByPrice();
+                sort_type = "available_keepers_by_price";
+            } else if (dropdownValue === 'distance') {
+                sortKeepersByDistance();
+                sort_type = "available_keepers_by_distance";
+            } else {
+                sortKeepersByDuration();
+                sort_type = "available_keepers_by_duration";
+            }
+            var elementsToRemove = document.querySelectorAll('#card-container .card');
+            console.log(elementsToRemove);
+            elementsToRemove.forEach(function (element) {
+                element.remove();
+            });
+            getAvailableKeepers(false, sort_type);
+        }
+    });
+}
 function sortKeepersByDistance() {
     var distances_duration = JSON.parse(localStorage.getItem("distance_duration"));
     var distances = distances_duration.distances[0];
@@ -17,7 +53,7 @@ function sortKeepersByDistance() {
     for (let i = 0; i < length - 1; i++) {
         for (let j = 0; j < length - i - 1; j++) {
             if (distances[j] > distances[j + 1]) {
-                temp = distances[j];
+                let temp = distances[j];
                 distances[j] = distances[j + 1];
                 distances[j + 1] = temp;
             }
@@ -25,11 +61,11 @@ function sortKeepersByDistance() {
     }
     var available_keepers = JSON.parse(localStorage.getItem('available_keepers'));
     var reorganised_keepers = [];
-    for (let i = 0; i < length - 1; i++) {
+    for (let i = 0; i <= length - 1; i++) {
         let current_index = jsonDistances[distances[i]];
         reorganised_keepers[i] = available_keepers[current_index];
     }
-    localStorage.setItem("available_keepers", JSON.stringify(reorganised_keepers));
+    localStorage.setItem("available_keepers_by_distance", JSON.stringify(reorganised_keepers));
 }
 
 function sortKeepersByDuration() {
@@ -44,7 +80,7 @@ function sortKeepersByDuration() {
     for (let i = 0; i < length - 1; i++) {
         for (let j = 0; j < length - i - 1; j++) {
             if (durations[j] > durations[j + 1]) {
-                temp = durations[j];
+                let temp = durations[j];
                 durations[j] = durations[j + 1];
                 durations[j + 1] = temp;
             }
@@ -52,16 +88,57 @@ function sortKeepersByDuration() {
     }
     var available_keepers = JSON.parse(localStorage.getItem('available_keepers'));
     var reorganised_keepers = [];
-    for (let i = 0; i < length - 1; i++) {
+    for (let i = 0; i <= length - 1; i++) {
         let current_index = jsonDurations[durations[i]];
         reorganised_keepers[i] = available_keepers[current_index];
     }
-    localStorage.setItem("available_keepers", JSON.stringify(reorganised_keepers));
-
+    localStorage.setItem("available_keepers_by_duration", JSON.stringify(reorganised_keepers));
 }
 
 function sortKeepersByPrice() {
-
+    var pet_price = localStorage.getItem("pet_price");
+    var available_keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    var length = available_keepers.length;
+    if (pet_price === "catdogprice") {
+        for (let i = 0; i < length - 1; i++) {
+            for (let j = 0; j < length - i - 1; j++) {
+                let current_catprice = available_keepers[i].catprice;
+                let next_catprice = available_keepers[j + 1].catprice;
+                let current_dogprice = available_keepers[i].dogprice;
+                let next_dogprice = available_keepers[j + 1].dogprice;
+                let current_avg = (current_catprice + current_dogprice) / 2;
+                let next_avg = (next_catprice + next_dogprice) / 2;
+                console.log(current_avg);
+                console.log(next_avg);
+                if (current_avg > next_avg) {
+                    let temp = available_keepers[j];
+                    available_keepers[j] = available_keepers[j + 1];
+                    available_keepers[j + 1] = temp;
+                }
+            }
+        }
+    } else if (pet_price === "catprice") {
+        for (let i = 0; i < length - 1; i++) {
+            for (let j = 0; j < length - i - 1; j++) {
+                if (available_keepers[i].catprice > available_keepers[j + 1].catprice) {
+                    let temp = available_keepers[j];
+                    available_keepers[j] = available_keepers[j + 1];
+                    available_keepers[j + 1] = temp;
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < length - 1; i++) {
+            for (let j = 0; j < length - i - 1; j++) {
+                if (available_keepers[i].dogprice > available_keepers[j + 1].dogprice) {
+                    let temp = available_keepers[j];
+                    available_keepers[j] = available_keepers[j + 1];
+                    available_keepers[j + 1] = temp;
+                }
+            }
+        }
+    }
+    localStorage.setItem("available_keepers_by_price", JSON.stringify(available_keepers));
 }
 
 function getDistanceAndDuration() {
@@ -73,7 +150,7 @@ function getDistanceAndDuration() {
     xhr.addEventListener('readystatechange', function () {
         if (this.readyState === this.DONE) {
             localStorage.setItem("distance_duration", this.responseText);
-            sortKeepersByDistance();
+            window.open('welcome_page.html', '_self');
         }
     });
     var keepers = JSON.parse(localStorage.getItem('available_keepers'));
@@ -720,7 +797,12 @@ function login() {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                window.open('welcome_page.html', '_self');
+                var cookies = getAllCookiePairs();
+                if (cookies.hasOwnProperty("owner_id")) {
+                    getAvailableKeepers(true);
+                } else {
+                    window.open('welcome_page.html', '_self');
+                }
             } else {
                 displayErrorMessage("Wrong credentials. Make sure you are registered and check your username and password again.");
             }
@@ -1169,7 +1251,7 @@ function insertBooking() {
     }
 }
 
-function getAvailableKeepers() {
+function getAvailableKeepers(welcome_page, sort_type) {
     var cookies = getAllCookiePairs();
     var jsonData = JSON.stringify({
         owner_id: cookies["owner_id"]
@@ -1205,7 +1287,11 @@ function getAvailableKeepers() {
             xhr1.onload = function () {
                 if (xhr1.readyState === 4 && xhr1.status === 200) {
                     localStorage.setItem("available_keepers", xhr1.responseText);
-                    addKeeperCardsOwners();
+                    if (!welcome_page) {
+                        addKeeperCardsOwners(sort_type);
+                    } else {
+                        getDistanceAndDuration();
+                    }
                 }
             };
             xhr1.open("POST", "getAvailableKeepers");
@@ -1222,13 +1308,13 @@ function getAvailableKeepers() {
     xhr.send(jsonData);
 }
 
-function addKeeperCardsOwners() {
+function addKeeperCardsOwners(sort_type) {
     let container = document.getElementById('card-container');
 //    let keepers_header = document.createElement('h3');
 //    keepers_header.textContent = 'Keepers';
 //    keepers_header.className = 'mt-4';
 //    container.appendChild(keepers_header);
-    var keepers = JSON.parse(localStorage.getItem('available_keepers'));
+    var keepers = JSON.parse(localStorage.getItem(sort_type));
     let categoryContainer = document.createElement('div');
     categoryContainer.className = 'category-container';
     keepers.forEach(entry => {
@@ -1238,6 +1324,7 @@ function addKeeperCardsOwners() {
 }
 
 function addKeeperCardsGuest() {
+//    getKeepers();
     let container = document.getElementById('card-container');
 //    let keepers_header = document.createElement('h3');
 //    keepers_header.textContent = 'Keepers';

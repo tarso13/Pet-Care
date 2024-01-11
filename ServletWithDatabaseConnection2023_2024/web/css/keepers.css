@@ -1,6 +1,6 @@
 body {
     background-image: url("https://www.hdwallpapers.in/download/two_black_white_cats_are_sitting_on_light_pink_couch_in_white_background_hd_cat-2560x1440.jpg");
-    font-family: Arial, sans-serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     /*background-color: #f4f4f4;*/
     margin-top:5%;
     /*display: flex;*/
@@ -111,8 +111,24 @@ h3{
     color:brown;
     font-weight: bolder;
     padding-right:90%;
+    display:flex;
 }
 
+h3 button {
+    background-color: #DDDDDD00;
+    /*transform: rotate(-90deg);*/
+}
+.swal2-popup {
+    padding-bottom: 20px; font-family: Georgia, 'Times New Roman', Times, serif;
+    
+}
+
+h3 button img{
+    border:2px solid brown;
+    border-radius: 5px;
+    margin-top:1%;
+
+}
 #menu{
     margin-left:85%;
 }

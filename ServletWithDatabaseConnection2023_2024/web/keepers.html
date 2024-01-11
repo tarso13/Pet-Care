@@ -46,8 +46,10 @@
                     navbar.appendChild(usersLink1);
                     navbar.appendChild(usersLink);
                     navbar.appendChild(usersLink3);
-                    getAvailableKeepers();
+                    getAvailableKeepers(false, "available_keepers");
                 } else {
+                    var sorting_button = document.getElementById("sorting");
+                    sorting_button.style.display = 'none';
                     account_management.style.display = "none";
                     var usersLink3 = document.createElement("a");
                     usersLink3.classList.add("nav-item", "nav-link");
@@ -60,6 +62,11 @@
                     usersLink.setAttribute("onclick", "getInfoLinks()");
                     navbar.appendChild(usersLink);
                     addKeeperCardsGuest();
+                    var cardElements = document.getElementsByClassName('card');
+                    for (let i = 0; i < cardElements.length; i++) {
+                        cardElements[i].style.height = '190px';
+                    }
+                    
                 }
             });
         </script> 
@@ -85,6 +92,8 @@
                 </div>
             </nav>
         </div>
-        <div id="card-container"><h3>Keepers</h3></div>
+        <div id="card-container"><h3>Keepers<button id="sorting" type="button" style="border:0" onclick="showSortOptionsKeepers()"> <img src="img/icons8-filter-48.png" height="30" width="30"></button></h3>
+        </div>
+
     </body>
 </html>

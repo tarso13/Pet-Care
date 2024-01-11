@@ -71,10 +71,11 @@ body {
 }
 
 h3 button{
-    background-color:white;
+   background-color: #DDDDDD00;
 /*    width:10px;
     height:10px;*/
 }
+
 .swal2-popup {
     font-size: 14px !important;
 }
