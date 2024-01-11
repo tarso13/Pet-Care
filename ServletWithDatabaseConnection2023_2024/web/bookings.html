@@ -28,14 +28,28 @@
                     if (cookies.hasOwnProperty("keeper_id")) {
                         usersLink.setAttribute("onclick", "getKeeperBookings()");
                         var menu = document.getElementById("menu");
-                        var usersLink1 = document.createElement("a");
-                        usersLink1.classList.add("dropdown-item");
-                        usersLink1.setAttribute("onclick", "getKeeperStats()");
-                        usersLink1.textContent = "My Stats";
-                        menu.appendChild(usersLink1);
+                        var usersLinkk = document.createElement("a");
+                        usersLinkk.classList.add("dropdown-item");
+                        usersLinkk.setAttribute("onclick", "getKeeperStats()");
+                        usersLinkk.textContent = "My Stats";
+                        menu.appendChild(usersLinkk);
+                        var usersLink2 = document.createElement("a");
+                        usersLink2.classList.add("dropdown-item");
+                        usersLink2.setAttribute("onclick", "logout()");
+                        usersLink2.textContent = "Logout";
+                        menu.appendChild(usersLink2);
+                        var usersLinkkk_ = document.createElement("a");
+                        usersLinkkk_.classList.add("nav-item", "nav-link");
+                        usersLinkkk_.setAttribute("onclick", "getMessages()");
+                        usersLinkkk_.textContent = "Messages";
+                        navBarAltMarkUp.appendChild(usersLinkkk_);
                         usersLink.textContent = "Bookings";
-                        var navbar = document.getElementById("navbarNavAltMarkup");
-                        navbar.appendChild(usersLink);
+                        navBarAltMarkUp.appendChild(usersLink);
+                        var usersLinkkk = document.createElement("a");
+                        usersLinkkk.classList.add("nav-item", "nav-link");
+                        usersLinkkk.setAttribute("onclick", "getStatistics()");
+                        usersLinkkk.textContent = "Statistics";
+                        navBarAltMarkUp.appendChild(usersLinkkk);
                     } else {
                         usersLink.setAttribute("onclick", "getOwnerBookings()");
 //                        usersLink2.setAttribute("onclick", "getMessages()");
@@ -57,7 +71,6 @@
                         usersLink1.setAttribute("onclick", "getKeepers()");
                         usersLink1.textContent = "Keepers";
                         navBarAltMarkUp.appendChild(usersLink1);
-
                     }
 
                 }
@@ -81,9 +94,9 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span id="user"></span>  
                 </a>
-                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu dropdown-menu-left" id="menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" onclick='redirectToPage("accountData")'>My Account</a>
-                    <a class="dropdown-item" onclick='logout()'>Logout</a>
+                    <!--<a class="dropdown-item" onclick='logout()'>Logout</a>-->
                 </div>
             </div>
         </div>

@@ -14,7 +14,6 @@ body {
 #navbarNavAltMarkup{
     /*margin-left:10%;*/
     margin-left:2%;
-    /*margin-bottom:0.2%;*/
 }
 
 .container-bar {
@@ -28,7 +27,7 @@ body {
     font-weight: bold;
 }
 .navbar{
-    margin-bottom:  20px;
+    margin-bottom:  15px;
 }
 .account-management{
     margin-left:1%;

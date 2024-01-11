@@ -12,7 +12,7 @@ function showSortOptionsKeepers() {
                 <select id="dropdown" class="swal2-input">
                     <option value="price">Price</option>
                     <option value="distance">Distance</option>
-                    <option value="arrival_time">Arrival Time</option>
+                    <option value="arrival_time">Estimated Arrival Time (By Car)</option>
                 </select>
             `,
         showCancelButton: true,
@@ -172,7 +172,7 @@ function getDistanceAndDuration() {
 function petManagementInfo() {
     Swal.fire({
         icon: 'info',
-        title: 'Pet Management',
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Pet Management </span>',
         text: "To change your pet's weight, make a PUT request to: http://localhost:4567/PetsAPI/petWeight/:pet_id/:weight,\n\
         To delete your pet, make a DELETE request to: http://localhost:4567/PetsAPI/petDeletion/:pet_id",
         confirmButtonColor: 'brown'
@@ -200,7 +200,7 @@ function addReview(keeper_id, owner_id) {
     (async () => {
 
         const {value: formValues} = await Swal.fire({
-            title: 'Your review matters!',
+            title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Your review matters!</span>',
             html:
                     '<input id="swal-input1" class="swal2-input" placeholder="Your text...">' +
                     '<input type="number"  id="swal-input2" class="swal2-input" style="width: 57.5%;" min="0" max="5" placeholder="Your score (out of 5)...">',
@@ -328,7 +328,12 @@ function ask_chatgpt(user_question) {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(this.responseText);
+            Swal.fire({
+                icon: 'info',
+                title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">CHATGPT Response</span>',
+                text: this.responseText,
+                confirmButtonColor: 'brown'
+            });
         }
     };
     xhr.open("POST", "askCHATGPT");
@@ -337,29 +342,47 @@ function ask_chatgpt(user_question) {
     xhr.send(jsonData);
 }
 
-function askCHATGPT() {
-    //ask_chatgpt();
-    Swal.fire({
-        title: 'Enter your message',
-        html: '<input type="text" id="swal-input-field" class="swal2-input">',
-        showCancelButton: true,
-        confirmButtonText: 'Send',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: 'green',
-        cancelButtonColor: 'brown',
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            const inputValue = document.getElementById('swal-input-field').value;
-            return inputValue;
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-        if (result.isConfirmed) {
-            ask_chatgpt(result.value);
-        }
+function askCHATGPT(pet_id) {
+    getPetById(pet_id);
+    var pet = JSON.parse(localStorage.getItem("pet"));
+    var pet_type = pet["type"];
+    var pet_breed = pet["breed"];
 
+    var pet_keep_message = "How do I take care of a " + pet_type + "?";
+    var pet_info_message = "What do I need to know about " + pet_breed + " " + pet_type + "s?";
+
+    Swal.fire({
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Ask CHATGPT </span>',
+        html: '<button id="petkeep" style="color: black; border:1px solid white; background-color:white; font-family: Georgia, Times, San Serif; font-size:20px;">' + pet_keep_message + '</button><button id="petinfo" style="border:1px solid white;color: black; background-color:white; font-family: Georgia, Times, San Serif; font-size:20px; margin-top:1%;">' + pet_info_message + '</button>',
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: 'brown'
+    });
+
+    document.getElementById('petkeep').addEventListener('click', function () {
+        ask_chatgpt(pet_keep_message);
+    });
+
+    document.getElementById('petinfo').addEventListener('click', function () {
+        ask_chatgpt(pet_info_message);
     });
 }
+
+function getPetById(pet_id) {
+    var jsonData = JSON.stringify({pet_id: pet_id});
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            localStorage.setItem("pet", this.responseText);
+        }
+    };
+    xhr.open("POST", 'getPet');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(jsonData);
+}
+
 function runGiveaway() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -412,7 +435,7 @@ function sendMessageGiveaway(message, booking_id) {
 
 function sendMessage(booking) {
     Swal.fire({
-        title: 'Enter your message',
+        title:'<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Enter your message</span>',
         html: '<input type="text" id="swal-input-field" class="swal2-input">',
         showCancelButton: true,
         confirmButtonText: 'Send',
@@ -494,18 +517,18 @@ function createBookingCard(booking) {
     card.appendChild(status_cookie);
     var cookies = getAllCookiePairs();
     if (status_cookie.textContent === "Status: accepted") {
-        if (`${booking.sender}` === 'keeper') {
+        if (cookies.hasOwnProperty("keeper_id")) {
             let cardButton = document.createElement('button');
             cardButton.className = 'card-button';
             cardButton.textContent = 'Ask CHATGPT';
             cardButton.onclick = function () {
-                askCHATGPT();
+                askCHATGPT(booking.pet_id);
             };
             card.appendChild(cardButton);
         }
         let cardButton2 = document.createElement('button');
         cardButton2.className = 'card-button-message';
-        if (`${booking.sender}` === 'keeper') {
+        if (cookies.hasOwnProperty("keeper_id")) {
             cardButton2.textContent = 'Message Owner';
         } else {
             cardButton2.textContent = 'Message Keeper';
@@ -529,10 +552,9 @@ function createBookingCard(booking) {
     if (status_cookie.textContent === "Status: finished") {
         if (cookies.hasOwnProperty("owner_id")) {
             let cardButton = document.createElement('button');
-            cardButton.className = 'card-button-message';
+            cardButton.className = 'card-button-message card-button-review';
             cardButton.textContent = 'Add Review';
             cardButton.onclick = function () {
-                console.log("review");
                 addReview(`${booking.keeper_id}`, `${booking.owner_id}`);
             };
             card.appendChild(cardButton);
@@ -1681,7 +1703,7 @@ function displayErrorMessage(errorMessage) {
 // Use SweetAlert to show the error message in a pop-up
     Swal.fire({
         icon: 'error',
-        title: 'Oops...',
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Oops... </span>',
         text: errorMessage,
         confirmButtonColor: 'brown'
     });
@@ -1692,7 +1714,7 @@ function displaySuccessMessage(Message) {
 // Use SweetAlert to show the error message in a pop-up
     Swal.fire({
         icon: 'success',
-        title: 'Good news!',
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Good news! </span>',
         text: Message,
         confirmButtonColor: 'brown'
     }).then((result) => {

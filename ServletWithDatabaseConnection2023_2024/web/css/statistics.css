@@ -39,8 +39,6 @@ body {
 }
 
 .collapse{
-    /*margin-left:50%;*/
-    /*margin-right: 10%;*/
     margin-top:0.1%;
 }
 .collapse .nav-item{
@@ -80,7 +78,7 @@ body {
 
 .charts{
     display:flex;
-/*    margin-left:5%;*/
+    margin-left:2%;
     margin-top:5%;
     width:50%;
 }

@@ -7,6 +7,7 @@ package database.tables;
 
 import mainClasses.Pet;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import database.DB_Connection;
 import java.sql.Connection;
@@ -102,7 +103,7 @@ public class EditPetsTable {
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
-            ArrayList <Pet> pets = new ArrayList();
+            ArrayList<Pet> pets = new ArrayList();
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
@@ -110,6 +111,31 @@ public class EditPetsTable {
                 pets.add(pet);
             }
             return pets;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Pet getPetById(String petIdJson) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs;
+        try {
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(petIdJson, JsonObject.class);
+            String petId = jsonObject.get("pet_id").getAsString();
+            rs = stmt.executeQuery("SELECT * FROM pets WHERE pet_id= '" + petId + "'");
+            Pet pet = null;
+            if (rs.next()) {
+                String json = DB_Connection.getResultsToJSON(rs);
+                gson = new Gson();
+                pet = gson.fromJson(json, Pet.class);
+                System.out.print(json);
+                return pet;
+            }
+            return pet;
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
@@ -229,7 +255,7 @@ public class EditPetsTable {
         stmt.close();
         con.close();
     }
-    
+
     public void deletePetByOwnerId(String owner_id) {
         try {
             Connection con = DB_Connection.getConnection();
