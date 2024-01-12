@@ -328,6 +328,7 @@ function ask_chatgpt(user_question) {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+//            alert(this.responseText);
             Swal.fire({
                 icon: 'info',
                 title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">CHATGPT Response</span>',
@@ -342,9 +343,9 @@ function ask_chatgpt(user_question) {
     xhr.send(jsonData);
 }
 
-function askCHATGPT(pet_id) {
-    getPetById(pet_id);
+function askCHATGPT() {
     var pet = JSON.parse(localStorage.getItem("pet"));
+
     var pet_type = pet["type"];
     var pet_breed = pet["breed"];
 
@@ -435,7 +436,7 @@ function sendMessageGiveaway(message, booking_id) {
 
 function sendMessage(booking) {
     Swal.fire({
-        title:'<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Enter your message</span>',
+        title: '<span style="color: brown; font-family: Georgia, Times, San Serif; font-size:20px;">Enter your message</span>',
         html: '<input type="text" id="swal-input-field" class="swal2-input">',
         showCancelButton: true,
         confirmButtonText: 'Send',
@@ -522,7 +523,11 @@ function createBookingCard(booking) {
             cardButton.className = 'card-button';
             cardButton.textContent = 'Ask CHATGPT';
             cardButton.onclick = function () {
-                askCHATGPT(booking.pet_id);
+                getPetById(booking.pet_id);
+                setTimeout(function () {
+                   askCHATGPT(booking.pet_id);
+                }, 200);
+               
             };
             card.appendChild(cardButton);
         }
@@ -823,6 +828,7 @@ function login() {
                 if (cookies.hasOwnProperty("owner_id")) {
                     getAvailableKeepers(true);
                 } else {
+                    console.log("hello");
                     window.open('welcome_page.html', '_self');
                 }
             } else {
@@ -851,6 +857,7 @@ function isLoggedIn() {
 
     if (logform) {
         logform.addEventListener("submit", (e) => {
+            console.log("hi");
             login();
             e.preventDefault();
         });
@@ -1240,13 +1247,14 @@ function insertBooking() {
         var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
         var owners_pets = JSON.parse(localStorage.getItem("pets"));
         var pet_type = owners_pets[0]["type"];
-        console.log(owners_pets[0]);
-        for (let i = 1; i < owners_pets.length; i++) {
-            if (owners_pets[i]["type"] !== pet_type) {
+//        
+        for (let j = 1; j < owners_pets.length; j++) {
+            if (owners_pets[j]["type"] !== pet_type) {
                 pet_type = "catdogkeeper";
+                break;
             }
         }
-        var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
+//        var pet_type = JSON.parse(localStorage.getItem("pet"))["type"];
         if (pet_type === "cat") {
             jsonData["price"] = parseInt(JSON.parse(localStorage.getItem("keeper_chosen"))["catprice"]) * daysDifference;
         } else if (pet_type === "catdogkeeper") {
@@ -1260,10 +1268,11 @@ function insertBooking() {
         xhr.onload = function () {
             if (xhr.status !== 200) {
                 displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
-                setTimeout(3000);
             } else {
                 displaySuccessMessage('The booking has been added!');
-
+                setTimeout(function () {
+                    window.open('keepers.html', '_self');
+                }, 3000);
             }
         };
         xhr.open('POST', 'addBooking');
@@ -1272,6 +1281,7 @@ function insertBooking() {
         xhr.send(JSON.stringify(jsonData));
     }
 }
+
 
 function getAvailableKeepers(welcome_page, sort_type) {
     var cookies = getAllCookiePairs();
@@ -1761,7 +1771,6 @@ function insertPetForm() {
     xhr.onload = function () {
         if (xhr.status !== 200) {
             displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
-            setTimeout(3000);
         } else {
             displaySuccessMessage('The pet has been added to the database!');
 
@@ -1836,8 +1845,9 @@ function validateForm() {
         xhr.onload = function () {
             if (xhr.status !== 200) {
                 displayErrorMessage("Error " + xhr.status + " - " + xhr.responseText);
-                setTimeout(5000);
-                window.open('index.html', '_self');
+                setTimeout(function () {
+                    window.open('login.html', '_self');
+                }, 3000);
             } else {
                 window.open('success_register.html', '_self');
             }

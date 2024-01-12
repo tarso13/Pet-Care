@@ -1,4 +1,5 @@
 package mainClasses;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -9,7 +10,9 @@ import org.codehaus.jettison.json.JSONObject;
 
 public class ChatGPT {
 
-    public static void chatGPT(String text) throws Exception {
+    public String key = "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";
+
+    public String chatGPT(String text) throws Exception {
         String url = "https://api.openai.com/v1/chat/completions";
         HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
@@ -24,7 +27,7 @@ public class ChatGPT {
         userMessage.put("content", text);
         messages.put(userMessage);
 
-        int maxTokens = 2200;
+        int maxTokens = 1000;
 
         con.setDoOutput(true);
 
@@ -39,7 +42,6 @@ public class ChatGPT {
         writer.write(requestBody.toString());
         writer.flush();
 
-
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
@@ -49,6 +51,6 @@ public class ChatGPT {
 
         in.close();
 
-        System.out.println(response.toString());
+        return response.toString();
     }
 }

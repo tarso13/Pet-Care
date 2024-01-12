@@ -86,11 +86,10 @@ public class askCHATGPT extends HttpServlet {
         }
 
 //        String model = "turbo";
-        String chatgpt_response;
         try {
-            chatgpt.chatGPT(requestData.toString());
+            String chatgpt_response = chatgpt.chatGPT(requestData.toString());
             response.setStatus(200);
-//            response.getWriter().print(chatgpt_response);
+            response.getWriter().print(chatgpt_response);
         } catch (Exception ex) {
             Logger.getLogger(askCHATGPT.class.getName()).log(Level.SEVERE, null, ex);
         }

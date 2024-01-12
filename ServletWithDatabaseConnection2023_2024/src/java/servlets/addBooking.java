@@ -79,6 +79,7 @@ public class addBooking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("hello");
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         EditBookingsTable eut = new EditBookingsTable();
         response.setContentType("text/html;charset=UTF-8");
@@ -90,9 +91,13 @@ public class addBooking extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             requestData.append(line);
         }
+        System.out.println(line);
+
         String json = requestData.toString();
         try (PrintWriter out = response.getWriter()) {
             eut.addBookingFromJSON(json);
+            System.out.println("Added");
+            System.out.println(json);
             response.setStatus(200);
         } catch (ClassNotFoundException ex) {
             response.setStatus(500);
