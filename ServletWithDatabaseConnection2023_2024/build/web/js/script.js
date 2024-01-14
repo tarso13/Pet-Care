@@ -525,9 +525,9 @@ function createBookingCard(booking) {
             cardButton.onclick = function () {
                 getPetById(booking.pet_id);
                 setTimeout(function () {
-                   askCHATGPT(booking.pet_id);
+                    askCHATGPT(booking.pet_id);
                 }, 200);
-               
+
             };
             card.appendChild(cardButton);
         }
@@ -566,7 +566,7 @@ function createBookingCard(booking) {
         }
     }
 
-    if (status_cookie.textContent === "Status: requested") {
+    if (status_cookie.textContent === "Status: requested" && cookies.hasOwnProperty("keeper_id")) {
         let cardButton = document.createElement('button');
         cardButton.className = 'card-button-accept';
         cardButton.textContent = 'Accept';
@@ -1006,9 +1006,11 @@ function getStatistics() {
 
 function drawCharts() {
     google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(drawPetStatistics);
-    google.charts.setOnLoadCallback(drawUserStatistics);
-    google.charts.setOnLoadCallback(drawEarningsStatistics);
+    google.charts.setOnLoadCallback(function () {
+        drawPetStatistics();
+        drawUserStatistics();
+        drawEarningsStatistics();
+    });
 //    location.reload();
 }
 
