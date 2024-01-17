@@ -205,6 +205,7 @@ function addReview(keeper_id, owner_id) {
                     '<input id="swal-input1" class="swal2-input" placeholder="Your text...">' +
                     '<input type="number"  id="swal-input2" class="swal2-input" style="width: 57.5%;" min="0" max="5" placeholder="Your score (out of 5)...">',
             focusConfirm: false,
+            confirmButtonColor: 'brown',
             preConfirm: () => {
                 return [
                     document.getElementById('swal-input1').value,
@@ -369,6 +370,23 @@ function askCHATGPT() {
         ask_chatgpt(pet_info_message);
     });
 }
+function runGiveaway() {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let bookings = JSON.parse(this.responseText);
+            sendMessageGiveaway("Congratulations! You have won the a 100€ gift card for a pet shop of your choice!", bookings[0].booking_id);
+            sendMessageGiveaway("Congratulations! You have won a free cup of coffee at a cat cafe!", bookings[1].booking_id);
+            displaySuccessMessage("Winners have been informed!");
+        } else {
+            displayErrorMessage("Giveaway for this month has already taken place.");
+        }
+    };
+    xhr.open("GET", 'runGiveaway');
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
+}
 
 function getPetById(pet_id) {
     var jsonData = JSON.stringify({pet_id: pet_id});
@@ -384,23 +402,6 @@ function getPetById(pet_id) {
     xhr.send(jsonData);
 }
 
-function runGiveaway() {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            let bookings = JSON.parse(this.responseText);
-            sendMessageGiveaway("Congratulations! You have won the a 100€ gift card for a pet shop of your choice!", bookings[0].booking_id);
-            sendMessageGiveaway("Congratulations! You have won a free cup of coffee at a cat cafe!", bookings[1].booking_id);
-
-        } else {
-            displayErrorMessage("Giveaway for this month already exists.");
-        }
-    };
-    xhr.open("GET", 'runGiveaway');
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send();
-}
 function sendMessageGiveaway(message, booking_id) {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -928,8 +929,22 @@ function addMessageCards() {
         container.appendChild(createMessageCard(entry));
     });
 }
+function accepted_booking_status(booking_id) {
+    var bookings = JSON.parse(localStorage.getItem("bookings"));
+    console.log(bookings);
+    for (const entry of bookings) {
+        console.log(entry.booking_id === booking_id);
+        if (entry.booking_id === booking_id) {
+            if (`${entry.status}` === "accepted")
+                return true;
+        }
+    }
+    ;
+    return false;
+}
 
 function createMessageCard(entry) {
+    console.log(entry);
     let card = document.createElement('div');
     card.className = 'card my-2';
     let booking = document.createElement('p');
@@ -944,7 +959,10 @@ function createMessageCard(entry) {
     let datetime = document.createElement('p');
     datetime.textContent = `Datetime: ${entry.datetime}`;
     card.appendChild(datetime);
-    if (`${entry.sender}` !== "admin" && `${entry.status}` === "accepted") {
+    console.log(`${entry.status}`);
+    accepted = accepted_booking_status(entry.booking_id);
+    console.log(accepted);
+    if (`${entry.sender}` !== "admin" && accepted) {
         let cardButton = document.createElement('button');
         cardButton.className = 'card-button';
         cardButton.textContent = 'Reply';

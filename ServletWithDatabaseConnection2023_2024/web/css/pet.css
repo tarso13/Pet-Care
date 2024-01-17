@@ -71,13 +71,16 @@ body {
 }
 
 h3 button{
-   background-color: #DDDDDD00;
-/*    width:10px;
-    height:10px;*/
+    background-color: #DDDDDD00;
+    /*    width:10px;
+        height:10px;*/
 }
 
 .swal2-popup {
     font-size: 14px !important;
+}
+.swal2-html-container{
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 h3 button img{
     height:30px;

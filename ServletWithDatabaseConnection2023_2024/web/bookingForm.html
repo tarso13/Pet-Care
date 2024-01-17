@@ -19,20 +19,26 @@
             document.addEventListener('DOMContentLoaded', function () {
                 var userspan = document.getElementById("user");
                 if (userspan) {
+                    var navbar = document.getElementById("navbarNavAltMarkup");
                     var cookies = getAllCookiePairs();
                     userspan.innerHTML = cookies["username"];
-                    var menu = document.getElementById("navbarNavAltMarkup");
+                    var usersLink2 = document.createElement("a");
+                    usersLink2.classList.add("nav-item", "nav-link");
+                    usersLink2.setAttribute("onclick", "getOwnerBookings()");
+                    usersLink2.textContent = "Bookings";
+                    navbar.appendChild(usersLink2);
+
                     var usersLink = document.createElement("a");
                     usersLink.classList.add("nav-item", "nav-link");
                     usersLink.setAttribute("onclick", "addPetPage()");
                     usersLink.textContent = "Add Pet";
-                    menu.appendChild(usersLink);
-                    var navBarAltMarkUp = document.getElementById("navbarNavAltMarkup");
+                    navbar.appendChild(usersLink);
+
                     var usersLinkk = document.createElement("a");
                     usersLinkk.classList.add("nav-item", "nav-link");
                     usersLinkk.setAttribute("onclick", "redirectToPage('keepers')");
                     usersLinkk.textContent = "Keepers";
-                    navBarAltMarkUp.appendChild(usersLinkk);
+                    navbar.appendChild(usersLinkk);
                     var keeperId = document.getElementById("keeper_id");
                     keeperId.setAttribute("value", JSON.parse(localStorage.getItem("keeper_chosen"))["keeper_id"]);
                     keeperId.setAttribute("disabled", "true");
@@ -44,7 +50,7 @@
                     var pets = JSON.parse(localStorage.getItem("pets"));
                     var concatenatedPets = pets[0]["pet_id"];
                     for (let i = 1; i < pets.length; i++) {
-                        concatenatedPets += ","+pets[i]["pet_id"];
+                        concatenatedPets += "," + pets[i]["pet_id"];
                     }
                     petIds.setAttribute("value", concatenatedPets);
                     petIds.setAttribute("disabled", "true");

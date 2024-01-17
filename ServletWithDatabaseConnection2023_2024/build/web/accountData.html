@@ -30,11 +30,11 @@
                     if (cookies.hasOwnProperty("keeper_id")) {
                         usersLinkk.setAttribute("onclick", "getKeeperBookings()");
                         navBarAltMarkUp.appendChild(usersLinkk);
-//                        var usersLink = document.createElement("a");
-//                        usersLink.classList.add("nav-item", "nav-link");
-//                        usersLink.setAttribute("onclick", "getStatistics()");
-//                        usersLink.textContent = "Statistics";
-//                        navBarAltMarkUp.appendChild(usersLink);
+                        var usersLink = document.createElement("a");
+                        usersLink.classList.add("nav-item", "nav-link");
+                        usersLink.setAttribute("onclick", "getStatistics()");
+                        usersLink.textContent = "Statistics";
+                        navBarAltMarkUp.appendChild(usersLink);
                         var usersLink1 = document.createElement("a");
                         usersLink1.classList.add("dropdown-item");
                         usersLink1.setAttribute("onclick", "getKeeperStats()");

@@ -77,8 +77,7 @@ public class runGiveaway extends HttpServlet {
         EditMessagesTable emt = new EditMessagesTable();
         try {
             ArrayList<Message> messages_admin = emt.getMessagesAdmin();
-            if (messages_admin.isEmpty()) {
-            } else {
+            if (!messages_admin.isEmpty()) {
                 Date currentDate = new Date();
                 int currentMonth = currentDate.getMonth() + 1;
                 for (Message m : messages_admin) {
@@ -91,70 +90,73 @@ public class runGiveaway extends HttpServlet {
                         return;
                     }
                 }
-                EditBookingsTable ebt = new EditBookingsTable();
-                ArrayList<Booking> bookings = ebt.getAllBookings();
-                HashMap<Integer, Integer> ownerPoints = new HashMap<>();
-                for (Booking b : bookings) {
-                    int owner_id = b.getOwner_id();
-                    LocalDate startDate = LocalDate.parse(b.getFromDate());
-                    LocalDate endDate = LocalDate.parse(b.getToDate());
-                    long total_days = ChronoUnit.DAYS.between(startDate, endDate);;
-                    int pointsToAdd = (int) total_days;
-                    if (ownerPoints.containsKey(owner_id)) {
-                        int currentPoints = ownerPoints.get(owner_id);
-                        ownerPoints.put(owner_id, currentPoints + pointsToAdd);
-                    } else {
-                        ownerPoints.put(owner_id, pointsToAdd);
-                    }
-                }
-
-                EditReviewsTable ert = new EditReviewsTable();
-                ArrayList<Review> reviews = ert.getAllReviews();
-                for (Review r : reviews) {
-                    int owner_id = r.getOwner_id();
-                    if (ownerPoints.containsKey(owner_id)) {
-                        int currentPoints = ownerPoints.get(owner_id);
-                        ownerPoints.put(owner_id, currentPoints + 2);
-                    } else {
-                        ownerPoints.put(owner_id, 2);
-                    }
-                }
-                ArrayList<Integer> ownerIds = new ArrayList();
-                for (Integer key : ownerPoints.keySet()) {
-                    int value = ownerPoints.get(key);
-                    for (int i = 0; i < value; i++) {
-                        ownerIds.add(key);
-                    }
-                }
-
-                Collections.shuffle(ownerIds);
-                Random random = new Random();
-                int winnerIndex = random.nextInt(ownerIds.size() - 0);
-                int winner1Id = ownerIds.get(winnerIndex);
-                winnerIndex = random.nextInt(ownerIds.size() - 0);
-                int winner2Id = ownerIds.get(winnerIndex);
-                while (winner2Id == winner1Id) {
-                    winnerIndex = random.nextInt(ownerIds.size() - 0);
-                    winner2Id = ownerIds.get(winnerIndex);
-                }
-                ArrayList<Booking> winnerBookings = new ArrayList();
-                for (Booking b : bookings) {
-                    if (b.getOwner_id() == winner1Id) {
-                        winnerBookings.add(b);
-                        break;
-                    }
-                }
-                for (Booking b : bookings) {
-                    if (b.getOwner_id() == winner2Id) {
-                        winnerBookings.add(b);
-                        break;
-                    }
-                }
-                Gson gson = new Gson();
-                String bookingsJson = gson.toJson(winnerBookings);
-                response.setStatus(200);
-                response.getWriter().print(bookingsJson);
             }
+            EditBookingsTable ebt = new EditBookingsTable();
+            ArrayList<Booking> bookings = ebt.getAllBookings();
+            HashMap<Integer, Integer> ownerPoints = new HashMap<>();
+            for (Booking b : bookings) {
+                System.out.println(b.getOwner_id());
+                int owner_id = b.getOwner_id();
+                LocalDate startDate = LocalDate.parse(b.getFromDate());
+                LocalDate endDate = LocalDate.parse(b.getToDate());
+                long total_days = ChronoUnit.DAYS.between(startDate, endDate);;
+
+                int pointsToAdd = (int) total_days;
+                if (ownerPoints.containsKey(owner_id)) {
+                    int currentPoints = ownerPoints.get(owner_id);
+                    ownerPoints.put(owner_id, currentPoints + pointsToAdd);
+                } else {
+                    ownerPoints.put(owner_id, pointsToAdd);
+                }
+            }
+            EditReviewsTable ert = new EditReviewsTable();
+            ArrayList<Review> reviews = ert.getAllReviews();
+            for (Review r : reviews) {
+                int owner_id = r.getOwner_id();
+                if (ownerPoints.containsKey(owner_id)) {
+                    int currentPoints = ownerPoints.get(owner_id);
+                    ownerPoints.put(owner_id, currentPoints + 2);
+                } else {
+                    ownerPoints.put(owner_id, 2);
+                }
+            }
+            ArrayList<Integer> ownerIds = new ArrayList();
+            for (Integer key : ownerPoints.keySet()) {
+                int value = ownerPoints.get(key);
+                for (int i = 0; i < value; i++) {
+                    ownerIds.add(key);
+                    System.out.println(key);
+                }
+            }
+
+            Collections.shuffle(ownerIds);
+            Random random = new Random();
+            int winnerIndex = random.nextInt(ownerIds.size() - 0);
+            int winner1Id = ownerIds.get(winnerIndex);
+            winnerIndex = random.nextInt(ownerIds.size() - 0);
+            int winner2Id = ownerIds.get(winnerIndex);
+            while (winner2Id == winner1Id) {
+                winnerIndex = random.nextInt(ownerIds.size() - 0);
+                winner2Id = ownerIds.get(winnerIndex);
+            }
+            ArrayList<Booking> winnerBookings = new ArrayList();
+            for (Booking b : bookings) {
+                if (b.getOwner_id() == winner1Id) {
+                    winnerBookings.add(b);
+                    break;
+                }
+            }
+            for (Booking b : bookings) {
+                if (b.getOwner_id() == winner2Id) {
+                    winnerBookings.add(b);
+                    break;
+                }
+            }
+            Gson gson = new Gson();
+            String bookingsJson = gson.toJson(winnerBookings);
+            response.setStatus(200);
+            System.out.println(bookingsJson);
+            response.getWriter().print(bookingsJson);
         } catch (SQLException ex) {
             Logger.getLogger(runGiveaway.class.getName()).log(Level.SEVERE, null, ex);
             response.setStatus(500);
